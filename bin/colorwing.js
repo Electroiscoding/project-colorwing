@@ -156,6 +156,76 @@ if (command === 'build') {
   } else {
     buildAll({ verbose: true });
   }
+} else if (command === 'lint') {
+  const targetPath = args[1] || '.';
+  const absTarget = path.resolve(process.cwd(), targetPath);
+  console.log(`[ColorWing Linter] Scanning directory: ${absTarget}`);
+
+  const COLOR_RULES = [
+    { pattern: /#000000\b/gi, replacement: 'var(--cw-bg) / ColorwingTokens.Primary', name: 'Pitch Black' },
+    { pattern: /#ffffff\b/gi, replacement: 'var(--cw-text-primary) / ColorwingTokens.Secondary', name: 'Pure White' },
+    { pattern: /#d90429\b/gi, replacement: 'var(--cw-tertiary) / ColorwingTokens.Tertiary', name: 'NeTuArk Red' },
+    { pattern: /#b00321\b/gi, replacement: 'var(--cw-tertiary-hover)', name: 'Tertiary Hover' },
+    { pattern: /#9b021d\b/gi, replacement: 'var(--cw-tertiary-dark)', name: 'Tertiary Dark' },
+    { pattern: /#c82128\b/gi, replacement: 'var(--cw-tertiary-crimson)', name: 'Tertiary Crimson' },
+    { pattern: /0xFF000000\b/g, replacement: 'ColorwingTokens.Primary', name: 'Kotlin Pitch Black' },
+    { pattern: /0xFFFFFFFF\b/g, replacement: 'ColorwingTokens.Secondary', name: 'Kotlin Pure White' },
+    { pattern: /0xFFD90429\b/g, replacement: 'ColorwingTokens.Tertiary', name: 'Kotlin NeTuArk Red' },
+  ];
+
+  const IGNORE_DIRS = new Set(['node_modules', '.git', 'dist']);
+  const VALID_EXTS = new Set(['.css', '.scss', '.js', '.jsx', '.ts', '.tsx', '.kt', '.dart', '.swift', '.html']);
+
+  let findings = 0;
+  let filesScanned = 0;
+
+  function scan(dir) {
+    if (!fs.existsSync(dir)) return;
+    const stat = fs.statSync(dir);
+    if (!stat.isDirectory()) {
+      scanFile(dir);
+      return;
+    }
+
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        if (!IGNORE_DIRS.has(entry.name)) {
+          scan(path.join(dir, entry.name));
+        }
+      } else if (entry.isFile()) {
+        const ext = path.extname(entry.name);
+        if (VALID_EXTS.has(ext)) {
+          scanFile(path.join(dir, entry.name));
+        }
+      }
+    }
+  }
+
+  function scanFile(filePath) {
+    if (filePath.includes('src/tokens') || filePath.includes('dist/')) return;
+    filesScanned++;
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const lines = content.split('\n');
+
+    lines.forEach((line, idx) => {
+      COLOR_RULES.forEach((rule) => {
+        const matches = line.match(rule.pattern);
+        if (matches) {
+          findings++;
+          const relPath = path.relative(process.cwd(), filePath);
+          console.log(`  ⚠️  ${relPath}:${idx + 1} -> Hardcoded ${rule.name} "${matches[0]}" detected.`);
+          console.log(`      💡 Suggestion: Replace with ${rule.replacement}`);
+        }
+      });
+    });
+  }
+
+  scan(absTarget);
+  console.log(`\n[ColorWing Linter] Scanned ${filesScanned} file(s). Found ${findings} hardcoded color instance(s).`);
+  if (findings === 0) {
+    console.log('✅ Clean! No hardcoded design violations found.');
+  }
 } else if (command === 'doctor') {
   console.log('--- ColorWing System Doctor ---');
   console.log(`System: ${tokens.meta.system} v${tokens.meta.version}`);
@@ -173,6 +243,7 @@ if (command === 'build') {
   console.log('  serve   - Start the realtime live sync server and SSE daemon');
   console.log('  watch   - Watch for changes and recompile automatically');
   console.log('  check   - Run WCAG accessibility & contrast audits');
+  console.log('  lint    - Scan codebases for hardcoded colors and suggest ColorWing tokens');
   console.log('  sync    - Sync tokens to target repository (--target <path> --platform [web|android|ios|flutter])');
   console.log('  export  - Print compiled tokens to stdout (--format css|kt|swift|flutter|json|tailwind)');
   console.log('  doctor  - Validate tokens and system consistency');

@@ -64,6 +64,7 @@ const expectedFiles = [
   'feed.min.css',
   'glass.css',
   'glass.min.css',
+  '_colorwing.scss',
   'colorwing.js',
   'colorwing.d.ts',
   'tokens.json',
@@ -110,6 +111,12 @@ const feedCss = fs.readFileSync(path.join(DIST_DIR, 'feed.css'), 'utf-8');
 assert.ok(feedCss.includes('.cw-post-plus-btn'), 'feed.css must contain post plus button');
 const glassCss = fs.readFileSync(path.join(DIST_DIR, 'glass.css'), 'utf-8');
 assert.ok(glassCss.includes('.cw-glass-panel'), 'glass.css must contain glass panel');
+
+// SCSS checks
+const scss = fs.readFileSync(path.join(DIST_DIR, '_colorwing.scss'), 'utf-8');
+assert.ok(scss.includes('$cw-primary: #000000;'), '_colorwing.scss must contain $cw-primary');
+assert.ok(scss.includes('$cw-tertiary: #D90429;'), '_colorwing.scss must contain $cw-tertiary');
+assert.ok(scss.includes('@mixin cw-bubble-sent'), '_colorwing.scss must contain @mixin cw-bubble-sent');
 
 // 7. Verify Kotlin File Output
 console.log('  Testing Kotlin Compose compilation output...');

@@ -1,0 +1,91 @@
+// =============================================================================
+// ColorWing Design System: SCSS Bundle
+// Single source of truth variables & mixins
+// =============================================================================
+
+// --- Color Tokens ---
+$cw-primary: #000000;
+$cw-secondary: #FFFFFF;
+$cw-tertiary: #D90429;
+$cw-tertiary-hover: #B00321;
+$cw-tertiary-dark: #9B021D;
+$cw-tertiary-crimson: #C82128;
+$cw-tertiary-deep: #7D1225;
+
+$cw-bg: #000000;
+$cw-bg-soft: #0A0B10;
+$cw-surface: #12131C;
+$cw-surface-elevated: #161926;
+$cw-surface-card: #111111;
+$cw-input-bg: #1A1A1A;
+$cw-border: rgba(255, 255, 255, 0.08);
+$cw-border-strong: rgba(255, 255, 255, 0.15);
+
+$cw-text-primary: #FFFFFF;
+$cw-text-secondary: rgba(255, 255, 255, 0.70);
+$cw-text-muted: rgba(255, 255, 255, 0.50);
+
+$cw-accent-cyan: #818CF8;
+$cw-accent-purple: #6366F1;
+$cw-success: #22C55E;
+$cw-warning: #F59E0B;
+
+// --- Geometry & Layout ---
+$cw-bubble-radius: 16px;
+$cw-bubble-tail-radius: 4px;
+$cw-feed-max-width: 600px;
+
+// --- Mixins ---
+@mixin cw-bubble-base {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  width: fit-content;
+  min-width: 60px;
+  padding: 8px 12px 6px 12px;
+  border-radius: $cw-bubble-radius;
+  font-size: 14.5px;
+  line-height: 1.4;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  box-sizing: border-box;
+}
+
+@mixin cw-bubble-sent {
+  @include cw-bubble-base;
+  background: linear-gradient(135deg, #D90429 0%, #C82128 40%, #9B021D 100%);
+  color: #ffffff;
+  border-bottom-right-radius: $cw-bubble-tail-radius;
+  box-shadow: 0 3px 12px rgba(217, 4, 41, 0.35);
+  margin-left: auto;
+}
+
+@mixin cw-bubble-received {
+  @include cw-bubble-base;
+  background: linear-gradient(135deg, #161926 0%, #0F131C 100%);
+  color: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom-left-radius: $cw-bubble-tail-radius;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  margin-right: auto;
+}
+
+@mixin cw-glass-panel {
+  background: rgba(18, 19, 28, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.40);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+@mixin cw-post-box {
+  background: $cw-surface-card;
+  border: 1px solid $cw-border;
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+}

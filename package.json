@@ -41,6 +41,7 @@
     "./feed.min": "./dist/feed.min.css",
     "./glass": "./dist/glass.css",
     "./glass.min": "./dist/glass.min.css",
+    "./scss": "./dist/_colorwing.scss",
     "./tokens": "./dist/tokens.json",
     "./tailwind": "./dist/tailwind-preset.js",
     "./kotlin/tokens": "./dist/ColorwingTokens.kt",
