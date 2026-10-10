@@ -1,6 +1,6 @@
 /**
  * ColorWing Centralized Design System: Master Compiler Pipeline
- * Orchestrates compilation to CSS, JS, Kotlin, Tailwind, and JSON targets.
+ * Orchestrates compilation to CSS, JS, Kotlin, Flutter, React Native, Tailwind, and JSON targets.
  */
 
 import fs from 'fs';
@@ -13,6 +13,8 @@ import {
   compileKotlinTheme,
   compileKotlinComponents
 } from './kotlinCompiler.js';
+import { compileFlutterTokens } from './flutterCompiler.js';
+import { compileReactNativeTokens } from './reactNativeCompiler.js';
 import { compileTailwindPreset } from './tailwindCompiler.js';
 import { compileJsonTokens } from './jsonCompiler.js';
 
@@ -43,15 +45,23 @@ export function buildAll(options = {}) {
   fs.writeFileSync(path.join(DIST_DIR, 'ColorwingTheme.kt'), ktTheme, 'utf-8');
   fs.writeFileSync(path.join(DIST_DIR, 'ColorwingComponents.kt'), ktComponents, 'utf-8');
 
-  // 3. Compile Tailwind Preset
+  // 3. Compile Flutter / Dart Tokens
+  const flutterTokens = compileFlutterTokens();
+  fs.writeFileSync(path.join(DIST_DIR, 'ColorwingTokens.dart'), flutterTokens, 'utf-8');
+
+  // 4. Compile React Native Tokens
+  const rnTokens = compileReactNativeTokens();
+  fs.writeFileSync(path.join(DIST_DIR, 'ColorwingNative.js'), rnTokens, 'utf-8');
+
+  // 5. Compile Tailwind Preset
   const tailwindPreset = compileTailwindPreset();
   fs.writeFileSync(path.join(DIST_DIR, 'tailwind-preset.js'), tailwindPreset, 'utf-8');
 
-  // 4. Compile JSON Tokens
+  // 6. Compile JSON Tokens
   const jsonTokens = compileJsonTokens();
   fs.writeFileSync(path.join(DIST_DIR, 'tokens.json'), jsonTokens, 'utf-8');
 
-  // 5. Generate JavaScript & TypeScript Distribution Files
+  // 7. Generate JavaScript & TypeScript Distribution Files
   const esmJs = `/**
  * ColorWing Design System (ESM Bundle)
  */
@@ -102,6 +112,7 @@ export declare const tokens: {
   bubbles: any;
   glass: any;
   components: any;
+  motion: any;
 };
 
 export default tokens;
@@ -113,12 +124,14 @@ export default tokens;
     console.log(`[ColorWing] Build complete in ${durationMs}ms`);
     console.log(`  -> dist/colorwing.css & min.css`);
     console.log(`  -> dist/ColorwingTokens.kt & Theme.kt & Components.kt`);
+    console.log(`  -> dist/ColorwingTokens.dart (Flutter)`);
+    console.log(`  -> dist/ColorwingNative.js (React Native)`);
     console.log(`  -> dist/tailwind-preset.js`);
     console.log(`  -> dist/tokens.json`);
     console.log(`  -> dist/colorwing.js & .d.ts`);
   }
 
-  return { durationMs, filesGenerated: 8 };
+  return { durationMs, filesGenerated: 10 };
 }
 
 export default { buildAll };

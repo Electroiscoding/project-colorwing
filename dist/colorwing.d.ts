@@ -40,6 +40,7 @@ export declare const tokens: {
   bubbles: any;
   glass: any;
   components: any;
+  motion: any;
 };
 
 export default tokens;

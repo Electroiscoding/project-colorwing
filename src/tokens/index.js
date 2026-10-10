@@ -8,19 +8,21 @@ import timeVibes, { getTimeVibeForHour } from './timeVibe.js';
 import bubbles from './bubbles.js';
 import glass from './glass.js';
 import components from './components.js';
+import motion from './motion.js';
 
 export const tokens = {
   meta: {
     system: 'ColorWing',
-    version: '1.0.0',
+    version: '1.1.0',
     description: 'Centralized Cross-Platform Design System for Web & Android'
   },
   colors,
   timeVibes,
   bubbles,
   glass,
-  components
+  components,
+  motion
 };
 
-export { colors, timeVibes, getTimeVibeForHour, bubbles, glass, components };
+export { colors, timeVibes, getTimeVibeForHour, bubbles, glass, components, motion };
 export default tokens;
