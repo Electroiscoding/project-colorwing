@@ -1,0 +1,124 @@
+/**
+ * ColorWing Centralized Design System: Master Compiler Pipeline
+ * Orchestrates compilation to CSS, JS, Kotlin, Tailwind, and JSON targets.
+ */
+
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import tokens from '../tokens/index.js';
+import { compileCss } from './cssCompiler.js';
+import {
+  compileKotlinTokens,
+  compileKotlinTheme,
+  compileKotlinComponents
+} from './kotlinCompiler.js';
+import { compileTailwindPreset } from './tailwindCompiler.js';
+import { compileJsonTokens } from './jsonCompiler.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const ROOT_DIR = path.resolve(__dirname, '../..');
+const DIST_DIR = path.resolve(ROOT_DIR, 'dist');
+
+export function buildAll(options = {}) {
+  const startTime = performance.now();
+  const verbose = options.verbose ?? true;
+
+  if (!fs.existsSync(DIST_DIR)) {
+    fs.mkdirSync(DIST_DIR, { recursive: true });
+  }
+
+  // 1. Compile CSS
+  const rawCss = compileCss({ minify: false });
+  const minCss = compileCss({ minify: true });
+  fs.writeFileSync(path.join(DIST_DIR, 'colorwing.css'), rawCss, 'utf-8');
+  fs.writeFileSync(path.join(DIST_DIR, 'colorwing.min.css'), minCss, 'utf-8');
+
+  // 2. Compile Kotlin Jetpack Compose Artifacts
+  const ktTokens = compileKotlinTokens();
+  const ktTheme = compileKotlinTheme();
+  const ktComponents = compileKotlinComponents();
+  fs.writeFileSync(path.join(DIST_DIR, 'ColorwingTokens.kt'), ktTokens, 'utf-8');
+  fs.writeFileSync(path.join(DIST_DIR, 'ColorwingTheme.kt'), ktTheme, 'utf-8');
+  fs.writeFileSync(path.join(DIST_DIR, 'ColorwingComponents.kt'), ktComponents, 'utf-8');
+
+  // 3. Compile Tailwind Preset
+  const tailwindPreset = compileTailwindPreset();
+  fs.writeFileSync(path.join(DIST_DIR, 'tailwind-preset.js'), tailwindPreset, 'utf-8');
+
+  // 4. Compile JSON Tokens
+  const jsonTokens = compileJsonTokens();
+  fs.writeFileSync(path.join(DIST_DIR, 'tokens.json'), jsonTokens, 'utf-8');
+
+  // 5. Generate JavaScript & TypeScript Distribution Files
+  const esmJs = `/**
+ * ColorWing Design System (ESM Bundle)
+ */
+export const tokens = ${JSON.stringify(tokens, null, 2)};
+export default tokens;
+`;
+  fs.writeFileSync(path.join(DIST_DIR, 'colorwing.js'), esmJs, 'utf-8');
+
+  const dts = `/**
+ * ColorWing TypeScript Declarations
+ */
+export interface ColorwingColors {
+  primary: string;
+  secondary: string;
+  tertiary: string;
+  tertiaryHover: string;
+  tertiaryDark: string;
+  tertiaryCrimson: string;
+  bg: string;
+  bgSoft: string;
+  surface: string;
+  surfaceCard: string;
+  inputBg: string;
+  borderDefault: string;
+  textPrimary: string;
+  textSecondary: string;
+  textMuted: string;
+  accentCyan: string;
+  accentPurple: string;
+  success: string;
+  warning: string;
+}
+
+export interface ColorwingTimeVibe {
+  id: string;
+  name: string;
+  startHour: number;
+  endHour: number;
+  ambientColor: string;
+  ambientColorAlpha: string;
+  gradient: string;
+  bubbleGlow: string;
+}
+
+export declare const tokens: {
+  colors: ColorwingColors;
+  timeVibes: Record<'morning' | 'day' | 'sunset' | 'night', ColorwingTimeVibe>;
+  bubbles: any;
+  glass: any;
+  components: any;
+};
+
+export default tokens;
+`;
+  fs.writeFileSync(path.join(DIST_DIR, 'colorwing.d.ts'), dts, 'utf-8');
+
+  const durationMs = (performance.now() - startTime).toFixed(2);
+  if (verbose) {
+    console.log(`[ColorWing] Build complete in ${durationMs}ms`);
+    console.log(`  -> dist/colorwing.css & min.css`);
+    console.log(`  -> dist/ColorwingTokens.kt & Theme.kt & Components.kt`);
+    console.log(`  -> dist/tailwind-preset.js`);
+    console.log(`  -> dist/tokens.json`);
+    console.log(`  -> dist/colorwing.js & .d.ts`);
+  }
+
+  return { durationMs, filesGenerated: 8 };
+}
+
+export default { buildAll };

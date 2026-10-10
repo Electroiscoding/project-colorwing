@@ -1,0 +1,45 @@
+{
+  "name": "@netuark/colorwing",
+  "version": "1.0.0",
+  "description": "Centralized cross-platform styling, coloring, and token design system for Web and Android",
+  "main": "dist/colorwing.js",
+  "module": "dist/colorwing.js",
+  "types": "dist/colorwing.d.ts",
+  "style": "dist/colorwing.css",
+  "type": "module",
+  "bin": {
+    "colorwing": "./bin/colorwing.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/colorwing.d.ts",
+      "import": "./dist/colorwing.js",
+      "default": "./dist/colorwing.js"
+    },
+    "./css": "./dist/colorwing.css",
+    "./min.css": "./dist/colorwing.min.css",
+    "./tokens": "./dist/tokens.json",
+    "./tailwind": "./dist/tailwind-preset.js",
+    "./kotlin/tokens": "./dist/ColorwingTokens.kt",
+    "./kotlin/theme": "./dist/ColorwingTheme.kt",
+    "./kotlin/components": "./dist/ColorwingComponents.kt"
+  },
+  "scripts": {
+    "build": "node bin/colorwing.js build",
+    "watch": "node bin/colorwing.js watch",
+    "serve": "node bin/colorwing.js serve",
+    "test": "node tests/tokens.test.js"
+  },
+  "keywords": [
+    "design-system",
+    "tokens",
+    "css",
+    "jetpack-compose",
+    "kotlin",
+    "tailwind",
+    "netuark",
+    "colorwing"
+  ],
+  "author": "NeTuArk Engineering",
+  "license": "MIT"
+}

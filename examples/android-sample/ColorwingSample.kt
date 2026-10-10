@@ -1,0 +1,67 @@
+package com.netuark.app.sample
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.netuark.colorwing.*
+
+/**
+ * Android Jetpack Compose Sample utilizing ColorWing Centralized Design Tokens
+ * Demonstrates:
+ * - ColorwingTheme (Web static default with optional isLiquidGlass toggle)
+ * - Dynamic Time-based Ambient Vibe
+ * - ColorwingChatTopBar (showCallButton = true for APK)
+ * - ColorwingPostBox with Tertiary Red Plus Icon
+ */
+@Composable
+fun ColorwingSampleScreen() {
+    var isLiquidGlass by remember { mutableStateOf(false) }
+
+    ColorwingTheme(isLiquidGlass = isLiquidGlass) {
+        val ambientColor = rememberColorwingAmbientColor()
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(ColorwingTokens.Background)
+        ) {
+            // Top Bar with APK Call Button
+            ColorwingChatTopBar(
+                title = "Sarah Connor",
+                statusText = "Online",
+                isOnline = true,
+                showCallButton = true, // APK Decision: Only visible on APK, not on web
+                onBackClick = { /* Navigate back */ },
+                onCallClick = { /* Launch voice call */ }
+            )
+
+            // Feed Post Box with Red Plus Button
+            ColorwingPostBox(
+                placeholder = "What's happening?",
+                onPostClick = { /* Create post */ }
+            )
+
+            // Sequential Feed Flow items
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                item {
+                    // Chat Bubble Demo using Colorwing Bubble Brush
+                    val bubbleBrush = rememberColorwingBubbleBrush(isMine = true)
+                    Box(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .background(bubbleBrush, ColorwingTokens.BubbleShapeSent)
+                            .padding(horizontal = 14.dp, vertical = 8.dp)
+                    ) {
+                        androidx.compose.material3.Text(
+                            text = "ColorWing powers Android & Web seamlessly!",
+                            color = ColorwingTokens.TextPrimary
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
