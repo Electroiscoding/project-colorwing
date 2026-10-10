@@ -58,6 +58,16 @@ object ColorwingTokens {
     val AmbientSunset = Color(0xFF2E121B)
     val AmbientNight = Color(0xFF0F0A1C)
 
+    // --- Glass & Liquid Glass Specifications (APK SafeHaze & LiquidGlassEffect) ---
+    val GlassBorderWidthStatic = 1.dp
+    val GlassBorderWidthLiquid = 1.5.dp
+    val GlassBlurRadius = 16.dp
+    val GlassRefractionHeight = 28.dp
+    val GlassRefractionAmount = 32.dp
+    val GlassSpecularTopAlpha = 0.75f
+    val GlassSpecularSideAlpha = 0.25f
+    val GlassSpecularBottomAlpha = 0.35f
+
     // --- Bubble Shapes ---
     val BubbleCornerRadius = 14.dp
     val BubbleTailCornerRadius = 4.dp

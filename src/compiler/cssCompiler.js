@@ -220,7 +220,11 @@ export function compileFeedCss(options = {}) {
 
 export function compileGlassCss(options = {}) {
   const { glass } = tokens;
-  const raw = `/* ColorWing Glassmorphism */
+  const raw = `/* ==========================================================================
+   ColorWing Modular Glass Bundle
+   Static Default (Zero Lag) | Optional Toggle: Liquid Glass (1:1 APK Alignment)
+   ========================================================================== */
+
 .cw-glass-panel {
   background: var(--cw-glass-bg);
   border: var(--cw-glass-border);
@@ -245,6 +249,55 @@ export function compileGlassCss(options = {}) {
   --cw-glass-filter: ${glass.liquid.backdropFilter} !important;
   backdrop-filter: ${glass.liquid.backdropFilter} !important;
   -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter} !important;
+}
+
+/* Full Liquid Glass Surface Styling matching APK SafeHaze + LiquidGlassEffect */
+[data-liquid-glass="true"] .cw-glass-panel,
+.cw-liquid-glass .cw-glass-panel,
+.cw-glass-panel.cw-liquid-glass {
+  background-image: ${glass.liquid.overlayGradient} !important;
+  background-color: var(--cw-glass-bg) !important;
+  border: ${glass.liquid.border} !important;
+  box-shadow: ${glass.liquid.boxShadow} !important;
+  backdrop-filter: ${glass.liquid.backdropFilter} !important;
+  -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter} !important;
+}
+
+[data-liquid-glass="true"] .cw-glass-panel::before,
+.cw-liquid-glass .cw-glass-panel::before,
+.cw-glass-panel.cw-liquid-glass::before {
+  background: ${glass.liquid.specularTopLine} !important;
+  height: 1.5px !important;
+}
+
+/* Standalone Liquid Glass Utility Classes */
+.cw-liquid-glass-border {
+  border: ${glass.liquid.border} !important;
+  box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.75), inset 0 -1.5px 0 0 rgba(255, 255, 255, 0.35) !important;
+}
+
+.cw-liquid-glass-overlay {
+  background: ${glass.liquid.overlayGradient} !important;
+}
+
+.cw-liquid-glass-surface {
+  background-image: ${glass.liquid.overlayGradient};
+  background-color: ${glass.liquid.surface};
+  border: ${glass.liquid.border};
+  box-shadow: ${glass.liquid.boxShadow};
+  backdrop-filter: ${glass.liquid.backdropFilter};
+  -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter};
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.cw-liquid-glass-surface::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1.5px;
+  background: ${glass.liquid.specularTopLine};
+  pointer-events: none;
 }
 `;
   return options.minify ? minifyCss(raw) : raw;
@@ -370,6 +423,55 @@ export function compileCss(options = {}) {
   --cw-glass-filter: ${glass.liquid.backdropFilter} !important;
   backdrop-filter: ${glass.liquid.backdropFilter} !important;
   -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter} !important;
+}
+
+/* Full Liquid Glass Surface Styling matching APK SafeHaze + LiquidGlassEffect */
+[data-liquid-glass="true"] .cw-glass-panel,
+.cw-liquid-glass .cw-glass-panel,
+.cw-glass-panel.cw-liquid-glass {
+  background-image: ${glass.liquid.overlayGradient} !important;
+  background-color: var(--cw-glass-bg) !important;
+  border: ${glass.liquid.border} !important;
+  box-shadow: ${glass.liquid.boxShadow} !important;
+  backdrop-filter: ${glass.liquid.backdropFilter} !important;
+  -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter} !important;
+}
+
+[data-liquid-glass="true"] .cw-glass-panel::before,
+.cw-liquid-glass .cw-glass-panel::before,
+.cw-glass-panel.cw-liquid-glass::before {
+  background: ${glass.liquid.specularTopLine} !important;
+  height: 1.5px !important;
+}
+
+/* Standalone Liquid Glass Utility Classes */
+.cw-liquid-glass-border {
+  border: ${glass.liquid.border} !important;
+  box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.75), inset 0 -1.5px 0 0 rgba(255, 255, 255, 0.35) !important;
+}
+
+.cw-liquid-glass-overlay {
+  background: ${glass.liquid.overlayGradient} !important;
+}
+
+.cw-liquid-glass-surface {
+  background-image: ${glass.liquid.overlayGradient};
+  background-color: ${glass.liquid.surface};
+  border: ${glass.liquid.border};
+  box-shadow: ${glass.liquid.boxShadow};
+  backdrop-filter: ${glass.liquid.backdropFilter};
+  -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter};
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.cw-liquid-glass-surface::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1.5px;
+  background: ${glass.liquid.specularTopLine};
+  pointer-events: none;
 }
 
 /* ==========================================================================

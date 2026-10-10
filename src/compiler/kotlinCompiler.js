@@ -6,7 +6,7 @@
 import tokens from '../tokens/index.js';
 
 export function compileKotlinTokens() {
-  const { colors, timeVibes, bubbles } = tokens;
+  const { colors, timeVibes, bubbles, glass } = tokens;
 
   return `package com.netuark.colorwing
 
@@ -67,6 +67,16 @@ object ColorwingTokens {
     val AmbientDay = Color(0xFF111E2E)
     val AmbientSunset = Color(0xFF2E121B)
     val AmbientNight = Color(0xFF0F0A1C)
+
+    // --- Glass & Liquid Glass Specifications (APK SafeHaze & LiquidGlassEffect) ---
+    val GlassBorderWidthStatic = ${glass.static.borderWidthDp}.dp
+    val GlassBorderWidthLiquid = ${glass.liquid.borderWidthDp}.dp
+    val GlassBlurRadius = ${glass.liquid.blurRadiusDp}.dp
+    val GlassRefractionHeight = ${glass.liquid.refractionHeightDp}.dp
+    val GlassRefractionAmount = ${glass.liquid.refractionAmountDp}.dp
+    val GlassSpecularTopAlpha = ${glass.liquid.specularAlphas.top}f
+    val GlassSpecularSideAlpha = ${glass.liquid.specularAlphas.sides}f
+    val GlassSpecularBottomAlpha = ${glass.liquid.specularAlphas.bottom}f
 
     // --- Bubble Shapes ---
     val BubbleCornerRadius = ${bubbles.geometry.composeCornerDp}.dp
@@ -204,12 +214,83 @@ fun rememberColorwingGlassBrush(isLiquidGlass: Boolean = false): Brush {
         remember { Brush.verticalGradient(colors = colors) }
     }
 }
+
+/**
+ * Edge border brush for liquid glass surfaces (1:1 from APK LiquidGlassEffect.kt).
+ * A crisp white outline that defines the glass shape.
+ * Top edge is bright white (0.75f specular highlight), sides are 0.25f, bottom is 0.35f reflection.
+ */
+@Composable
+fun rememberLiquidGlassBorder(): Brush {
+    return remember {
+        Brush.verticalGradient(
+            colors = listOf(
+                Color.White.copy(alpha = 0.75f), // Top specular highlight
+                Color.White.copy(alpha = 0.25f), // Sides
+                Color.White.copy(alpha = 0.35f)  // Bottom reflection
+            )
+        )
+    }
+}
+
+/**
+ * Overlay brush that adds specular top-lighting and depth shadow (1:1 from APK LiquidGlassEffect.kt).
+ * Apply to the background of a glass component over the blur/background.
+ */
+@Composable
+fun rememberLiquidGlassOverlayBrush(): Brush {
+    return remember {
+        Brush.verticalGradient(
+            colors = listOf(
+                Color.White.copy(alpha = 0.20f), // Top light diffusion
+                Color.White.copy(alpha = 0.05f),
+                Color.Transparent,
+                Color.Transparent,
+                Color.Black.copy(alpha = 0.15f)  // Bottom depth shadow
+            )
+        )
+    }
+}
+
+/**
+ * Standard frosted glass border brush (1:1 from APK Theme.kt).
+ */
+@Composable
+fun rememberStandardGlassBorder(): Brush {
+    val colors = remember { listOf(Color.White.copy(alpha = 0.35f), Color.White.copy(alpha = 0.12f)) }
+    return remember { Brush.verticalGradient(colors = colors) }
+}
+
+@Composable
+fun rememberTelegramGlassBorder(): Brush = rememberStandardGlassBorder()
+
+/**
+ * Standard frosted glass background brush (1:1 from APK Theme.kt).
+ */
+@Composable
+fun rememberStandardFrostedGlassBrush(): Brush {
+    val colors = remember { listOf(Color(0x990A0B10), Color(0x880E111C)) }
+    return remember { Brush.verticalGradient(colors = colors) }
+}
+
+@Composable
+fun rememberTelegramFrostedGlassBrush(): Brush = rememberStandardFrostedGlassBrush()
+
+/**
+ * Feed frosted glass background brush (1:1 from APK FeedScreen.kt).
+ */
+@Composable
+fun rememberFeedFrostedGlassBrush(): Brush {
+    val colors = remember { listOf(Color(0x990D111D), Color(0x88090B14)) }
+    return remember { Brush.verticalGradient(colors = colors) }
+}
 `;
 }
 
 export function compileKotlinComponents() {
   return `package com.netuark.colorwing
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -226,6 +307,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -234,7 +316,48 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 
 /**
+ * Centralized Glass Surface Composable (1:1 from APK SafeHaze + LiquidGlassEffect)
+ * - isLiquidGlass = false: Standard frosted glass brush + 1.0.dp border
+ * - isLiquidGlass = true: Specular top-lighting overlay brush + 1.5.dp multi-stop specular border
+ */
+@Composable
+fun ColorwingGlassSurface(
+    modifier: Modifier = Modifier,
+    isLiquidGlass: Boolean = false,
+    shape: androidx.compose.ui.graphics.Shape = RoundedCornerShape(20.dp),
+    content: @Composable BoxScope.() -> Unit
+) {
+    val baseBrush = rememberStandardFrostedGlassBrush()
+    val borderBrush = if (isLiquidGlass) rememberLiquidGlassBorder() else rememberStandardGlassBorder()
+    val overlayBrush = if (isLiquidGlass) rememberLiquidGlassOverlayBrush() else null
+    val borderWidth = if (isLiquidGlass) ColorwingTokens.GlassBorderWidthLiquid else ColorwingTokens.GlassBorderWidthStatic
+
+    Box(
+        modifier = modifier
+            .clip(shape)
+            .background(baseBrush, shape)
+    ) {
+        if (overlayBrush != null) {
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .background(overlayBrush, shape)
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .border(BorderStroke(borderWidth, borderBrush), shape)
+        )
+
+        content()
+    }
+}
+
+/**
  * Centralized Chat Top Bar Component
+ * Supports static OLED black default (zero lag) and APK Liquid Glass mode
  * Note: Call button is conditionally visible on APK (default: true for Android)
  */
 @Composable
@@ -242,61 +365,132 @@ fun ColorwingChatTopBar(
     title: String,
     statusText: String,
     isOnline: Boolean,
+    isLiquidGlass: Boolean = false,
     showCallButton: Boolean = true, // APK rule: true on APK, false on Web
     onBackClick: () -> Unit = {},
     onCallClick: () -> Unit = {},
     onMoreClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(64.dp)
-            .background(ColorwingTokens.Background)
-            .padding(horizontal = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = onBackClick) {
-            Icon(
-                Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
-                tint = ColorwingTokens.Tertiary
-            )
-        }
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = title,
-                color = ColorwingTokens.TextPrimary,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = statusText,
-                color = if (isOnline) ColorwingTokens.Success else ColorwingTokens.TextMuted,
-                fontSize = 12.sp
-            )
-        }
-
-        // Call button: Rendered on APK, hidden on Web
-        if (showCallButton) {
-            IconButton(onClick = onCallClick) {
+    val contentRow: @Composable () -> Unit = {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = onBackClick) {
                 Icon(
-                    Icons.Default.Phone,
-                    contentDescription = "Voice Call",
-                    tint = ColorwingTokens.TextPrimary
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = ColorwingTokens.Tertiary
+                )
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    color = ColorwingTokens.TextPrimary,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = statusText,
+                    color = if (isOnline) ColorwingTokens.Success else ColorwingTokens.TextMuted,
+                    fontSize = 12.sp
+                )
+            }
+
+            // Call button: Rendered on APK, hidden on Web
+            if (showCallButton) {
+                IconButton(onClick = onCallClick) {
+                    Icon(
+                        Icons.Default.Phone,
+                        contentDescription = "Voice Call",
+                        tint = ColorwingTokens.TextPrimary
+                    )
+                }
+            }
+
+            IconButton(onClick = onMoreClick) {
+                Icon(
+                    Icons.Default.MoreVert,
+                    contentDescription = "More Options",
+                    tint = ColorwingTokens.TextSecondary
                 )
             }
         }
+    }
 
-        IconButton(onClick = onMoreClick) {
-            Icon(
-                Icons.Default.MoreVert,
-                contentDescription = "More Options",
-                tint = ColorwingTokens.TextSecondary
-            )
+    if (isLiquidGlass) {
+        ColorwingGlassSurface(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(64.dp),
+            isLiquidGlass = true,
+            shape = RoundedCornerShape(20.dp)
+        ) {
+            contentRow()
+        }
+    } else {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(64.dp)
+                .background(ColorwingTokens.Background)
+                .border(BorderStroke(1.dp, ColorwingTokens.BorderDefault)),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            contentRow()
+        }
+    }
+}
+
+/**
+ * Centralized Glass Bottom Input Bar (1:1 from APK ChatBottomBarComponents.kt)
+ */
+@Composable
+fun ColorwingGlassBottomBar(
+    inputText: String,
+    onInputChanged: (String) -> Unit = {},
+    onSendClick: () -> Unit = {},
+    isLiquidGlass: Boolean = false,
+    modifier: Modifier = Modifier
+) {
+    ColorwingGlassSurface(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp),
+        isLiquidGlass = isLiquidGlass,
+        shape = RoundedCornerShape(28.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 14.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = if (inputText.isEmpty()) "Message..." else inputText,
+                    color = if (inputText.isEmpty()) ColorwingTokens.TextMuted else ColorwingTokens.TextPrimary,
+                    fontSize = 14.sp
+                )
+            }
+            IconButton(
+                onClick = onSendClick,
+                modifier = Modifier
+                    .size(36.dp)
+                    .background(ColorwingTokens.Tertiary, CircleShape)
+            ) {
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = "Send",
+                    tint = Color.White
+                )
+            }
         }
     }
 }

@@ -45,6 +45,14 @@ $cw-bubble-radius: ${bubbles.geometry.borderRadius};
 $cw-bubble-tail-radius: ${bubbles.geometry.borderRadiusSentTail};
 $cw-feed-max-width: ${components.feed.maxWidth};
 
+// --- Glass Tokens ---
+$cw-glass-bg: ${glass.static.surfaceTranslucent};
+$cw-glass-border: ${glass.static.border};
+$cw-glass-shadow: ${glass.static.boxShadow};
+$cw-glass-border-liquid: ${glass.liquid.border};
+$cw-glass-shadow-liquid: ${glass.liquid.boxShadow};
+$cw-glass-filter-liquid: ${glass.liquid.backdropFilter};
+
 // --- Mixins ---
 @mixin cw-bubble-base {
   position: relative;
@@ -80,13 +88,31 @@ $cw-feed-max-width: ${components.feed.maxWidth};
   margin-right: auto;
 }
 
-@mixin cw-glass-panel {
-  background: ${glass.static.surfaceTranslucent};
-  border: ${glass.static.border};
-  box-shadow: ${glass.static.boxShadow};
+@mixin cw-glass-panel($is-liquid: false) {
+  @if $is-liquid {
+    background-image: ${glass.liquid.overlayGradient};
+    background-color: ${glass.liquid.surface};
+    border: $cw-glass-border-liquid;
+    box-shadow: $cw-glass-shadow-liquid;
+    backdrop-filter: $cw-glass-filter-liquid;
+    -webkit-backdrop-filter: $cw-glass-filter-liquid;
+  } @else {
+    background: $cw-glass-bg;
+    border: $cw-glass-border;
+    box-shadow: $cw-glass-shadow;
+  }
   border-radius: 18px;
   position: relative;
   overflow: hidden;
+}
+
+@mixin cw-liquid-glass {
+  background-image: ${glass.liquid.overlayGradient} !important;
+  background-color: ${glass.liquid.surface} !important;
+  border: $cw-glass-border-liquid !important;
+  box-shadow: $cw-glass-shadow-liquid !important;
+  backdrop-filter: $cw-glass-filter-liquid !important;
+  -webkit-backdrop-filter: $cw-glass-filter-liquid !important;
 }
 
 @mixin cw-post-box {

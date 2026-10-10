@@ -114,3 +114,73 @@ fun rememberColorwingGlassBrush(isLiquidGlass: Boolean = false): Brush {
         remember { Brush.verticalGradient(colors = colors) }
     }
 }
+
+/**
+ * Edge border brush for liquid glass surfaces (1:1 from APK LiquidGlassEffect.kt).
+ * A crisp white outline that defines the glass shape.
+ * Top edge is bright white (0.75f specular highlight), sides are 0.25f, bottom is 0.35f reflection.
+ */
+@Composable
+fun rememberLiquidGlassBorder(): Brush {
+    return remember {
+        Brush.verticalGradient(
+            colors = listOf(
+                Color.White.copy(alpha = 0.75f), // Top specular highlight
+                Color.White.copy(alpha = 0.25f), // Sides
+                Color.White.copy(alpha = 0.35f)  // Bottom reflection
+            )
+        )
+    }
+}
+
+/**
+ * Overlay brush that adds specular top-lighting and depth shadow (1:1 from APK LiquidGlassEffect.kt).
+ * Apply to the background of a glass component over the blur/background.
+ */
+@Composable
+fun rememberLiquidGlassOverlayBrush(): Brush {
+    return remember {
+        Brush.verticalGradient(
+            colors = listOf(
+                Color.White.copy(alpha = 0.20f), // Top light diffusion
+                Color.White.copy(alpha = 0.05f),
+                Color.Transparent,
+                Color.Transparent,
+                Color.Black.copy(alpha = 0.15f)  // Bottom depth shadow
+            )
+        )
+    }
+}
+
+/**
+ * Standard frosted glass border brush (1:1 from APK Theme.kt).
+ */
+@Composable
+fun rememberStandardGlassBorder(): Brush {
+    val colors = remember { listOf(Color.White.copy(alpha = 0.35f), Color.White.copy(alpha = 0.12f)) }
+    return remember { Brush.verticalGradient(colors = colors) }
+}
+
+@Composable
+fun rememberTelegramGlassBorder(): Brush = rememberStandardGlassBorder()
+
+/**
+ * Standard frosted glass background brush (1:1 from APK Theme.kt).
+ */
+@Composable
+fun rememberStandardFrostedGlassBrush(): Brush {
+    val colors = remember { listOf(Color(0x990A0B10), Color(0x880E111C)) }
+    return remember { Brush.verticalGradient(colors = colors) }
+}
+
+@Composable
+fun rememberTelegramFrostedGlassBrush(): Brush = rememberStandardFrostedGlassBrush()
+
+/**
+ * Feed frosted glass background brush (1:1 from APK FeedScreen.kt).
+ */
+@Composable
+fun rememberFeedFrostedGlassBrush(): Brush {
+    val colors = remember { listOf(Color(0x990D111D), Color(0x88090B14)) }
+    return remember { Brush.verticalGradient(colors = colors) }
+}

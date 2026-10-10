@@ -54,4 +54,19 @@ public enum ColorwingTokens {
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
+
+    // --- Liquid Glass Tokens (APK Alignment) ---
+    public static let glassBorderWidthLiquid: CGFloat = 1.5
+    public static let glassBorderWidthStatic: CGFloat = 1.0
+    public static let glassBlurRadius: CGFloat = 16.0
+    public static let liquidGlassBorderGradient = LinearGradient(
+        colors: [Color.white.opacity(0.75), Color.white.opacity(0.25), Color.white.opacity(0.35)],
+        startPoint: .top,
+        endPoint: .bottom
+    )
+    public static let liquidGlassOverlayGradient = LinearGradient(
+        colors: [Color.white.opacity(0.20), Color.white.opacity(0.05), Color.clear, Color.clear, Color.black.opacity(0.15)],
+        startPoint: .top,
+        endPoint: .bottom
+    )
 }

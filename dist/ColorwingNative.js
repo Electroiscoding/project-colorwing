@@ -41,6 +41,20 @@ export const ColorwingNative = {
       paddingHorizontal: 12,
       paddingVertical: 8
     }
+  },
+  glass: {
+    staticStyle: {
+      backgroundColor: 'rgba(18, 19, 28, 0.75)',
+      borderWidth: 1.0,
+      borderColor: 'rgba(255, 255, 255, 0.08)',
+      borderRadius: 18
+    },
+    liquidStyle: {
+      backgroundColor: 'rgba(18, 19, 28, 0.60)',
+      borderWidth: 1.5,
+      borderColor: 'rgba(255, 255, 255, 0.25)',
+      borderRadius: 20
+    }
   }
 };
 

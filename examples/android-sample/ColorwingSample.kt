@@ -28,11 +28,12 @@ fun ColorwingSampleScreen() {
                 .fillMaxSize()
                 .background(ColorwingTokens.Background)
         ) {
-            // Top Bar with APK Call Button
+            // Top Bar with APK Call Button & Liquid Glass Support
             ColorwingChatTopBar(
                 title = "Sarah Connor",
                 statusText = "Online",
                 isOnline = true,
+                isLiquidGlass = isLiquidGlass,
                 showCallButton = true, // APK Decision: Only visible on APK, not on web
                 onBackClick = { /* Navigate back */ },
                 onCallClick = { /* Launch voice call */ }
@@ -47,6 +48,7 @@ fun ColorwingSampleScreen() {
             // Chat Bubble Demo using ColorwingChatBubble
             LazyColumn(
                 modifier = Modifier
+                    .weight(1f)
                     .fillMaxWidth()
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -65,7 +67,30 @@ fun ColorwingSampleScreen() {
                         timestamp = "8:31 PM"
                     )
                 }
+                item {
+                    // Glass Surface Card Demo
+                    ColorwingGlassSurface(
+                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                        isLiquidGlass = isLiquidGlass
+                    ) {
+                        Text(
+                            text = if (isLiquidGlass) "✨ Fiercest Liquid Glass: 1.5dp specular border + overlay brush enabled!" else "Clean static OLED glass default (zero lag, max FPS)",
+                            color = ColorwingTokens.TextSecondary,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                }
             }
+
+            // Liquid Glass Bottom Bar (1:1 from APK ChatBottomBarComponents.kt)
+            var messageInput by remember { mutableStateOf("") }
+            ColorwingGlassBottomBar(
+                inputText = messageInput,
+                onInputChanged = { messageInput = it },
+                onSendClick = { messageInput = "" },
+                isLiquidGlass = isLiquidGlass,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
         }
     }
 }

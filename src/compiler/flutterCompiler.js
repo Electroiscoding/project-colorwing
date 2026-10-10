@@ -80,6 +80,33 @@ class ColorwingTokens {
       Color(0xFF0F131C),
     ],
   );
+
+  // --- Liquid Glass Tokens (APK Alignment) ---
+  static const double glassBorderWidthLiquid = 1.5;
+  static const double glassBorderWidthStatic = 1.0;
+  static const double glassBlurRadius = 16.0;
+
+  static const LinearGradient liquidGlassBorderGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Color(0xBFFFFFFF), // 0.75 top
+      Color(0x40FFFFFF), // 0.25 sides
+      Color(0x59FFFFFF), // 0.35 bottom
+    ],
+  );
+
+  static const LinearGradient liquidGlassOverlayGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Color(0x33FFFFFF), // 0.20 top
+      Color(0x0DFFFFFF), // 0.05
+      Colors.transparent,
+      Colors.transparent,
+      Color(0x26000000), // 0.15 bottom shadow
+    ],
+  );
 }
 `;
 }

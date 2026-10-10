@@ -35,6 +35,14 @@ $cw-bubble-radius: 14px;
 $cw-bubble-tail-radius: 4px;
 $cw-feed-max-width: 600px;
 
+// --- Glass Tokens ---
+$cw-glass-bg: rgba(18, 19, 28, 0.75);
+$cw-glass-border: 1px solid rgba(255, 255, 255, 0.08);
+$cw-glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.40);
+$cw-glass-border-liquid: 1.5px solid rgba(255, 255, 255, 0.25);
+$cw-glass-shadow-liquid: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.75), inset 0 -1.5px 0 0 rgba(255, 255, 255, 0.35), 0 8px 36px rgba(0, 0, 0, 0.65);
+$cw-glass-filter-liquid: blur(16px) saturate(180%) contrast(105%);
+
 // --- Mixins ---
 @mixin cw-bubble-base {
   position: relative;
@@ -70,13 +78,31 @@ $cw-feed-max-width: 600px;
   margin-right: auto;
 }
 
-@mixin cw-glass-panel {
-  background: rgba(18, 19, 28, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.40);
+@mixin cw-glass-panel($is-liquid: false) {
+  @if $is-liquid {
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.15) 100%);
+    background-color: rgba(18, 19, 28, 0.60);
+    border: $cw-glass-border-liquid;
+    box-shadow: $cw-glass-shadow-liquid;
+    backdrop-filter: $cw-glass-filter-liquid;
+    -webkit-backdrop-filter: $cw-glass-filter-liquid;
+  } @else {
+    background: $cw-glass-bg;
+    border: $cw-glass-border;
+    box-shadow: $cw-glass-shadow;
+  }
   border-radius: 18px;
   position: relative;
   overflow: hidden;
+}
+
+@mixin cw-liquid-glass {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.15) 100%) !important;
+  background-color: rgba(18, 19, 28, 0.60) !important;
+  border: $cw-glass-border-liquid !important;
+  box-shadow: $cw-glass-shadow-liquid !important;
+  backdrop-filter: $cw-glass-filter-liquid !important;
+  -webkit-backdrop-filter: $cw-glass-filter-liquid !important;
 }
 
 @mixin cw-post-box {
