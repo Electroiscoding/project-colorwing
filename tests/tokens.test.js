@@ -135,6 +135,7 @@ assert.ok(ktComponents.includes('fun ColorwingChatBubble'), 'Kotlin ChatBubble m
 assert.ok(ktComponents.includes('fun ColorwingReplyQuote'), 'Kotlin ReplyQuote must be defined');
 assert.ok(ktComponents.includes('fun ColorwingReactionPill'), 'Kotlin ReactionPill must be defined');
 assert.ok(ktComponents.includes('fun ColorwingAvatar'), 'Kotlin Avatar must be defined');
+assert.ok(ktComponents.includes('fun ColorwingCallLogBubble'), 'Kotlin CallLogBubble must be defined');
 
 // 8. Verify Swift File Output
 console.log('  Testing Swift iOS compilation output...');

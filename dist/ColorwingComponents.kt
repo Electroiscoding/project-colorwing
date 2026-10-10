@@ -140,39 +140,98 @@ fun ColorwingPostBox(
 }
 
 /**
- * Reply Quote Preview Box
+ * Reply Quote Preview Box (Exact APK 1:1 Alignment)
  */
 @Composable
 fun ColorwingReplyQuote(
     senderName: String,
     messageSnippet: String,
+    isMine: Boolean = false,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
-            .fillMaxWidth()
-            .background(Color(0x0DFFFFFF), RoundedCornerShape(6.dp))
+            .widthIn(max = 240.dp)
+            .clickable(onClick = onClick)
+            .clip(RoundedCornerShape(12.dp))
+            .background(Color.Black.copy(alpha = 0.45f))
             .border(
-                width = 3.dp,
-                color = ColorwingTokens.Tertiary,
-                shape = RoundedCornerShape(topStart = 6.dp, bottomStart = 6.dp)
+                1.dp,
+                Color.White.copy(alpha = 0.12f),
+                RoundedCornerShape(12.dp)
             )
-            .padding(horizontal = 10.dp, vertical = 6.dp)
+            .padding(horizontal = 8.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
+        // Vertical Accent Line (APK signature)
+        Box(
+            modifier = Modifier
+                .width(3.dp)
+                .height(30.dp)
+                .clip(RoundedCornerShape(2.dp))
+                .background(if (isMine) Color.White.copy(alpha = 0.8f) else ColorwingTokens.Tertiary)
+        )
+
+        Spacer(modifier = Modifier.width(8.dp))
+
         Column {
             Text(
                 text = senderName,
-                color = ColorwingTokens.Tertiary,
+                color = if (isMine) Color.White.copy(alpha = 0.9f) else ColorwingTokens.Tertiary,
                 fontWeight = FontWeight.Bold,
-                fontSize = 12.sp
+                fontSize = 11.sp
             )
             Text(
                 text = messageSnippet,
-                color = ColorwingTokens.TextSecondary,
-                fontSize = 12.sp,
+                color = if (isMine) Color.White.copy(alpha = 0.7f) else ColorwingTokens.TextSecondary,
+                fontSize = 11.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
+        }
+    }
+}
+
+/**
+ * Centered Call Log Bubble (APK signature BubbleCallLogContent)
+ */
+@Composable
+fun ColorwingCallLogBubble(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Surface(
+            color = ColorwingTokens.Surface.copy(alpha = 0.6f),
+            shape = RoundedCornerShape(16.dp),
+            border = androidx.compose.foundation.BorderStroke(1.dp, ColorwingTokens.BorderDefault),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Phone,
+                    contentDescription = null,
+                    tint = ColorwingTokens.Tertiary,
+                    modifier = Modifier.size(14.dp)
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = text,
+                    color = ColorwingTokens.TextPrimary,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
         }
     }
 }
