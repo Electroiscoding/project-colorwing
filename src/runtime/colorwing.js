@@ -201,7 +201,12 @@ export class ColorWingRuntime {
     if (typeof document === 'undefined') return;
     this.isLiquidGlass = enable !== undefined ? enable : !this.isLiquidGlass;
     this.preferences.liquidGlass = this.isLiquidGlass;
-    document.documentElement.setAttribute('data-liquid-glass', this.isLiquidGlass ? 'true' : 'false');
+    const strVal = this.isLiquidGlass ? 'true' : 'false';
+    document.documentElement.setAttribute('data-liquid-glass', strVal);
+    document.documentElement.classList.toggle('cw-liquid-glass', this.isLiquidGlass);
+    if (document.body) {
+      document.body.classList.toggle('cw-liquid-glass', this.isLiquidGlass);
+    }
     return this.isLiquidGlass;
   }
 
