@@ -436,7 +436,89 @@ fun MainChatScreen() {
 }
 ```
 
-### Step 3: Use Token Brushes & Colors Directly
+### Step 3: Universal Feed Post Card (1:1 Web Feed and Android APK)
+
+To build the feed in Android APK exactly like the web with zero design drift, use `ColorwingPostCard` (or `ColorwingTheme` + `ColorwingPostCard`):
+
+```kotlin
+import com.netuark.colorwing.*
+
+@Composable
+fun FeedScreen(posts: List<Post>) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(ColorwingTokens.Background)
+    ) {
+        // Sequential Post Box (Web style)
+        item {
+            ColorwingPostBox(
+                placeholder = "What's happening?",
+                onPostClick = { /* open create dialog */ }
+            )
+        }
+
+        // Full Universal Post Cards
+        items(posts, key = { it.id }) { post ->
+            ColorwingPostCard(
+                postId = post.id,
+                authorName = post.authorName,
+                authorHandle = post.authorHandle,
+                timestampText = post.timeAgo,
+                postText = post.text,
+                authorAvatarUrl = post.avatarUrl,
+                mediaUrl = post.mediaUrl,
+                isVideo = post.isVideo,
+                isLiked = post.isLikedByMe,
+                likeCount = post.likesCount,
+                repostCount = post.repostsCount,
+                isReposted = post.isRepostedByMe,
+                repostedByName = post.repostedBy,
+                commentCount = post.commentsCount,
+                viewsCount = post.viewsCount,
+                isFollowed = post.isFollowedByMe,
+                showFollowButton = !post.isMe,
+                isLiquidGlass = false, // Rule 2: Web static OLED black by default
+                quotedPost = post.quotedPost?.let { q ->
+                    ColorwingQuotedPostData(
+                        id = q.id,
+                        authorName = q.authorName,
+                        authorHandle = q.authorHandle,
+                        text = q.text,
+                        mediaUrl = q.mediaUrl,
+                        isVideo = q.isVideo
+                    )
+                },
+                onPostClick = { /* open post details */ },
+                onLikeClick = { /* toggle like */ },
+                onRepostClick = { /* open repost dialog */ },
+                onCommentClick = { /* open comments */ },
+                onFollowClick = { /* toggle follow */ },
+                onAuthorClick = { /* open profile */ },
+                onDownloadClick = { /* download media */ },
+                onMoreClick = { /* open bottom sheet options */ }
+            )
+        }
+    }
+}
+```
+
+#### Complete Post Card Anatomy (Exact Match with Web `nta-post-component.js`):
+1. **Repost Header Banner**: Emerald repeat icon + `🔄 reposterName reposted`.
+2. **Author Header Row**: 40.dp avatar circle, bold name, `@handle`, `timestamp`, and `Follow` chip button.
+3. **Post Body**: 14.sp primary text with 20.sp line height.
+4. **Media Outer Container**: 16:9 video aspect ratio with top-right `Video` badge, bottom-left play/pause, bottom-right audio mute, and center play overlay icon; or responsive image container.
+5. **Quoted Post Mini-Card**: Embedded 16.dp rounded preview card with author header, snippet, and optional thumbnail.
+6. **Bottom Action Bar**:
+   - Comments icon (`chat_bubble_outline`) + count
+   - Repost icon (`repeat`) + count (turns emerald `#34D399` when active)
+   - Like icon (`favorite` / `favorite_border`) + count (turns crimson `#D90429` with bounce animation)
+   - Download media button (when media exists)
+   - Views counter pill (`visibility` / `👁 count`)
+   - More options button (`more_horiz` / `MoreVert`)
+7. **Glass Screen Support**: Setting `isLiquidGlass = true` or `[data-liquid-glass="true"]` automatically wraps the card in ColorWing's specular liquid glass surface (`--cw-glass-bg`, 1.5dp multi-stop refractive border, and backdrop blur).
+
+### Step 4: Use Token Brushes & Colors Directly
 
 ```kotlin
 // Time-based dynamic atmospheric vibe:
