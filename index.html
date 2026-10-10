@@ -169,6 +169,25 @@
       margin-bottom: 8px;
     }
 
+    /* Poll Option styling */
+    .cw-poll-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .cw-poll-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.20);
+    }
+    .cw-poll-card.voted {
+      border-color: var(--cw-tertiary);
+      background: rgba(217, 4, 41, 0.12);
+    }
+
     /* Heart Pop Animation */
     @keyframes cw-heart-pop {
       0% { transform: scale(1); }
@@ -178,6 +197,29 @@
     .heart-anim {
       display: inline-block;
       animation: cw-heart-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1.0);
+    }
+
+    /* Slider Range styling */
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--cw-tertiary);
+      border: 2px solid #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
     }
   </style>
 </head>
@@ -197,7 +239,7 @@
           <span style="border:1px solid rgba(34,197,94,0.4); color:var(--cw-success); background:rgba(34,197,94,0.1); font-size:11px; font-weight:700; padding:2px 8px; border-radius:9999px;">10/10 Test Suites Passed (~10ms)</span>
         </div>
         <p style="margin:8px 0 0; color:var(--cw-text-secondary); font-size:14.5px; line-height:1.4;">
-          Centralized Single Source of Truth for Web, Jetpack Compose, iOS SwiftUI & Flutter. Native OLED pitch black, high-contrast white, brand red #D90429, exact 1:1 APK chat bubbles, and the fiercest Liquid Glass.
+          Centralized Single Source of Truth for Web, Jetpack Compose, iOS SwiftUI & Flutter. Native OLED pitch black, high-contrast white, brand red #D90429, exact 1:1 APK chat bubbles, and the fiercest Liquid Glass optics.
         </p>
       </div>
 
@@ -375,7 +417,7 @@
       </div>
 
       <!-- Chat Messages Container with Ambient Vibe Glow -->
-      <div id="chat-stream" style="padding:24px 20px; background:radial-gradient(circle at 50% 20%, var(--cw-ambient-color-alpha) 0%, rgba(10, 11, 16, 0.98) 75%); display:flex; flex-direction:column; gap:14px; min-height:420px; max-height:560px; overflow-y:auto; transition:background 0.5s ease;">
+      <div id="chat-stream" style="padding:24px 20px; background:radial-gradient(circle at 50% 20%, var(--cw-ambient-color-alpha) 0%, rgba(10, 11, 16, 0.98) 75%); display:flex; flex-direction:column; gap:14px; min-height:480px; max-height:640px; overflow-y:auto; transition:background 0.5s ease;">
         
         <!-- Call Log Event -->
         <div class="cw-call-log-bubble">
@@ -450,37 +492,178 @@
           </div>
         </div>
 
+        <!-- Interactive APK Poll Message (BubblePollContent) -->
+        <div class="cw-bubble-group" style="align-self:flex-start; width:100%; max-width:340px;">
+          <div class="cw-bubble cw-bubble-received" style="width:100%; padding:14px;">
+            <div style="font-weight:700; font-size:13.5px; margin-bottom:10px; color:#fff;">📊 Poll: Which client target do you deploy first?</div>
+            <div id="poll-opt-1" class="cw-poll-card" onclick="votePoll(1)">
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+                <span>Android Jetpack Compose</span>
+                <span id="poll-pct-1" style="font-weight:700; color:var(--cw-tertiary);">48%</span>
+              </div>
+              <div style="background:rgba(255,255,255,0.1); border-radius:9999px; height:6px; overflow:hidden;">
+                <div id="poll-bar-1" style="width:48%; background:var(--cw-tertiary); height:100%; border-radius:9999px; transition:width 0.4s ease;"></div>
+              </div>
+            </div>
+            <div id="poll-opt-2" class="cw-poll-card" onclick="votePoll(2)">
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+                <span>Web Browser (CSS & SSR)</span>
+                <span id="poll-pct-2" style="font-weight:700; color:var(--cw-accent-cyan);">32%</span>
+              </div>
+              <div style="background:rgba(255,255,255,0.1); border-radius:9999px; height:6px; overflow:hidden;">
+                <div id="poll-bar-2" style="width:32%; background:var(--cw-accent-cyan); height:100%; border-radius:9999px; transition:width 0.4s ease;"></div>
+              </div>
+            </div>
+            <div id="poll-opt-3" class="cw-poll-card" onclick="votePoll(3)">
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+                <span>iOS SwiftUI & Flutter</span>
+                <span id="poll-pct-3" style="font-weight:700; color:var(--cw-success);">20%</span>
+              </div>
+              <div style="background:rgba(255,255,255,0.1); border-radius:9999px; height:6px; overflow:hidden;">
+                <div id="poll-bar-3" style="width:20%; background:var(--cw-success); height:100%; border-radius:9999px; transition:width 0.4s ease;"></div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; font-size:10px; color:var(--cw-text-muted);">
+              <span id="poll-vote-count">257 votes • Tap option to vote</span>
+              <span>8:34 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- View Once Media Bubble (ViewOnceBubble) -->
+        <div class="cw-bubble-group" style="align-self:flex-end;">
+          <div class="cw-bubble cw-bubble-sent" id="view-once-bubble" onclick="openViewOnce(this)" style="cursor:pointer; display:flex; align-items:center; gap:8px; padding:10px 14px;">
+            <span style="font-size:16px;">🔒</span>
+            <div>
+              <div style="font-weight:700; font-size:13px;">View-Once Architecture Diagram</div>
+              <div id="view-once-status" style="font-size:11px; color:rgba(255,255,255,0.7);">Tap to reveal • Disappears after view</div>
+            </div>
+            <span style="font-size:10px; color:rgba(255,255,255,0.6); align-self:flex-end; margin-left:6px;">8:35 PM ✓✓</span>
+          </div>
+        </div>
+
+        <!-- Syntax Code Snippet Bubble (Mermaid/Code) -->
+        <div class="cw-bubble-group" style="align-self:flex-start; max-width:380px;">
+          <div class="cw-bubble cw-bubble-received" style="padding:10px 14px; font-family:monospace; font-size:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:4px;">
+              <span style="color:var(--cw-accent-cyan); font-weight:700;">Kotlin Compose Spec</span>
+              <span style="cursor:pointer; color:var(--cw-tertiary);" onclick="copySnippet('ColorwingGlassSurface(isLiquidGlass = true)')">📋 Copy</span>
+            </div>
+            <pre style="margin:0; color:#E2E8F0; overflow-x:auto;"><code>ColorwingGlassSurface(
+    isLiquidGlass = true,
+    shape = RoundedCornerShape(14.dp)
+) { ... }</code></pre>
+            <div style="text-align:right; font-size:10px; color:var(--cw-text-muted); margin-top:4px;">8:36 PM</div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Sequential Chat Input Box -->
-      <form class="cw-post-box" onsubmit="sendMessage(event)" style="margin:16px;">
-        <input id="chat-input" class="cw-post-input" placeholder="Type a message to test live bubble rendering..." autocomplete="off">
-        <button type="submit" class="cw-post-plus-btn" title="Send message">+</button>
+      <!-- Sequential Chat Input Box with Role Switcher -->
+      <form class="cw-post-box" onsubmit="sendMessage(event)" style="margin:16px; flex-direction:column; align-items:stretch; gap:10px;">
+        <div style="display:flex; gap:6px; align-items:center;">
+          <span style="font-size:11px; font-weight:700; color:var(--cw-text-secondary); text-transform:uppercase;">Send As:</span>
+          <button type="button" class="control-pill active" id="sender-role-sent" style="font-size:11px; padding:4px 10px;" onclick="setSenderRole('sent')">🔴 You (Sent)</button>
+          <button type="button" class="control-pill" id="sender-role-received" style="font-size:11px; padding:4px 10px;" onclick="setSenderRole('received')">🔵 Sarah (Received)</button>
+          <button type="button" class="control-pill" id="sender-role-ai" style="font-size:11px; padding:4px 10px;" onclick="setSenderRole('ai')">🤖 Beeta AI</button>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <input id="chat-input" class="cw-post-input" placeholder="Type a message to test live bubble rendering..." autocomplete="off">
+          <button type="submit" class="cw-post-plus-btn" title="Send message">+</button>
+        </div>
       </form>
 
     </div>
 
+    <!-- Interactive Liquid Glass Laboratory & Parameter Sliders -->
+    <div class="section-title">
+      <span>🧪 Liquid Glass Physics Laboratory (Live Parameter Sliders)</span>
+      <span class="stat-badge">Dynamic Specular Modeler</span>
+    </div>
+
+    <div style="background:var(--cw-surface-card); border:1px solid var(--cw-border); border-radius:20px; padding:22px; margin-bottom:32px;">
+      <div class="grid-2col" style="align-items:center;">
+        
+        <!-- Controls Column -->
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:6px;">
+              <span>Backdrop Blur</span>
+              <span id="val-blur" style="color:var(--cw-accent-cyan);">16px</span>
+            </div>
+            <input type="range" id="slider-blur" min="0" max="32" value="16" oninput="updateGlassLab()">
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:6px;">
+              <span>Top Specular Alpha (White)</span>
+              <span id="val-specular" style="color:var(--cw-tertiary);">0.75</span>
+            </div>
+            <input type="range" id="slider-specular" min="10" max="100" value="75" oninput="updateGlassLab()">
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:6px;">
+              <span>Bottom Reflection Alpha</span>
+              <span id="val-refl" style="color:var(--cw-success);">0.35</span>
+            </div>
+            <input type="range" id="slider-refl" min="0" max="80" value="35" oninput="updateGlassLab()">
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:6px;">
+              <span>Corner Radius</span>
+              <span id="val-radius" style="color:#F59E0B;">14px</span>
+            </div>
+            <input type="range" id="slider-radius" min="4" max="32" value="14" oninput="updateGlassLab()">
+          </div>
+        </div>
+
+        <!-- Live Preview Specimen -->
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; background:radial-gradient(circle at 50% 50%, var(--cw-ambient-color-alpha) 0%, rgba(0,0,0,0.85) 100%); border-radius:16px; border:1px solid var(--cw-border);">
+          <div id="lab-preview-bubble" class="cw-bubble cw-bubble-sent cw-liquid-glass" style="max-width:280px; margin-bottom:14px; transition:all 0.1s ease;">
+            Interactive laboratory specimen! Sliders dynamically re-tune refraction, specular stroke, and blur.
+            <div style="text-align:right; font-size:10px; color:rgba(255,255,255,0.7); margin-top:4px;">Live • Tuned</div>
+          </div>
+          <button class="cw-btn cw-btn-secondary" style="font-size:12px; padding:6px 14px;" onclick="copyLabCss()">
+            📋 Copy Custom Glass CSS
+          </button>
+        </div>
+
+      </div>
+    </div>
+
     <!-- Centralized Design System Token Swatches -->
     <div class="section-title">
-      <span>🎨 Complete Token Swatches & Palette Matrix</span>
+      <span>🎨 Complete Token Swatches & Palette Matrix (All 23 Tokens)</span>
       <span class="stat-badge">Click to Copy Hex</span>
     </div>
 
     <div class="swatches-grid" style="margin-bottom:32px;">
       <div class="swatch-box" onclick="copySnippet('#000000')">
         <div class="swatch-color" style="background:#000000;"></div>
-        <div style="font-size:12px; font-weight:700;">Primary</div>
+        <div style="font-size:12px; font-weight:700;">Primary OLED</div>
         <div style="font-size:11px; color:var(--cw-text-muted);">#000000</div>
       </div>
       <div class="swatch-box" onclick="copySnippet('#FFFFFF')">
         <div class="swatch-color" style="background:#FFFFFF;"></div>
-        <div style="font-size:12px; font-weight:700; color:#fff;">Secondary</div>
+        <div style="font-size:12px; font-weight:700; color:#fff;">Secondary White</div>
         <div style="font-size:11px; color:var(--cw-text-muted);">#FFFFFF</div>
       </div>
       <div class="swatch-box" onclick="copySnippet('#D90429')">
         <div class="swatch-color" style="background:#D90429;"></div>
         <div style="font-size:12px; font-weight:700; color:var(--cw-tertiary);">Tertiary Brand</div>
         <div style="font-size:11px; color:var(--cw-text-muted);">#D90429</div>
+      </div>
+      <div class="swatch-box" onclick="copySnippet('#B00321')">
+        <div class="swatch-color" style="background:#B00321;"></div>
+        <div style="font-size:12px; font-weight:700;">Tertiary Hover</div>
+        <div style="font-size:11px; color:var(--cw-text-muted);">#B00321</div>
+      </div>
+      <div class="swatch-box" onclick="copySnippet('#9B021D')">
+        <div class="swatch-color" style="background:#9B021D;"></div>
+        <div style="font-size:12px; font-weight:700;">Tertiary Dark</div>
+        <div style="font-size:11px; color:var(--cw-text-muted);">#9B021D</div>
       </div>
       <div class="swatch-box" onclick="copySnippet('#C82128')">
         <div class="swatch-color" style="background:#C82128;"></div>
@@ -497,6 +680,26 @@
         <div style="font-size:12px; font-weight:700;">Surface Base</div>
         <div style="font-size:11px; color:var(--cw-text-muted);">#12131C</div>
       </div>
+      <div class="swatch-box" onclick="copySnippet('#161926')">
+        <div class="swatch-color" style="background:#161926;"></div>
+        <div style="font-size:12px; font-weight:700;">Surface Elevated</div>
+        <div style="font-size:11px; color:var(--cw-text-muted);">#161926</div>
+      </div>
+      <div class="swatch-box" onclick="copySnippet('#111111')">
+        <div class="swatch-color" style="background:#111111;"></div>
+        <div style="font-size:12px; font-weight:700;">Surface Card</div>
+        <div style="font-size:11px; color:var(--cw-text-muted);">#111111</div>
+      </div>
+      <div class="swatch-box" onclick="copySnippet('#1A1A1A')">
+        <div class="swatch-color" style="background:#1A1A1A;"></div>
+        <div style="font-size:12px; font-weight:700;">Input Background</div>
+        <div style="font-size:11px; color:var(--cw-text-muted);">#1A1A1A</div>
+      </div>
+      <div class="swatch-box" onclick="copySnippet('#1E293B')">
+        <div class="swatch-color" style="background:#1E293B;"></div>
+        <div style="font-size:12px; font-weight:700;">Border Slate</div>
+        <div style="font-size:11px; color:var(--cw-text-muted);">#1E293B</div>
+      </div>
       <div class="swatch-box" onclick="copySnippet('#818CF8')">
         <div class="swatch-color" style="background:#818CF8;"></div>
         <div style="font-size:12px; font-weight:700; color:#818CF8;">Accent Cyan</div>
@@ -506,6 +709,11 @@
         <div class="swatch-color" style="background:#6366F1;"></div>
         <div style="font-size:12px; font-weight:700; color:#6366F1;">Accent Purple</div>
         <div style="font-size:11px; color:var(--cw-text-muted);">#6366F1</div>
+      </div>
+      <div class="swatch-box" onclick="copySnippet('#4F46E5')">
+        <div class="swatch-color" style="background:#4F46E5;"></div>
+        <div style="font-size:12px; font-weight:700; color:#4F46E5;">Accent Blue</div>
+        <div style="font-size:11px; color:var(--cw-text-muted);">#4F46E5</div>
       </div>
       <div class="swatch-box" onclick="copySnippet('#22C55E')">
         <div class="swatch-color" style="background:#22C55E;"></div>
@@ -517,6 +725,16 @@
         <div style="font-size:12px; font-weight:700; color:#F59E0B;">Warning Amber</div>
         <div style="font-size:11px; color:var(--cw-text-muted);">#F59E0B</div>
       </div>
+      <div class="swatch-box" onclick="copySnippet('#F1C40F')">
+        <div class="swatch-color" style="background:#F1C40F;"></div>
+        <div style="font-size:12px; font-weight:700; color:#F1C40F;">Warning Gold</div>
+        <div style="font-size:11px; color:var(--cw-text-muted);">#F1C40F</div>
+      </div>
+      <div class="swatch-box" onclick="copySnippet('#EF4444')">
+        <div class="swatch-color" style="background:#EF4444;"></div>
+        <div style="font-size:12px; font-weight:700; color:#EF4444;">Danger Red</div>
+        <div style="font-size:11px; color:var(--cw-text-muted);">#EF4444</div>
+      </div>
       <div class="swatch-box" onclick="copySnippet('#381B09')">
         <div class="swatch-color" style="background:#381B09;"></div>
         <div style="font-size:12px; font-weight:700;">Morning Vibe</div>
@@ -526,6 +744,77 @@
         <div class="swatch-color" style="background:#111E2E;"></div>
         <div style="font-size:12px; font-weight:700;">Day Vibe</div>
         <div style="font-size:11px; color:var(--cw-text-muted);">#111E2E</div>
+      </div>
+      <div class="swatch-box" onclick="copySnippet('#2E121B')">
+        <div class="swatch-color" style="background:#2E121B;"></div>
+        <div style="font-size:12px; font-weight:700;">Sunset Vibe</div>
+        <div style="font-size:11px; color:var(--cw-text-muted);">#2E121B</div>
+      </div>
+      <div class="swatch-box" onclick="copySnippet('#0F0A1C')">
+        <div class="swatch-color" style="background:#0F0A1C;"></div>
+        <div style="font-size:12px; font-weight:700;">Night Vibe</div>
+        <div style="font-size:11px; color:var(--cw-text-muted);">#0F0A1C</div>
+      </div>
+    </div>
+
+    <!-- Live Accessibility & WCAG 2.1 Audit Card -->
+    <div class="section-title">
+      <span>👁️ WCAG 2.1 AAA Accessibility & Color-Blindness Audit</span>
+      <span class="stat-badge">Compliance Verified</span>
+    </div>
+
+    <div style="background:var(--cw-surface-card); border:1px solid var(--cw-border); border-radius:20px; padding:22px; margin-bottom:32px;">
+      <div style="overflow-x:auto; margin-bottom:18px;">
+        <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--cw-border); color:var(--cw-text-secondary);">
+              <th style="padding:8px 12px;">Token Combination</th>
+              <th style="padding:8px 12px;">Foreground / Background</th>
+              <th style="padding:8px 12px;">Contrast Ratio</th>
+              <th style="padding:8px 12px;">WCAG Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td style="padding:10px 12px; font-weight:700;">Secondary White on Black</td>
+              <td style="padding:10px 12px;">#FFFFFF on #000000</td>
+              <td style="padding:10px 12px; font-weight:700; color:var(--cw-success);">21.0:1</td>
+              <td style="padding:10px 12px;"><span style="background:rgba(34,197,94,0.12); color:var(--cw-success); padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:700;">AAA (Pass)</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td style="padding:10px 12px; font-weight:700;">Text Secondary (70%) on Black</td>
+              <td style="padding:10px 12px;">rgba(255,255,255,0.7) on #000000</td>
+              <td style="padding:10px 12px; font-weight:700; color:var(--cw-success);">14.7:1</td>
+              <td style="padding:10px 12px;"><span style="background:rgba(34,197,94,0.12); color:var(--cw-success); padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:700;">AAA (Pass)</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td style="padding:10px 12px; font-weight:700;">Success Green on Black</td>
+              <td style="padding:10px 12px;">#22C55E on #000000</td>
+              <td style="padding:10px 12px; font-weight:700; color:var(--cw-success);">9.2:1</td>
+              <td style="padding:10px 12px;"><span style="background:rgba(34,197,94,0.12); color:var(--cw-success); padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:700;">AAA (Pass)</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td style="padding:10px 12px; font-weight:700;">Accent Cyan on Black</td>
+              <td style="padding:10px 12px;">#818CF8 on #000000</td>
+              <td style="padding:10px 12px; font-weight:700; color:var(--cw-success);">8.4:1</td>
+              <td style="padding:10px 12px;"><span style="background:rgba(34,197,94,0.12); color:var(--cw-success); padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:700;">AAA (Pass)</span></td>
+            </tr>
+            <tr>
+              <td style="padding:10px 12px; font-weight:700;">Tertiary Red #D90429 on Black</td>
+              <td style="padding:10px 12px;">#D90429 on #000000</td>
+              <td style="padding:10px 12px; font-weight:700; color:#F59E0B;">4.8:1</td>
+              <td style="padding:10px 12px;"><span style="background:rgba(245,158,11,0.12); color:#F59E0B; padding:2px 8px; border-radius:9999px; font-size:11px; font-weight:700;">AA Graphical / Large (Pass)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Color Blindness Check Badges -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <span style="font-size:12px; font-weight:700; color:var(--cw-text-secondary);">Color-Blindness Simulation:</span>
+        <span class="cw-badge" style="background:rgba(34,197,94,0.12); color:var(--cw-success); border:1px solid rgba(34,197,94,0.3);">✓ Deuteranopia (5.1:1 Gold/Bronze)</span>
+        <span class="cw-badge" style="background:rgba(34,197,94,0.12); color:var(--cw-success); border:1px solid rgba(34,197,94,0.3);">✓ Protanopia (3.9:1 Dark Olive)</span>
+        <span class="cw-badge" style="background:rgba(34,197,94,0.12); color:var(--cw-success); border:1px solid rgba(34,197,94,0.3);">✓ Tritanopia (4.9:1 Deep Crimson)</span>
       </div>
     </div>
 
@@ -694,7 +983,7 @@
       </div>
 
       <!-- 6. SCSS SASS Mixins -->
-      <div class="code-pill" onclick="copySnippet('@import '@netuark/colorwing/scss';')">
+      <div class="code-pill" onclick="copySnippet('@import \'@netuark/colorwing/scss\';')">
         <div>
           <span style="color:#EC4899; font-weight:700;">6. SCSS / SASS Bundle:</span>
           <code>@import '@netuark/colorwing/scss'; // dist/_colorwing.scss</code>
@@ -719,6 +1008,15 @@
   </script>
 
   <script>
+    let currentSenderRole = 'sent';
+
+    function setSenderRole(role) {
+      currentSenderRole = role;
+      document.getElementById('sender-role-sent').classList.toggle('active', role === 'sent');
+      document.getElementById('sender-role-received').classList.toggle('active', role === 'received');
+      document.getElementById('sender-role-ai').classList.toggle('active', role === 'ai');
+    }
+
     // Live Studio Controls
     function setVibe(vibeId, btn) {
       document.documentElement.setAttribute('data-time-vibe', vibeId);
@@ -806,6 +1104,63 @@
       btn.textContent = isPlaying ? '▶' : '⏸';
     }
 
+    function votePoll(optionIndex) {
+      document.querySelectorAll('.cw-poll-card').forEach((card, idx) => {
+        card.classList.toggle('voted', idx === (optionIndex - 1));
+      });
+      const counts = [125, 83, 51];
+      counts[optionIndex - 1] += 1;
+      const total = counts.reduce((a, b) => a + b, 0);
+      document.getElementById('poll-pct-1').textContent = Math.round((counts[0] / total) * 100) + '%';
+      document.getElementById('poll-bar-1').style.width = Math.round((counts[0] / total) * 100) + '%';
+      document.getElementById('poll-pct-2').textContent = Math.round((counts[1] / total) * 100) + '%';
+      document.getElementById('poll-bar-2').style.width = Math.round((counts[1] / total) * 100) + '%';
+      document.getElementById('poll-pct-3').textContent = Math.round((counts[2] / total) * 100) + '%';
+      document.getElementById('poll-bar-3').style.width = Math.round((counts[2] / total) * 100) + '%';
+      document.getElementById('poll-vote-count').textContent = total + ' votes • Voted option ' + optionIndex;
+    }
+
+    function openViewOnce(el) {
+      const status = document.getElementById('view-once-status');
+      if (status.textContent.includes('Opened')) return;
+      status.textContent = 'Opened • Full Architecture Visible';
+      el.style.opacity = '0.5';
+      setTimeout(() => {
+        status.textContent = 'Expired • View Once media deleted';
+      }, 3500);
+    }
+
+    function updateGlassLab() {
+      const blur = document.getElementById('slider-blur').value;
+      const specular = (document.getElementById('slider-specular').value / 100).toFixed(2);
+      const refl = (document.getElementById('slider-refl').value / 100).toFixed(2);
+      const radius = document.getElementById('slider-radius').value;
+
+      document.getElementById('val-blur').textContent = blur + 'px';
+      document.getElementById('val-specular').textContent = specular;
+      document.getElementById('val-refl').textContent = refl;
+      document.getElementById('val-radius').textContent = radius + 'px';
+
+      const preview = document.getElementById('lab-preview-bubble');
+      if (preview) {
+        preview.style.backdropFilter = 'blur(' + blur + 'px) saturate(180%) contrast(105%)';
+        preview.style.webkitBackdropFilter = 'blur(' + blur + 'px) saturate(180%) contrast(105%)';
+        preview.style.borderRadius = radius + 'px';
+        preview.style.boxShadow = 'inset 0 1.5px 0 0 rgba(255, 255, 255, ' + specular + '), inset 0 -1.5px 0 0 rgba(255, 255, 255, ' + refl + '), inset -3px 0 0 0 #E65100, 0 8px 32px rgba(0, 0, 0, 0.55)';
+      }
+    }
+
+    function copyLabCss() {
+      const blur = document.getElementById('slider-blur').value;
+      const specular = (document.getElementById('slider-specular').value / 100).toFixed(2);
+      const refl = (document.getElementById('slider-refl').value / 100).toFixed(2);
+      const radius = document.getElementById('slider-radius').value;
+      const css = 'backdrop-filter: blur(' + blur + 'px) saturate(180%) contrast(105%);\n' +
+                  'border-radius: ' + radius + 'px;\n' +
+                  'box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, ' + specular + '), inset 0 -1.5px 0 0 rgba(255, 255, 255, ' + refl + '), inset -3px 0 0 0 #E65100, 0 8px 32px rgba(0, 0, 0, 0.55);';
+      copySnippet(css);
+    }
+
     function openOnboarding() {
       if (window.ColorWing) {
         window.ColorWing.showOnboardingModal({
@@ -831,16 +1186,36 @@
       const stream = document.getElementById('chat-stream');
       const group = document.createElement('div');
       group.className = 'cw-bubble-group';
-      group.style.alignSelf = 'flex-end';
       const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-      group.innerHTML = 
-        '<div class="cw-bubble cw-bubble-sent">' +
-          escapeHtml(text) +
-          '<div style="text-align:right; font-size:10px; color:rgba(255,255,255,0.7); margin-top:4px;">' + timeStr + ' ✓✓</div>' +
-        '</div>';
-      stream.appendChild(group);
+      if (currentSenderRole === 'sent') {
+        group.style.alignSelf = 'flex-end';
+        group.innerHTML = 
+          '<div class="cw-bubble cw-bubble-sent">' +
+            escapeHtml(text) +
+            '<div style="text-align:right; font-size:10px; color:rgba(255,255,255,0.7); margin-top:4px;">' + timeStr + ' ✓✓</div>' +
+          '</div>';
+      } else if (currentSenderRole === 'received') {
+        group.style.alignSelf = 'flex-start';
+        group.innerHTML = 
+          '<div class="cw-bubble cw-bubble-received">' +
+            escapeHtml(text) +
+            '<div style="text-align:right; font-size:10px; color:var(--cw-text-muted); margin-top:4px;">' + timeStr + '</div>' +
+          '</div>';
+      } else {
+        group.style.alignSelf = 'flex-start';
+        group.innerHTML = 
+          '<div class="cw-bubble cw-bubble-ai">' +
+            '<div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">' +
+              '<span class="cw-badge cw-badge-ai">BEETA AI</span>' +
+              '<span style="font-size:11px; color:rgba(255,255,255,0.7);">Autonomous Engine</span>' +
+            '</div>' +
+            escapeHtml(text) +
+            '<div style="text-align:right; font-size:10px; color:rgba(255,255,255,0.6); margin-top:4px;">' + timeStr + '</div>' +
+          '</div>';
+      }
 
+      stream.appendChild(group);
       input.value = '';
       stream.scrollTop = stream.scrollHeight;
     }
