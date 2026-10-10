@@ -212,8 +212,19 @@
 
         <!-- Chat Bubble Stream -->
         <div class="chat-body cw-scrollbar-thin">
+          <!-- Call Log Bubble -->
+          <div class="cw-call-log-bubble">
+            <span class="cw-call-icon">📞</span>
+            <span>Voice call ended • 4m 12s</span>
+            <span style="color:var(--cw-text-muted); font-size:10px; margin-left:4px;">10:20 AM</span>
+          </div>
+
           <div class="cw-bubble-group" style="align-self: flex-start;">
             <div class="cw-bubble cw-bubble-received">
+              <div class="cw-reply-quote">
+                <div class="cw-reply-quote-title">John Connor</div>
+                <div class="cw-reply-quote-text">Is the new design system deployed to all platforms?</div>
+              </div>
               Hey! Did you see the new ColorWing centralized design system?
               <div style="font-size:10px; color:var(--cw-text-muted); text-align:right; margin-top:4px;">10:24 AM</div>
             </div>
@@ -223,6 +234,34 @@
             <div class="cw-bubble cw-bubble-sent">
               Yes! Primary is native pitch-black, secondary is white, and tertiary is brand red #D90429.
               <div style="font-size:10px; color:rgba(255,255,255,0.7); text-align:right; margin-top:4px;">10:25 AM ✓✓</div>
+            </div>
+            <!-- Reactions Row -->
+            <div style="display:flex; justify-content:flex-end; margin-top:4px;">
+              <div class="cw-reactions-row">
+                <button class="cw-reaction-pill active">❤️ 12</button>
+                <button class="cw-reaction-pill">🔥 8</button>
+                <button class="cw-reaction-pill">🪽 24</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Voice Message Player -->
+          <div class="cw-bubble-group" style="align-self: flex-start; max-width: 320px;">
+            <div class="cw-bubble cw-bubble-received" style="padding: 10px 14px;">
+              <div class="cw-voice-player">
+                <button class="cw-voice-btn" title="Play">▶</button>
+                <div class="cw-voice-waveform">
+                  <div class="cw-voice-bar active" style="height:8px;"></div>
+                  <div class="cw-voice-bar active" style="height:14px;"></div>
+                  <div class="cw-voice-bar active" style="height:20px;"></div>
+                  <div class="cw-voice-bar active" style="height:12px;"></div>
+                  <div class="cw-voice-bar" style="height:10px;"></div>
+                  <div class="cw-voice-bar" style="height:16px;"></div>
+                  <div class="cw-voice-bar" style="height:12px;"></div>
+                </div>
+                <span style="font-size:11px; font-weight:700; color:var(--cw-text-secondary); margin-left:4px;">0:38</span>
+              </div>
+              <div style="font-size:10px; color:var(--cw-text-muted); text-align:right; margin-top:4px;">10:25 AM</div>
             </div>
           </div>
 

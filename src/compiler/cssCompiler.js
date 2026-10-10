@@ -148,6 +148,25 @@ export function compileBubblesCss(options = {}) {
   box-shadow: 0 4px 16px rgba(99, 102, 241, 0.20);
   margin-right: auto;
 }
+.cw-call-log-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(18, 19, 28, 0.60);
+  border: 1px solid var(--cw-border);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cw-text-primary);
+  margin: 6px auto;
+  box-sizing: border-box;
+}
+.cw-call-log-bubble .cw-call-icon {
+  color: var(--cw-tertiary);
+  font-size: 13px;
+}
 `;
   return options.minify ? minifyCss(raw) : raw;
 }
@@ -626,6 +645,27 @@ export function compileCss(options = {}) {
   border-bottom-left-radius: 4px;
   box-shadow: 0 4px 16px rgba(99, 102, 241, 0.20);
   margin-right: auto;
+}
+
+/* Centered Call Log Bubble (APK signature BubbleCallLogContent) */
+.cw-call-log-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(18, 19, 28, 0.60);
+  border: 1px solid var(--cw-border);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cw-text-primary);
+  margin: 6px auto;
+  box-sizing: border-box;
+}
+.cw-call-log-bubble .cw-call-icon {
+  color: var(--cw-tertiary);
+  font-size: 13px;
 }
 
 /* Reactions Bar & Reaction Pills */

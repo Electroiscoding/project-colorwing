@@ -106,12 +106,14 @@ assert.ok(css.includes('.cw-bottom-sheet'), 'CSS must include .cw-bottom-sheet')
 assert.ok(css.includes('.cw-badge-admin'), 'CSS must include .cw-badge-admin');
 assert.ok(css.includes('.cw-liquid-glass-border'), 'CSS must include .cw-liquid-glass-border');
 assert.ok(css.includes('.cw-liquid-glass-surface'), 'CSS must include .cw-liquid-glass-surface');
+assert.ok(css.includes('.cw-call-log-bubble'), 'CSS must include .cw-call-log-bubble');
 
 // Modular CSS checks
 const colorsCss = fs.readFileSync(path.join(DIST_DIR, 'colors.css'), 'utf-8');
 assert.ok(colorsCss.includes('--cw-primary: #000000;'), 'colors.css must contain primary');
 const bubblesCss = fs.readFileSync(path.join(DIST_DIR, 'bubbles.css'), 'utf-8');
 assert.ok(bubblesCss.includes('.cw-bubble-sent'), 'bubbles.css must contain bubble sent');
+assert.ok(bubblesCss.includes('.cw-call-log-bubble'), 'bubbles.css must contain call log bubble');
 const feedCss = fs.readFileSync(path.join(DIST_DIR, 'feed.css'), 'utf-8');
 assert.ok(feedCss.includes('.cw-post-plus-btn'), 'feed.css must contain post plus button');
 const glassCss = fs.readFileSync(path.join(DIST_DIR, 'glass.css'), 'utf-8');

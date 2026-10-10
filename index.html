@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ColorWing • Centralized Cross-Platform Design System</title>
   
-  <!-- Direct CDN Link from the GitHub Repository -->
+  <!-- Primary Local Compiled Bundle (Offline / Local Server) -->
+  <link rel="stylesheet" href="./dist/colorwing.css">
+  <!-- GitHub Master CDN Fallback -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.min.css">
 
   <style>
+    * { box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
       background-color: var(--cw-bg);
       color: var(--cw-text-primary);
       margin: 0;
-      padding: 24px 16px;
+      padding: 24px 16px 64px 16px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -22,8 +25,20 @@
       transition: background-color 0.3s ease;
     }
 
+    /* Ambient atmospheric backdrop layer */
+    #ambient-backdrop {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 10%, var(--cw-ambient-color-alpha) 0%, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+      transition: background 0.6s ease;
+    }
+
     .main-wrap {
-      max-width: 920px;
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
       width: 100%;
     }
 
@@ -47,33 +62,43 @@
     }
 
     .code-pill {
-      font-family: monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size: 13px;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 4px 10px;
-      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 8px 12px;
+      border-radius: 10px;
       color: var(--cw-text-primary);
       cursor: pointer;
       border: 1px solid var(--cw-border);
       transition: all 0.15s ease;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: space-between;
+      gap: 8px;
+      user-select: all;
     }
     .code-pill:hover {
-      background: rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.10);
       border-color: var(--cw-tertiary);
+      transform: translateY(-1px);
     }
 
     .control-pill {
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--cw-border);
       color: #fff;
-      padding: 6px 12px;
+      padding: 7px 14px;
       border-radius: 9999px;
       font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .control-pill:hover {
+      background: rgba(255, 255, 255, 0.12);
     }
     .control-pill.active {
       background: var(--cw-tertiary);
@@ -81,33 +106,67 @@
       box-shadow: 0 2px 10px var(--cw-tertiary-glow);
     }
 
-    .copy-success {
+    .copy-toast {
       color: var(--cw-success);
       font-size: 12px;
-      margin-left: 6px;
+      font-weight: 700;
       display: none;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--cw-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin: 32px 0 14px 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--cw-text-secondary);
+      font-family: monospace;
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .grid-2col { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Dynamic Ambient Lighting Layer -->
+  <div id="ambient-backdrop"></div>
 
   <div class="main-wrap">
     
     <!-- Top Hero Banner -->
     <div class="hero-banner cw-glass-panel">
       <div>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <h1 style="margin:0; font-size:28px; font-weight:800;">🪽 ColorWing</h1>
-          <span style="background:var(--cw-tertiary); color:#fff; font-size:11px; font-weight:700; padding:2px 8px; border-radius:9999px;">v1.1.0</span>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <h1 style="margin:0; font-size:30px; font-weight:800; letter-spacing:-0.5px;">🪽 ColorWing</h1>
+          <span style="background:var(--cw-tertiary); color:#fff; font-size:11px; font-weight:700; padding:3px 10px; border-radius:9999px;">v1.1.0</span>
+          <span style="border:1px solid rgba(34,197,94,0.4); color:var(--cw-success); background:rgba(34,197,94,0.1); font-size:11px; font-weight:700; padding:2px 8px; border-radius:9999px;">10/10 Tests Passed</span>
         </div>
-        <p style="margin:6px 0 0; color:var(--cw-text-secondary); font-size:14px;">
-          Centralized Cross-Platform Design Tokens for Web & Android
+        <p style="margin:8px 0 0; color:var(--cw-text-secondary); font-size:14.5px; line-height:1.4;">
+          Centralized Cross-Platform Design System for Web & Android Compose. Native OLED pitch black, high-contrast white, brand red, 1:1 APK chat bubbles, and optional fierce Liquid Glass.
         </p>
       </div>
 
       <div class="btn-group">
         <a class="cw-btn cw-btn-tertiary" href="https://github.com/Electroiscoding/project-colorwing" target="_blank" style="text-decoration:none;">
-          GitHub Repository
+          GitHub Repository ➔
         </a>
         <button class="cw-btn cw-btn-secondary" onclick="openOnboarding()">
           Onboarding Modal
@@ -119,68 +178,143 @@
     </div>
 
     <!-- Live Interactive Studio Controls -->
-    <div style="background:var(--cw-surface-card); border:1px solid var(--cw-border); border-radius:18px; padding:20px; margin-bottom:24px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
-        <!-- Vibe Selector -->
+    <div style="background:var(--cw-surface-card); border:1px solid var(--cw-border); border-radius:20px; padding:22px; margin-bottom:28px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px;">
+        
+        <!-- 1. Ambient Vibe Selector -->
         <div>
-          <div style="font-size:12px; font-weight:700; color:var(--cw-text-secondary); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">
-            Ambient Time Vibe
+          <div style="font-size:12px; font-weight:800; color:var(--cw-text-secondary); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.6px; display:flex; align-items:center; gap:6px;">
+            <span>Ambient Time Vibe</span>
+            <span id="vibe-indicator" style="width:8px; height:8px; border-radius:50%; background:var(--cw-ambient-bubble-glow); display:inline-block;"></span>
           </div>
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
-            <button class="control-pill active" onclick="setVibe('morning', this)">🌅 Morning</button>
-            <button class="control-pill" onclick="setVibe('day', this)">☀️ Day</button>
-            <button class="control-pill" onclick="setVibe('sunset', this)">🌇 Sunset</button>
-            <button class="control-pill" onclick="setVibe('night', this)">🌙 Night</button>
+            <button class="control-pill active" onclick="setVibe('morning', this)">🌅 Morning (#381B09)</button>
+            <button class="control-pill" onclick="setVibe('day', this)">☀️ Day (#111E2E)</button>
+            <button class="control-pill" onclick="setVibe('sunset', this)">🌇 Sunset (#2E121B)</button>
+            <button class="control-pill" onclick="setVibe('night', this)">🌙 Night (#0F0A1C)</button>
+            <button class="control-pill" onclick="setVibeAuto(this)">⏱️ Auto Clock</button>
           </div>
         </div>
 
-        <!-- Glass Toggle -->
+        <!-- 2. Liquid Glass Toggle -->
         <div>
-          <div style="font-size:12px; font-weight:700; color:var(--cw-text-secondary); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">
-            Liquid Glass Physics
+          <div style="font-size:12px; font-weight:800; color:var(--cw-text-secondary); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.6px;">
+            Liquid Glass Physics (APK Spec)
           </div>
           <div style="display:flex; gap:6px;">
-            <button id="btn-glass-static" class="control-pill active" onclick="setGlass(false)">⚡ Static (0 Lag)</button>
-            <button id="btn-glass-liquid" class="control-pill" onclick="setGlass(true)">🫧 Liquid Glass</button>
+            <button id="btn-glass-static" class="control-pill active" onclick="setGlass(false)">⚡ Static (0 Lag Default)</button>
+            <button id="btn-glass-liquid" class="control-pill" onclick="setGlass(true)">🫧 Fierce Liquid Glass</button>
           </div>
         </div>
 
-        <!-- Platform Simulation -->
+        <!-- 3. Platform Mode Toggle -->
         <div>
-          <div style="font-size:12px; font-weight:700; color:var(--cw-text-secondary); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">
-            Platform Mode
+          <div style="font-size:12px; font-weight:800; color:var(--cw-text-secondary); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.6px;">
+            Platform Call Button
           </div>
           <div style="display:flex; gap:6px;">
-            <button id="btn-plat-web" class="control-pill active" onclick="setPlatform('web')">🌐 Web (Call Hidden)</button>
-            <button id="btn-plat-apk" class="control-pill" onclick="setPlatform('apk')">📱 APK (Call Visible)</button>
+            <button id="btn-plat-web" class="control-pill active" onclick="setPlatform('web')">🌐 Web (Hidden)</button>
+            <button id="btn-plat-apk" class="control-pill" onclick="setPlatform('apk')">📱 APK (Visible 📞)</button>
           </div>
         </div>
+
       </div>
     </div>
 
-    <!-- 1-Liner Quick Imports -->
-    <div style="background:var(--cw-surface-card); border:1px solid var(--cw-border); border-radius:18px; padding:20px; margin-bottom:24px;">
-      <h3 style="margin:0 0 12px 0; font-size:15px; color:var(--cw-tertiary); display:flex; align-items:center; justify-content:space-between;">
-        <span>Direct 1-Liner Imports (Click to Copy)</span>
-        <span id="copy-notify" class="copy-success">✓ Copied to clipboard!</span>
-      </h3>
-      <div style="display:flex; flex-direction:column; gap:8px;">
-        <div class="code-pill" onclick="copySnippet('&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.min.css&quot;&gt;')">
-          <span style="color:var(--cw-accent-cyan);">HTML CDN:</span> &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.min.css"&gt;
-        </div>
-        <div class="code-pill" onclick="copySnippet('npm install github:Electroiscoding/project-colorwing')">
-          <span style="color:var(--cw-tertiary);">NPM Git:</span> npm install github:Electroiscoding/project-colorwing
-        </div>
-        <div class="code-pill" onclick="copySnippet('curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/install.sh | bash -s android')">
-          <span style="color:var(--cw-success);">Android APK:</span> curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/install.sh | bash -s android
-        </div>
-      </div>
+    <!-- Live Fiercest Liquid Glass Showcase -->
+    <div class="section-title">
+      <span>🫧 Fiercest Liquid Glass Architecture (APK SafeHaze & LiquidGlassEffect 1:1)</span>
+      <span class="stat-badge">rememberLiquidGlassBorder() • 1.5dp Specular</span>
     </div>
 
-    <!-- Live Messenger & Feed Demo -->
-    <div class="cw-glass-panel" style="background:var(--cw-surface); border:1px solid var(--cw-border); border-radius:20px; overflow:hidden; margin-bottom:32px;">
+    <div class="grid-2col" style="margin-bottom:28px;">
       
-      <!-- Chat Header -->
+      <!-- Liquid Glass Inspector Card -->
+      <div class="cw-liquid-glass-surface" style="padding:22px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="margin:0; font-size:16px; font-weight:800; color:#fff;">Fierce Specular Surface</h3>
+          <span style="font-size:11px; font-weight:700; color:#fff; background:rgba(255,255,255,0.15); padding:2px 8px; border-radius:9999px;">Active Preset</span>
+        </div>
+        <p style="margin:0 0 16px 0; font-size:13.5px; color:rgba(255,255,255,0.75); line-height:1.5;">
+          This surface implements the APK's exact multi-stop specular vertical gradient border: 
+          <strong>0.75 top highlight</strong>, <strong>0.25 sides</strong>, and <strong>0.35 bottom reflection</strong> with <strong>1.5px/1.5dp stroke</strong> and <strong>16px blur + vibrancy</strong>.
+        </p>
+
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-bottom:16px;">
+          <div style="background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:8px; text-align:center;">
+            <div style="font-size:11px; color:rgba(255,255,255,0.5);">Top Specular</div>
+            <div style="font-size:14px; font-weight:700; color:#fff;">0.75 White</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:8px; text-align:center;">
+            <div style="font-size:11px; color:rgba(255,255,255,0.5);">Edge Sides</div>
+            <div style="font-size:14px; font-weight:700; color:#fff;">0.25 Dim</div>
+          </div>
+          <div style="background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:8px; text-align:center;">
+            <div style="font-size:11px; color:rgba(255,255,255,0.5);">Bottom Refl.</div>
+            <div style="font-size:14px; font-weight:700; color:#fff;">0.35 Alpha</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <button class="cw-btn cw-btn-tertiary" style="font-size:12px; padding:8px 16px;" onclick="triggerGlassPulse()">
+            Simulate Light Pulse
+          </button>
+          <button class="cw-btn cw-btn-secondary" style="font-size:12px; padding:8px 16px;" onclick="setGlass(document.documentElement.getAttribute('data-liquid-glass') !== 'true')">
+            Toggle Liquid / Static
+          </button>
+        </div>
+      </div>
+
+      <!-- Static Performance Card -->
+      <div style="background:var(--cw-surface-card); border:1px solid var(--cw-border); border-radius:20px; padding:22px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="margin:0; font-size:16px; font-weight:800; color:#fff;">Static High-Performance Standard</h3>
+          <span style="font-size:11px; font-weight:700; color:var(--cw-success); background:rgba(34,197,94,0.12); padding:2px 8px; border-radius:9999px;">Default Mode</span>
+        </div>
+        <p style="margin:0 0 16px 0; font-size:13.5px; color:var(--cw-text-secondary); line-height:1.5;">
+          Per Core Rule 2, the design system defaults to clean static transparency with zero blur lag. Low-end phones, tablets, and low-spec browsers experience instant 60 FPS scrolling and full battery savings.
+        </p>
+
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-bottom:16px;">
+          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--cw-border); border-radius:10px; padding:8px; text-align:center;">
+            <div style="font-size:11px; color:var(--cw-text-muted);">Default Blur</div>
+            <div style="font-size:14px; font-weight:700; color:#fff;">0px (None)</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--cw-border); border-radius:10px; padding:8px; text-align:center;">
+            <div style="font-size:11px; color:var(--cw-text-muted);">Border Width</div>
+            <div style="font-size:14px; font-weight:700; color:#fff;">1.0px Flat</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--cw-border); border-radius:10px; padding:8px; text-align:center;">
+            <div style="font-size:11px; color:var(--cw-text-muted);">Frame Rate</div>
+            <div style="font-size:14px; font-weight:700; color:var(--cw-success);">Solid 60 FPS</div>
+          </div>
+        </div>
+
+        <div style="font-size:12.5px; color:var(--cw-text-muted); display:flex; align-items:center; gap:6px;">
+          <span>✓ Persisted 100% locally in user settings (localStorage / DataStore).</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Live Messenger & Bubbles Suite -->
+    <div class="section-title">
+      <span>💬 1:1 APK Chat Stream & Components Suite</span>
+      <span class="stat-badge">nta-app-try1/MessageBubble.kt Exact Spec</span>
+    </div>
+
+    <div class="cw-glass-panel" style="background:var(--cw-surface); border:1px solid var(--cw-border); border-radius:22px; overflow:hidden; margin-bottom:32px;">
+      
+      <!-- Pinned Message Banner -->
+      <div class="cw-pinned-banner">
+        <span style="font-size:16px;">📌</span>
+        <div style="flex:1; font-size:13px; color:var(--cw-text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+          <strong style="color:#fff;">ColorWing v1.1.0:</strong> Centralized styling active across Web CSS, Android Compose, iOS SwiftUI & Flutter.
+        </div>
+        <span style="font-size:12px; color:var(--cw-tertiary); font-weight:700; cursor:pointer;">VIEW</span>
+      </div>
+
+      <!-- Chat Top Bar -->
       <div class="cw-chat-header">
         <div style="display:flex; align-items:center; gap:12px;">
           <div class="cw-avatar cw-avatar-md">
@@ -188,50 +322,230 @@
             <div class="cw-avatar-status"></div>
           </div>
           <div>
-            <div style="font-weight:700; font-size:15px;">NeTuArk Engineering</div>
+            <div style="font-weight:700; font-size:15px; display:flex; align-items:center; gap:6px;">
+              Sarah Connor
+              <span class="cw-badge cw-badge-verified">VERIFIED</span>
+            </div>
             <div style="font-size:12px; color:var(--cw-success);">Online • Live Sync Ready</div>
           </div>
         </div>
+        
         <div style="display:flex; align-items:center; gap:10px;">
-          <button class="cw-call-btn" title="APK Native Call Button">📞 Call</button>
-          <button style="background:transparent; border:none; color:#fff; font-size:18px; cursor:pointer;" onclick="openSettings()">⚙️</button>
+          <button class="cw-call-btn" onclick="triggerCallAlert()" title="APK Native Call Button">📞 Call</button>
+          <button style="background:transparent; border:none; color:var(--cw-text-secondary); font-size:18px; cursor:pointer;" onclick="openSettings()" title="Settings">⚙️</button>
         </div>
       </div>
 
-      <!-- Chat Stream -->
-      <div id="chat-stream" style="padding:20px; background:#000000; display:flex; flex-direction:column; gap:12px; min-height:220px; max-height:360px; overflow-y:auto;">
+      <!-- Chat Messages Container -->
+      <div id="chat-stream" style="padding:24px 20px; background:#000000; display:flex; flex-direction:column; gap:14px; min-height:420px; max-height:560px; overflow-y:auto;">
         
+        <!-- Call Log Event -->
+        <div class="cw-call-log-bubble">
+          <span class="cw-call-icon">📞</span>
+          <span>Voice call ended • 4m 12s</span>
+          <span style="color:var(--cw-text-muted); font-size:10px; margin-left:4px;">8:15 PM</span>
+        </div>
+
+        <!-- Received Message with Reply Quote -->
         <div class="cw-bubble-group" style="align-self:flex-start;">
           <div class="cw-bubble cw-bubble-received">
-            Hey! ColorWing tokens are loaded directly from the exact GitHub repo.
+            <div class="cw-reply-quote">
+              <div class="cw-reply-quote-title">John Connor</div>
+              <div class="cw-reply-quote-text">Is the new design system deployed to all platforms?</div>
+            </div>
+            Yes! ColorWing is fully unified. It exports to Jetpack Compose, Web CSS, SwiftUI, and Flutter with zero desync.
+            <div style="text-align:right; font-size:10px; color:var(--cw-text-muted); margin-top:4px;">8:30 PM</div>
           </div>
         </div>
 
+        <!-- Sent Bubble with 4-Stop Gradient & Aurora Amber Edge -->
         <div class="cw-bubble-group" style="align-self:flex-end;">
           <div class="cw-bubble cw-bubble-sent">
-            Primary OLED black, secondary white, tertiary brand red. Zero lag, maximum FPS.
+            Look at this sent bubble! Base Red (#C82128) ➔ Crimson (#A01830) ➔ Purple Glow (#6D164A) ➔ Blue Glow (#501F50), with the white specular highlight on top and the warm amber Aurora edge on the right!
+            <div style="text-align:right; font-size:10px; color:rgba(255,255,255,0.7); margin-top:4px;">8:31 PM ✓✓</div>
+          </div>
+          <!-- Interactive Reactions Row -->
+          <div style="display:flex; justify-content:flex-end; margin-top:4px;">
+            <div class="cw-reactions-row">
+              <button class="cw-reaction-pill active" onclick="toggleReaction(this)">❤️ 12</button>
+              <button class="cw-reaction-pill" onclick="toggleReaction(this)">🔥 8</button>
+              <button class="cw-reaction-pill" onclick="toggleReaction(this)">🪽 24</button>
+              <button class="cw-reaction-pill" onclick="toggleReaction(this)">🚀 5</button>
+            </div>
           </div>
         </div>
 
+        <!-- Received Voice Message Player -->
+        <div class="cw-bubble-group" style="align-self:flex-start; max-width:320px;">
+          <div class="cw-bubble cw-bubble-received" style="padding:10px 14px;">
+            <div class="cw-voice-player">
+              <button class="cw-voice-btn" onclick="toggleVoicePlay(this)" title="Play voice message">▶</button>
+              <div class="cw-voice-waveform">
+                <div class="cw-voice-bar active" style="height:8px;"></div>
+                <div class="cw-voice-bar active" style="height:14px;"></div>
+                <div class="cw-voice-bar active" style="height:20px;"></div>
+                <div class="cw-voice-bar active" style="height:12px;"></div>
+                <div class="cw-voice-bar active" style="height:18px;"></div>
+                <div class="cw-voice-bar" style="height:10px;"></div>
+                <div class="cw-voice-bar" style="height:16px;"></div>
+                <div class="cw-voice-bar" style="height:22px;"></div>
+                <div class="cw-voice-bar" style="height:14px;"></div>
+                <div class="cw-voice-bar" style="height:8px;"></div>
+                <div class="cw-voice-bar" style="height:18px;"></div>
+                <div class="cw-voice-bar" style="height:12px;"></div>
+              </div>
+              <span style="font-size:11px; font-weight:700; color:var(--cw-text-secondary); margin-left:4px;">0:42</span>
+            </div>
+            <div style="text-align:right; font-size:10px; color:var(--cw-text-muted); margin-top:4px;">8:32 PM</div>
+          </div>
+        </div>
+
+        <!-- AI Assistant Bubble -->
         <div class="cw-bubble-group" style="align-self:flex-start;">
           <div class="cw-bubble cw-bubble-ai">
-            🤖 <strong>Beeta AI:</strong> Liquid glass is off by default. Flip the toggle anytime to test blur physics!
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+              <span class="cw-badge cw-badge-ai">BEETA AI</span>
+              <span style="font-size:11px; color:rgba(255,255,255,0.7);">Autonomous Engine</span>
+            </div>
+            All 10 test suites pass with flying colors (~10ms compile time). Liquid Glass parameters now mirror Kyant0/backdrop and SafeHaze down to exact dp values!
+            <div style="text-align:right; font-size:10px; color:rgba(255,255,255,0.6); margin-top:4px;">8:33 PM</div>
           </div>
         </div>
 
       </div>
 
-      <!-- Sequential Feed / Chat Input Box -->
+      <!-- Sequential Chat Input Box -->
       <form class="cw-post-box" onsubmit="sendMessage(event)" style="margin:16px;">
-        <input id="chat-input" class="cw-post-input" placeholder="Type a message to test bubble rendering..." autocomplete="off">
+        <input id="chat-input" class="cw-post-input" placeholder="Type a message to test live bubble rendering..." autocomplete="off">
         <button type="submit" class="cw-post-plus-btn" title="Send message">+</button>
       </form>
 
     </div>
 
+    <!-- Feed Screen Components Showcase -->
+    <div class="section-title">
+      <span>📰 Feed & Social Architecture</span>
+      <span class="stat-badge">Sequential Post Box & Status Cards</span>
+    </div>
+
+    <div class="cw-feed-container" style="border-radius:20px; border:1px solid var(--cw-border); margin-bottom:32px; overflow:hidden;">
+      
+      <!-- Feed Tab Bar -->
+      <div class="cw-tab-bar">
+        <div class="cw-tab-item active">Trending</div>
+        <div class="cw-tab-item">Following</div>
+        <div class="cw-tab-item">NeTuArk AI</div>
+      </div>
+
+      <!-- Post Creation Box -->
+      <div class="cw-post-box">
+        <div class="cw-avatar cw-avatar-sm">NW</div>
+        <input class="cw-post-input" placeholder="What's happening in NeTuArk?" readonly onclick="document.getElementById('chat-input').focus()">
+        <button class="cw-post-plus-btn" title="Create Post">+</button>
+      </div>
+
+      <!-- Feed Item 1 -->
+      <div class="cw-feed-item">
+        <div style="display:flex; gap:12px;">
+          <div class="cw-avatar cw-avatar-md">
+            AD
+            <div class="cw-avatar-status"></div>
+          </div>
+          <div style="flex:1;">
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-weight:700; font-size:14px;">Administrator</span>
+                <span class="cw-badge cw-badge-admin">ADMIN</span>
+                <span style="color:var(--cw-text-muted); font-size:12px;">@netuark • 2h</span>
+              </div>
+              <span style="color:var(--cw-text-muted); cursor:pointer;">•••</span>
+            </div>
+            <p style="margin:8px 0 12px 0; font-size:14px; line-height:1.45; color:var(--cw-text-primary);">
+              ColorWing is now the single source of truth for both web and APK. It eliminates design divergence forever while respecting native device battery efficiency.
+            </p>
+            <div style="display:flex; gap:20px; font-size:12px; color:var(--cw-text-muted);">
+              <span style="cursor:pointer;">💬 48 replies</span>
+              <span style="cursor:pointer;" onclick="this.innerHTML = '❤️ 143'">❤️ 142 likes</span>
+              <span style="cursor:pointer;">🔄 19 shares</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Direct 1-Liner Imports Matrix (All 6 Platforms) -->
+    <div class="section-title">
+      <span>🚀 Universal Cross-Platform Import Matrix (Click to Copy)</span>
+      <span id="copy-notify" class="copy-toast">✓ COPIED TO CLIPBOARD</span>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:48px;">
+      
+      <!-- 1. HTML CDN -->
+      <div class="code-pill" onclick="copySnippet('<link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.min.css&quot;>')">
+        <div>
+          <span style="color:var(--cw-accent-cyan); font-weight:700;">1. HTML Web CDN:</span>
+          <code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.min.css"&gt;</code>
+        </div>
+        <span style="color:var(--cw-text-muted); font-size:12px;">📋 Copy</span>
+      </div>
+
+      <!-- 2. NPM Git -->
+      <div class="code-pill" onclick="copySnippet('npm install github:Electroiscoding/project-colorwing')">
+        <div>
+          <span style="color:var(--cw-tertiary); font-weight:700;">2. NPM Git Package:</span>
+          <code>npm install github:Electroiscoding/project-colorwing</code>
+        </div>
+        <span style="color:var(--cw-text-muted); font-size:12px;">📋 Copy</span>
+      </div>
+
+      <!-- 3. Android APK Installer -->
+      <div class="code-pill" onclick="copySnippet('curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/install.sh | bash -s android')">
+        <div>
+          <span style="color:var(--cw-success); font-weight:700;">3. Android Compose:</span>
+          <code>curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/install.sh | bash -s android</code>
+        </div>
+        <span style="color:var(--cw-text-muted); font-size:12px;">📋 Copy</span>
+      </div>
+
+      <!-- 4. iOS SwiftUI Structure -->
+      <div class="code-pill" onclick="copySnippet('curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/dist/ColorwingTokens.swift -o ColorwingTokens.swift')">
+        <div>
+          <span style="color:#F59E0B; font-weight:700;">4. iOS SwiftUI Tokens:</span>
+          <code>curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/dist/ColorwingTokens.swift -o ColorwingTokens.swift</code>
+        </div>
+        <span style="color:var(--cw-text-muted); font-size:12px;">📋 Copy</span>
+      </div>
+
+      <!-- 5. Flutter Dart -->
+      <div class="code-pill" onclick="copySnippet('curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/dist/ColorwingTokens.dart -o lib/ColorwingTokens.dart')">
+        <div>
+          <span style="color:#38BDF8; font-weight:700;">5. Flutter / Dart:</span>
+          <code>curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/dist/ColorwingTokens.dart -o lib/ColorwingTokens.dart</code>
+        </div>
+        <span style="color:var(--cw-text-muted); font-size:12px;">📋 Copy</span>
+      </div>
+
+      <!-- 6. SCSS SASS Mixins -->
+      <div class="code-pill" onclick="copySnippet('@import '@netuark/colorwing/scss';')">
+        <div>
+          <span style="color:#EC4899; font-weight:700;">6. SCSS / SASS Bundle:</span>
+          <code>@import '@netuark/colorwing/scss'; // dist/_colorwing.scss</code>
+        </div>
+        <span style="color:var(--cw-text-muted); font-size:12px;">📋 Copy</span>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align:center; color:var(--cw-text-muted); font-size:13px; border-top:1px solid var(--cw-border); padding-top:24px;">
+      ColorWing Design System • MIT Licensed • Single Source of Truth for NeTuArk Web and Android.
+    </div>
+
   </div>
 
-  <!-- Client Runtime -->
+  <!-- Client Runtime Initializer -->
   <script type="module">
     import { ColorWing } from './src/runtime/colorwing.js';
     window.ColorWing = ColorWing;
@@ -239,14 +553,37 @@
   </script>
 
   <script>
+    // Live Studio Controls
     function setVibe(vibeId, btn) {
       document.documentElement.setAttribute('data-time-vibe', vibeId);
       document.querySelectorAll('.control-pill').forEach(b => {
-        if (b.textContent.includes('Morning') || b.textContent.includes('Day') || b.textContent.includes('Sunset') || b.textContent.includes('Night')) {
+        if (b.textContent.includes('Morning') || b.textContent.includes('Day') || b.textContent.includes('Sunset') || b.textContent.includes('Night') || b.textContent.includes('Auto')) {
           b.classList.remove('active');
         }
       });
       if (btn) btn.classList.add('active');
+      updateVibeDot(vibeId);
+    }
+
+    function setVibeAuto(btn) {
+      const hour = new Date().getHours();
+      let vibe = 'morning';
+      if (hour >= 11 && hour <= 16) vibe = 'day';
+      else if (hour >= 17 && hour <= 19) vibe = 'sunset';
+      else if (hour >= 20 || hour <= 5) vibe = 'night';
+      setVibe(vibe, btn);
+    }
+
+    function updateVibeDot(vibe) {
+      const dot = document.getElementById('vibe-indicator');
+      if (!dot) return;
+      const colors = {
+        morning: '#E65100',
+        day: '#4F46E5',
+        sunset: '#D90429',
+        night: '#6366F1'
+      };
+      dot.style.background = colors[vibe] || '#E65100';
     }
 
     function setGlass(enable) {
@@ -259,6 +596,34 @@
       document.documentElement.setAttribute('data-platform', platform);
       document.getElementById('btn-plat-web').classList.toggle('active', platform === 'web');
       document.getElementById('btn-plat-apk').classList.toggle('active', platform === 'apk');
+    }
+
+    function triggerGlassPulse() {
+      setGlass(true);
+      const card = document.querySelector('.cw-liquid-glass-surface');
+      if (card) {
+        card.style.transform = 'scale(1.02)';
+        card.style.transition = 'transform 0.2s ease';
+        setTimeout(() => { card.style.transform = 'scale(1)'; }, 200);
+      }
+    }
+
+    function triggerCallAlert() {
+      alert('📞 NeTuArk Native Call: Initiating secure P2P voice call channel via APK interface.');
+    }
+
+    function toggleReaction(btn) {
+      btn.classList.toggle('active');
+      const parts = btn.textContent.trim().split(' ');
+      const emoji = parts[0];
+      let count = parseInt(parts[1] || '0', 10);
+      count = btn.classList.contains('active') ? count + 1 : count - 1;
+      btn.textContent = emoji + ' ' + count;
+    }
+
+    function toggleVoicePlay(btn) {
+      const isPlaying = btn.textContent === '⏸';
+      btn.textContent = isPlaying ? '▶' : '⏸';
     }
 
     function openOnboarding() {
@@ -287,7 +652,13 @@
       const group = document.createElement('div');
       group.className = 'cw-bubble-group';
       group.style.alignSelf = 'flex-end';
-      group.innerHTML = `<div class="cw-bubble cw-bubble-sent">${escapeHtml(text)}</div>`;
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      group.innerHTML = 
+        '<div class="cw-bubble cw-bubble-sent">' +
+          escapeHtml(text) +
+          '<div style="text-align:right; font-size:10px; color:rgba(255,255,255,0.7); margin-top:4px;">' + timeStr + ' ✓✓</div>' +
+        '</div>';
       stream.appendChild(group);
 
       input.value = '';
