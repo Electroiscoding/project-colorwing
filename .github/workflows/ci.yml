@@ -1,0 +1,42 @@
+name: ColorWing CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  test-and-benchmark:
+    name: Test & Performance Benchmark
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Verify CLI Executable
+      run: node bin/colorwing.js --help
+
+    - name: Build All Targets
+      run: node bin/colorwing.js build
+
+    - name: Run WCAG Contrast Check
+      run: node bin/colorwing.js check
+
+    - name: Run System Doctor
+      run: node bin/colorwing.js doctor
+
+    - name: Run Unit Tests & < 10ms Benchmark
+      run: node tests/tokens.test.js
+
+    - name: Verify Live Server Boots & Exits Cleanly
+      run: node bin/colorwing.js serve --port 3333 --test-exit

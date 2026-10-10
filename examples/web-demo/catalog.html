@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-time-vibe="morning" data-liquid-glass="false">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ColorWing Component Catalog & Design Showcase</title>
+  
+  <link rel="stylesheet" href="../../dist/colorwing.css">
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+      background-color: var(--cw-bg);
+      color: var(--cw-text-primary);
+      margin: 0;
+      padding: 32px 20px;
+      display: flex;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .container {
+      max-width: 960px;
+      width: 100%;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      margin: 36px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--cw-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .component-box {
+      background: var(--cw-surface);
+      border: 1px solid var(--cw-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .swatch-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .swatch-item {
+      background: var(--cw-surface-card);
+      border: 1px solid var(--cw-border);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .swatch-color {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      flex-shrink: 0;
+    }
+
+    /* Animated Pop */
+    @keyframes cw-heart-pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.35); }
+      100% { transform: scale(1); }
+    }
+    .heart-anim {
+      display: inline-block;
+      animation: cw-heart-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1.0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Header -->
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <div>
+        <h1 style="margin:0; font-size:28px; font-weight:800;">🪽 ColorWing Component Catalog</h1>
+        <p style="margin:4px 0 0; color:var(--cw-text-secondary); font-size:14px;">
+          The Centralized Design Standard for NeTuArk Web & Android
+        </p>
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <button class="cw-btn cw-btn-secondary" onclick="toggleGlass()" id="glass-toggle-btn">
+          Toggle Liquid Glass (Off)
+        </button>
+      </div>
+    </div>
+
+    <!-- 1. Color Palette -->
+    <div class="section-title">
+      <span>1. Brand & Surface Hierarchy</span>
+      <span style="font-size:12px; color:var(--cw-text-muted);">Rule: Native Black + High-Contrast White + NeTuArk Red</span>
+    </div>
+
+    <div class="swatch-row">
+      <div class="swatch-item">
+        <div class="swatch-color" style="background:var(--cw-primary);"></div>
+        <div>
+          <strong style="font-size:13px; display:block;">Primary: Black</strong>
+          <span style="font-size:11px; color:var(--cw-text-muted);">#000000 (OLED Native)</span>
+        </div>
+      </div>
+
+      <div class="swatch-item">
+        <div class="swatch-color" style="background:var(--cw-secondary);"></div>
+        <div>
+          <strong style="font-size:13px; display:block;">Secondary: White</strong>
+          <span style="font-size:11px; color:var(--cw-text-muted);">#FFFFFF</span>
+        </div>
+      </div>
+
+      <div class="swatch-item">
+        <div class="swatch-color" style="background:var(--cw-tertiary);"></div>
+        <div>
+          <strong style="font-size:13px; display:block;">Tertiary: Red</strong>
+          <span style="font-size:11px; color:var(--cw-text-muted);">#D90429</span>
+        </div>
+      </div>
+
+      <div class="swatch-item">
+        <div class="swatch-color" style="background:var(--cw-surface);"></div>
+        <div>
+          <strong style="font-size:13px; display:block;">Surface Dark</strong>
+          <span style="font-size:11px; color:var(--cw-text-muted);">#12131C</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Chat Header -->
+    <div class="section-title">
+      <span>2. Chat Header (Web vs APK Call Button Rule)</span>
+      <span style="font-size:12px; color:var(--cw-text-muted);">Rule: Call button visible only on APK</span>
+    </div>
+
+    <div class="component-box cw-glass-panel" style="padding:0; overflow:hidden;">
+      <div class="cw-chat-header">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="cw-avatar cw-avatar-md">
+            SC
+            <div class="cw-avatar-status"></div>
+          </div>
+          <div>
+            <div style="font-weight:700; font-size:15px;">Sarah Connor</div>
+            <div style="font-size:12px; color:var(--cw-success);">Online</div>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:8px;">
+          <!-- Hidden on Web by default, visible on APK -->
+          <button class="cw-call-btn" title="Call Button (APK Only)">📞</button>
+          <button style="background:transparent; border:none; color:#fff; cursor:pointer;" title="Options">⋮</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Chat Bubbles & Interactive Stream -->
+    <div class="section-title">
+      <span>3. Chat Bubbles (APK Asymmetric Shape + Crimson Brush)</span>
+    </div>
+
+    <div class="component-box" style="background:#000000;">
+      
+      <!-- Reply Quote -->
+      <div style="max-width:320px; margin-bottom:8px;">
+        <div class="cw-reply-quote">
+          <div class="cw-reply-quote-title">John Doe</div>
+          <div class="cw-reply-quote-text">Let's check the design tokens!</div>
+        </div>
+      </div>
+
+      <!-- Received Message -->
+      <div class="cw-bubble-group" style="align-self: flex-start;">
+        <div class="cw-bubble cw-bubble-received">
+          Here is a received message bubble in slate dark glass.
+          <div style="font-size:10px; color:var(--cw-text-muted); text-align:right; margin-top:4px;">10:40 AM</div>
+        </div>
+      </div>
+
+      <!-- Sent Message with Crimson Brush & Aurora Edge -->
+      <div class="cw-bubble-group" style="align-self: flex-end; margin-left:auto;">
+        <div class="cw-bubble cw-bubble-sent">
+          Here is a sent message bubble using the official #D90429 crimson gradient brush and 16px/4px tail corner.
+          <div style="font-size:10px; color:rgba(255,255,255,0.7); text-align:right; margin-top:4px;">10:41 AM ✓✓</div>
+        </div>
+      </div>
+
+      <!-- Reactions Bar -->
+      <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+        <div class="cw-reactions-row">
+          <button class="cw-reaction-pill active" onclick="react(this)">❤️ <span class="cnt">24</span></button>
+          <button class="cw-reaction-pill" onclick="react(this)">🔥 <span class="cnt">9</span></button>
+          <button class="cw-reaction-pill" onclick="react(this)">🚀 <span class="cnt">3</span></button>
+        </div>
+      </div>
+
+      <!-- Voice Message Player -->
+      <div style="margin-top:16px; max-width:360px;">
+        <div class="cw-voice-player">
+          <button class="cw-voice-btn" onclick="togglePlay(this)">▶</button>
+          <div class="cw-voice-waveform">
+            <div class="cw-voice-bar active" style="height:10px;"></div>
+            <div class="cw-voice-bar active" style="height:18px;"></div>
+            <div class="cw-voice-bar active" style="height:14px;"></div>
+            <div class="cw-voice-bar active" style="height:22px;"></div>
+            <div class="cw-voice-bar" style="height:12px;"></div>
+            <div class="cw-voice-bar" style="height:16px;"></div>
+            <div class="cw-voice-bar" style="height:8px;"></div>
+          </div>
+          <span style="font-size:11px; color:var(--cw-text-secondary);">0:38</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 4. Sequential Feed Flow -->
+    <div class="section-title">
+      <span>4. Sequential Feed Flow (Post Box + Plus Button)</span>
+      <span style="font-size:12px; color:var(--cw-text-muted);">Rule: Skip 3D card borders to eliminate fatigue</span>
+    </div>
+
+    <div class="cw-feed-container" style="border:1px solid var(--cw-border); border-radius:16px; min-height:auto;">
+      
+      <!-- Post Box -->
+      <div class="cw-post-box">
+        <input class="cw-post-input" id="new-post-text" placeholder="Write something...">
+        <button class="cw-post-plus-btn" onclick="addPost()">+</button>
+      </div>
+
+      <!-- Feed Stream -->
+      <div id="feed-items-container">
+        <div class="cw-feed-item">
+          <div style="display:flex; gap:12px;">
+            <div class="cw-avatar cw-avatar-sm">NW</div>
+            <div style="flex:1;">
+              <div>
+                <strong>NeTuArk Engineering</strong>
+                <span style="font-size:12px; color:var(--cw-text-muted); margin-left:6px;">@netuark • just now</span>
+              </div>
+              <p style="margin:6px 0; font-size:14px; line-height:1.5;">
+                Flat sequential feed items prevent eye fatigue across hours of browsing.
+              </p>
+              <div style="display:flex; gap:20px; font-size:12px; color:var(--cw-text-muted);">
+                <span style="cursor:pointer;" onclick="likePost(this)">❤️ <span class="like-cnt">142</span></span>
+                <span>💬 19</span>
+                <span>🔄 38</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    let isLiquid = false;
+    function toggleGlass() {
+      isLiquid = !isLiquid;
+      document.documentElement.setAttribute('data-liquid-glass', isLiquid ? 'true' : 'false');
+      document.getElementById('glass-toggle-btn').textContent = isLiquid ? 'Toggle Liquid Glass (ON)' : 'Toggle Liquid Glass (Off)';
+    }
+
+    function react(btn) {
+      btn.classList.toggle('active');
+      const cnt = btn.querySelector('.cnt');
+      let val = parseInt(cnt.textContent, 10);
+      cnt.textContent = btn.classList.contains('active') ? val + 1 : val - 1;
+    }
+
+    function togglePlay(btn) {
+      btn.textContent = btn.textContent === '▶' ? '⏸' : '▶';
+    }
+
+    function likePost(el) {
+      el.classList.toggle('heart-anim');
+      const cnt = el.querySelector('.like-cnt');
+      let val = parseInt(cnt.textContent, 10);
+      cnt.textContent = val + 1;
+    }
+
+    function addPost() {
+      const input = document.getElementById('new-post-text');
+      if (!input.value.trim()) return;
+      const container = document.getElementById('feed-items-container');
+      const item = document.createElement('div');
+      item.className = 'cw-feed-item';
+      item.innerHTML = `
+        <div style="display:flex; gap:12px;">
+          <div class="cw-avatar cw-avatar-sm">ME</div>
+          <div style="flex:1;">
+            <div>
+              <strong>You</strong>
+              <span style="font-size:12px; color:var(--cw-text-muted); margin-left:6px;">@you • just now</span>
+            </div>
+            <p style="margin:6px 0; font-size:14px; line-height:1.5;">${input.value}</p>
+            <div style="display:flex; gap:20px; font-size:12px; color:var(--cw-text-muted);">
+              <span style="cursor:pointer;" onclick="likePost(this)">❤️ <span class="like-cnt">1</span></span>
+              <span>💬 0</span>
+              <span>🔄 0</span>
+            </div>
+          </div>
+        </div>
+      `;
+      container.prepend(item);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>

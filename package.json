@@ -1,6 +1,6 @@
 {
   "name": "@netuark/colorwing",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Centralized cross-platform styling, coloring, and token design system for Web and Android",
   "main": "dist/colorwing.js",
   "module": "dist/colorwing.js",
@@ -10,6 +10,21 @@
   "bin": {
     "colorwing": "./bin/colorwing.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Electroiscoding/project-colorwing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Electroiscoding/project-colorwing/issues"
+  },
+  "homepage": "https://github.com/Electroiscoding/project-colorwing#readme",
+  "files": [
+    "dist",
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "exports": {
     ".": {
       "types": "./dist/colorwing.d.ts",
@@ -22,12 +37,16 @@
     "./tailwind": "./dist/tailwind-preset.js",
     "./kotlin/tokens": "./dist/ColorwingTokens.kt",
     "./kotlin/theme": "./dist/ColorwingTheme.kt",
-    "./kotlin/components": "./dist/ColorwingComponents.kt"
+    "./kotlin/components": "./dist/ColorwingComponents.kt",
+    "./flutter": "./dist/ColorwingTokens.dart",
+    "./native": "./dist/ColorwingNative.js"
   },
   "scripts": {
     "build": "node bin/colorwing.js build",
     "watch": "node bin/colorwing.js watch",
     "serve": "node bin/colorwing.js serve",
+    "check": "node bin/colorwing.js check",
+    "doctor": "node bin/colorwing.js doctor",
     "test": "node tests/tokens.test.js"
   },
   "keywords": [
@@ -36,6 +55,8 @@
     "css",
     "jetpack-compose",
     "kotlin",
+    "flutter",
+    "react-native",
     "tailwind",
     "netuark",
     "colorwing"
