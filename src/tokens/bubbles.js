@@ -1,48 +1,50 @@
 /**
  * ColorWing Centralized Design System: Chat Bubbles
  *
- * Merged UI Decision:
- * - APK Shape (14-16px smooth pill with 4px tail corner)
- * - Gradient Brush (Red Crimson to Deep Crimson)
- * - Time-Based Vibe tint overlay
+ * Exact 1:1 Implementation from APK (nta-app-try1/MessageBubble.kt & Theme.kt):
+ * - APK Shape (14dp rounded corners with 4dp tail)
+ * - Sent: Base Red (#C82128) -> Crimson (#A01830) -> Purple Glow (#6D164A) -> Blue Glow (#501F50)
+ * - Received: Slate Base (#0F131C) -> Slate Mid (#181D28) -> Slate Highlight (#1D1D2C)
+ * - Aurora Amber Edge line (#E65100)
+ * - White 15% Top Highlight specular line
  */
 
 export const bubbles = {
   geometry: {
-    borderRadius: '16px',
+    borderRadius: '14px',
     borderRadiusSentTail: '4px',
     borderRadiusReceivedTail: '4px',
     paddingY: '8px',
     paddingX: '12px',
     paddingBottom: '6px',
     minWidth: '60px',
-    maxWidthPercentMobile: '85%',
+    maxWidthPercentMobile: '82%',
     maxWidthPercentDesktop: '70%',
     composeCornerDp: 14,
     composeTailCornerDp: 4
   },
 
   sent: {
-    // Red to Deep Crimson Gradient Brush
-    gradient: 'linear-gradient(135deg, #D90429 0%, #C82128 40%, #9B021D 100%)',
-    gradientColors: ['#D90429', '#C82128', '#9B021D'],
+    // Exact APK Base Red -> Crimson -> Purple Glow -> Blue Glow
+    gradient: 'linear-gradient(135deg, #C82128 0%, #A01830 35%, #6D164A 70%, #501F50 100%)',
+    gradientColors: ['#C82128', '#A01830', '#6D164A', '#501F50'],
     color: '#FFFFFF',
     border: 'none',
-    boxShadow: '0 3px 12px rgba(217, 4, 41, 0.35)',
+    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(200, 33, 40, 0.25)',
     topHighlight: 'rgba(255, 255, 255, 0.15)',
     edgeGlowAmber: '#E65100',
     edgeGlowWidth: '3px'
   },
 
   received: {
-    // Slate Glass / Dark Surface
-    background: '#161926',
-    gradient: 'linear-gradient(135deg, #161926 0%, #0F131C 100%)',
-    gradientColors: ['#161926', '#0F131C'],
+    // Exact APK Slate Base -> Slate Mid -> Slate Highlight
+    background: '#0F131C',
+    gradient: 'linear-gradient(135deg, #0F131C 0%, #181D28 40%, #1D1D2C 80%, #0F131C 100%)',
+    gradientColors: ['#0F131C', '#181D28', '#1D1D2C', '#0F131C'],
     color: '#F1F5F9',
     border: '1px solid rgba(255, 255, 255, 0.08)',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.25)',
-    topHighlight: 'rgba(255, 255, 255, 0.08)'
+    boxShadow: '0 3px 12px rgba(0, 0, 0, 0.35)',
+    topHighlight: 'rgba(255, 255, 255, 0.10)'
   },
 
   beetaAi: {

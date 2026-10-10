@@ -106,9 +106,21 @@ export function compileBubblesCss(options = {}) {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 16px 16px 0 0;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 14px 14px 0 0;
+  pointer-events: none;
+}
+.cw-bubble-sent::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  right: 2px;
+  width: 3px;
+  border-radius: 9999px;
+  background: ${bubbles.sent.edgeGlowAmber};
+  opacity: 0.85;
   pointer-events: none;
 }
 .cw-bubble-received {
@@ -118,6 +130,15 @@ export function compileBubblesCss(options = {}) {
   border-bottom-left-radius: ${bubbles.geometry.borderRadiusReceivedTail};
   box-shadow: ${bubbles.received.boxShadow};
   margin-right: auto;
+}
+.cw-bubble-received::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 14px 14px 0 0;
+  pointer-events: none;
 }
 .cw-bubble-ai {
   background: ${bubbles.beetaAi.gradient};

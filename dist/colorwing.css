@@ -54,14 +54,14 @@
   --cw-ambient-bubble-glow: rgba(230, 81, 0, 0.35);
 
   /* --- Chat Bubbles Geometry & Brushes --- */
-  --cw-bubble-radius: 16px;
+  --cw-bubble-radius: 14px;
   --cw-bubble-tail-sent: 4px;
   --cw-bubble-tail-received: 4px;
-  --cw-bubble-sent-bg: linear-gradient(135deg, #D90429 0%, #C82128 40%, #9B021D 100%);
-  --cw-bubble-sent-shadow: 0 3px 12px rgba(217, 4, 41, 0.35);
-  --cw-bubble-received-bg: linear-gradient(135deg, #161926 0%, #0F131C 100%);
+  --cw-bubble-sent-bg: linear-gradient(135deg, #C82128 0%, #A01830 35%, #6D164A 70%, #501F50 100%);
+  --cw-bubble-sent-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(200, 33, 40, 0.25);
+  --cw-bubble-received-bg: linear-gradient(135deg, #0F131C 0%, #181D28 40%, #1D1D2C 80%, #0F131C 100%);
   --cw-bubble-received-border: 1px solid rgba(255, 255, 255, 0.08);
-  --cw-bubble-received-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  --cw-bubble-received-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
 
   /* --- Static Glass (Default) --- */
   --cw-glass-bg: rgba(18, 19, 28, 0.75);

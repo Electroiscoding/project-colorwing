@@ -63,13 +63,11 @@ fun rememberColorwingAmbientColor(): Color {
 @Composable
 fun rememberColorwingBubbleBrush(isMine: Boolean): Brush {
     return if (isMine) {
-        val colors = remember {
-            listOf(
-                ColorwingTokens.Tertiary,
-                ColorwingTokens.TertiaryCrimson,
-                ColorwingTokens.TertiaryDark
-            )
-        }
+        val redBase = remember { Color(0xFFC82128) }
+        val crimson = remember { Color(0xFFA01830) }
+        val purpleGlow = remember { Color(0xFF6D164A) }
+        val blueGlow = remember { Color(0xFF501F50) }
+        val colors = remember { listOf(redBase, crimson, purpleGlow, blueGlow) }
         remember {
             Brush.linearGradient(
                 colors = colors,
@@ -79,8 +77,9 @@ fun rememberColorwingBubbleBrush(isMine: Boolean): Brush {
         }
     } else {
         val slateBase = remember { Color(0xFF0F131C) }
-        val slateMid = remember { Color(0xFF161926) }
-        val colors = remember { listOf(slateMid, slateBase) }
+        val slateMid = remember { Color(0xFF181D28) }
+        val slateHighlight = remember { Color(0xFF1D1D2C) }
+        val colors = remember { listOf(slateBase, slateMid, slateHighlight, slateBase) }
         remember {
             Brush.linearGradient(
                 colors = colors,

@@ -27,12 +27,12 @@ module.exports = {
         'cw-warning': '#F59E0B'
       },
       borderRadius: {
-        'cw-bubble': '16px',
+        'cw-bubble': '14px',
         'cw-tail': '4px'
       },
       boxShadow: {
-        'cw-bubble-sent': '0 3px 12px rgba(217, 4, 41, 0.35)',
-        'cw-bubble-received': '0 2px 10px rgba(0, 0, 0, 0.25)'
+        'cw-bubble-sent': '0 4px 14px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(200, 33, 40, 0.25)',
+        'cw-bubble-received': '0 3px 12px rgba(0, 0, 0, 0.35)'
       }
     }
   }

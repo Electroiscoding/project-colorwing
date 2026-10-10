@@ -258,7 +258,12 @@ fun ColorwingAvatar(
 
 /**
  * Centralized Chat Bubble Composable
- * Adheres to APK Shape (14dp with 4dp tail) & Gradient Brushes
+ * Exact 1:1 Implementation from APK (nta-app-try1/MessageBubble.kt):
+ * - APK Shape (14dp with 4dp tail)
+ * - Sent: Base Red (#C82128) -> Crimson (#A01830) -> Purple Glow (#6D164A) -> Blue Glow (#501F50)
+ * - Received: Slate Base (#0F131C) -> Slate Mid (#181D28) -> Slate Highlight (#1D1D2C)
+ * - Top Highlight Specular Line (White alpha 0.15)
+ * - Aurora Amber Edge Line (#E65100 alpha 0.85)
  */
 @Composable
 fun ColorwingChatBubble(
@@ -271,6 +276,7 @@ fun ColorwingChatBubble(
     val brush = rememberColorwingBubbleBrush(isMine = isMine)
     val alignment = if (isMine) Alignment.CenterEnd else Alignment.CenterStart
     val textColor = if (isMine) Color.White else ColorwingTokens.TextPrimary
+    val edgeColor = Color(0xFFE65100) // APK Warm Amber static line
 
     Box(
         modifier = modifier.fillMaxWidth(),
@@ -278,14 +284,37 @@ fun ColorwingChatBubble(
     ) {
         Column(
             modifier = Modifier
-                .widthIn(min = 60.dp, max = 280.dp)
+                .widthIn(min = 60.dp, max = 290.dp)
                 .clip(shape)
                 .background(brush, shape)
                 .then(
                     if (!isMine) Modifier.border(1.dp, ColorwingTokens.BorderDefault, shape)
                     else Modifier
                 )
-                .padding(horizontal = 14.dp, vertical = 8.dp)
+                .drawWithCache {
+                    onDrawWithContent {
+                        drawContent()
+                        // 1. Top Specular Highlight Line
+                        drawLine(
+                            color = Color.White.copy(alpha = if (isMine) 0.15f else 0.10f),
+                            start = androidx.compose.ui.geometry.Offset(0f, 0f),
+                            end = androidx.compose.ui.geometry.Offset(size.width, 0f),
+                            strokeWidth = 2f
+                        )
+                        // 2. Aurora Amber Edge Line (APK signature)
+                        if (isMine) {
+                            val edgeX = size.width - 2f
+                            drawLine(
+                                color = edgeColor.copy(alpha = 0.85f),
+                                start = androidx.compose.ui.geometry.Offset(edgeX, 10f),
+                                end = androidx.compose.ui.geometry.Offset(edgeX, size.height - 10f),
+                                strokeWidth = 3f,
+                                cap = androidx.compose.ui.graphics.StrokeCap.Round
+                            )
+                        }
+                    }
+                }
+                .padding(start = 12.dp, top = 8.dp, end = 12.dp, bottom = 6.dp)
         ) {
             Text(
                 text = text,
@@ -298,7 +327,7 @@ fun ColorwingChatBubble(
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = timestamp,
-                    color = ColorwingTokens.TextMuted,
+                    color = if (isMine) Color.White.copy(alpha = 0.70f) else ColorwingTokens.TextMuted,
                     fontSize = 10.sp,
                     modifier = Modifier.align(Alignment.End)
                 )
