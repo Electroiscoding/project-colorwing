@@ -17,7 +17,13 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { buildAll } from '../src/compiler/index.js';
 import { startLiveServer } from '../src/server/liveServer.js';
-import { compileCss } from '../src/compiler/cssCompiler.js';
+import {
+  compileCss,
+  compileColorsCss,
+  compileBubblesCss,
+  compileFeedCss,
+  compileGlassCss
+} from '../src/compiler/cssCompiler.js';
 import { compileKotlinTokens, compileKotlinTheme, compileKotlinComponents } from '../src/compiler/kotlinCompiler.js';
 import { compileSwiftTokens } from '../src/compiler/swiftCompiler.js';
 import { compileFlutterTokens } from '../src/compiler/flutterCompiler.js';
@@ -92,6 +98,10 @@ if (command === 'build') {
   if (platform === 'web') {
     syncFiles.push({ src: 'colorwing.min.css', dest: 'colorwing.min.css' });
     syncFiles.push({ src: 'colorwing.js', dest: 'colorwing.js' });
+    syncFiles.push({ src: 'colors.min.css', dest: 'colors.min.css' });
+    syncFiles.push({ src: 'bubbles.min.css', dest: 'bubbles.min.css' });
+    syncFiles.push({ src: 'feed.min.css', dest: 'feed.min.css' });
+    syncFiles.push({ src: 'glass.min.css', dest: 'glass.min.css' });
   } else if (platform === 'android') {
     syncFiles.push({ src: 'ColorwingTokens.kt', dest: 'ColorwingTokens.kt' });
     syncFiles.push({ src: 'ColorwingTheme.kt', dest: 'ColorwingTheme.kt' });
@@ -123,6 +133,14 @@ if (command === 'build') {
 
   if (format === 'css') {
     process.stdout.write(compileCss({ minify: false }));
+  } else if (format === 'colors') {
+    process.stdout.write(compileColorsCss({ minify: false }));
+  } else if (format === 'bubbles') {
+    process.stdout.write(compileBubblesCss({ minify: false }));
+  } else if (format === 'feed') {
+    process.stdout.write(compileFeedCss({ minify: false }));
+  } else if (format === 'glass') {
+    process.stdout.write(compileGlassCss({ minify: false }));
   } else if (format === 'kt' || format === 'kotlin') {
     process.stdout.write(compileKotlinTokens() + '\n\n' + compileKotlinTheme() + '\n\n' + compileKotlinComponents());
   } else if (format === 'swift') {
