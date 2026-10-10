@@ -167,6 +167,63 @@ export function compileBubblesCss(options = {}) {
   color: var(--cw-tertiary);
   font-size: 13px;
 }
+
+/* --- Liquid Glass Bubbles (1:1 APK LiquidGlassEffect & SafeHaze) --- */
+[data-liquid-glass="true"] .cw-bubble,
+.cw-liquid-glass .cw-bubble,
+.cw-bubble.cw-liquid-glass {
+  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-sent,
+.cw-liquid-glass .cw-bubble-sent,
+.cw-bubble-sent.cw-liquid-glass {
+  background-image: ${bubbles.liquidGlass.sent.overlayBrush}, ${bubbles.liquidGlass.sent.gradient} !important;
+  background-color: rgba(160, 24, 48, 0.75) !important;
+  border: ${bubbles.liquidGlass.sent.border} !important;
+  box-shadow: ${bubbles.liquidGlass.sent.boxShadow} !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-sent::before,
+.cw-liquid-glass .cw-bubble-sent::before,
+.cw-bubble-sent.cw-liquid-glass::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.85) 50%, transparent 100%) !important;
+  height: 1.5px !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-received,
+.cw-liquid-glass .cw-bubble-received,
+.cw-bubble-received.cw-liquid-glass {
+  background-image: ${bubbles.liquidGlass.received.overlayBrush}, ${bubbles.liquidGlass.received.gradient} !important;
+  background-color: rgba(18, 19, 28, 0.70) !important;
+  border: ${bubbles.liquidGlass.received.border} !important;
+  box-shadow: ${bubbles.liquidGlass.received.boxShadow} !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-received::before,
+.cw-liquid-glass .cw-bubble-received::before,
+.cw-bubble-received.cw-liquid-glass::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.65) 50%, transparent 100%) !important;
+  height: 1.5px !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-ai,
+.cw-liquid-glass .cw-bubble-ai,
+.cw-bubble-ai.cw-liquid-glass {
+  background-image: linear-gradient(180deg, rgba(129, 140, 248, 0.25) 0%, transparent 60%), ${bubbles.liquidGlass.beetaAi.gradient} !important;
+  border: ${bubbles.liquidGlass.beetaAi.border} !important;
+  box-shadow: ${bubbles.liquidGlass.beetaAi.boxShadow} !important;
+}
+
+[data-liquid-glass="true"] .cw-call-log-bubble,
+.cw-liquid-glass .cw-call-log-bubble {
+  background-color: rgba(18, 19, 28, 0.65) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.50), 0 6px 20px rgba(0, 0, 0, 0.40) !important;
+  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+}
 `;
   return options.minify ? minifyCss(raw) : raw;
 }
@@ -238,7 +295,7 @@ export function compileFeedCss(options = {}) {
 }
 
 export function compileGlassCss(options = {}) {
-  const { glass } = tokens;
+  const { glass, bubbles } = tokens;
   const raw = `/* ==========================================================================
    ColorWing Modular Glass Bundle
    Static Default (Zero Lag) | Optional Toggle: Liquid Glass (1:1 APK Alignment)
@@ -317,6 +374,63 @@ export function compileGlassCss(options = {}) {
   height: 1.5px;
   background: ${glass.liquid.specularTopLine};
   pointer-events: none;
+}
+
+/* Liquid Glass Message Bubbles (1:1 APK LiquidGlassEffect & SafeHaze) */
+[data-liquid-glass="true"] .cw-bubble,
+.cw-liquid-glass .cw-bubble,
+.cw-bubble.cw-liquid-glass {
+  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-sent,
+.cw-liquid-glass .cw-bubble-sent,
+.cw-bubble-sent.cw-liquid-glass {
+  background-image: ${bubbles.liquidGlass.sent.overlayBrush}, ${bubbles.liquidGlass.sent.gradient} !important;
+  background-color: rgba(160, 24, 48, 0.75) !important;
+  border: ${bubbles.liquidGlass.sent.border} !important;
+  box-shadow: ${bubbles.liquidGlass.sent.boxShadow} !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-sent::before,
+.cw-liquid-glass .cw-bubble-sent::before,
+.cw-bubble-sent.cw-liquid-glass::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.85) 50%, transparent 100%) !important;
+  height: 1.5px !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-received,
+.cw-liquid-glass .cw-bubble-received,
+.cw-bubble-received.cw-liquid-glass {
+  background-image: ${bubbles.liquidGlass.received.overlayBrush}, ${bubbles.liquidGlass.received.gradient} !important;
+  background-color: rgba(18, 19, 28, 0.70) !important;
+  border: ${bubbles.liquidGlass.received.border} !important;
+  box-shadow: ${bubbles.liquidGlass.received.boxShadow} !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-received::before,
+.cw-liquid-glass .cw-bubble-received::before,
+.cw-bubble-received.cw-liquid-glass::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.65) 50%, transparent 100%) !important;
+  height: 1.5px !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-ai,
+.cw-liquid-glass .cw-bubble-ai,
+.cw-bubble-ai.cw-liquid-glass {
+  background-image: linear-gradient(180deg, rgba(129, 140, 248, 0.25) 0%, transparent 60%), ${bubbles.liquidGlass.beetaAi.gradient} !important;
+  border: ${bubbles.liquidGlass.beetaAi.border} !important;
+  box-shadow: ${bubbles.liquidGlass.beetaAi.boxShadow} !important;
+}
+
+[data-liquid-glass="true"] .cw-call-log-bubble,
+.cw-liquid-glass .cw-call-log-bubble {
+  background-color: rgba(18, 19, 28, 0.65) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.50), 0 6px 20px rgba(0, 0, 0, 0.40) !important;
+  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
 }
 `;
   return options.minify ? minifyCss(raw) : raw;
@@ -666,6 +780,63 @@ export function compileCss(options = {}) {
 .cw-call-log-bubble .cw-call-icon {
   color: var(--cw-tertiary);
   font-size: 13px;
+}
+
+/* --- Liquid Glass Bubbles (1:1 APK LiquidGlassEffect & SafeHaze) --- */
+[data-liquid-glass="true"] .cw-bubble,
+.cw-liquid-glass .cw-bubble,
+.cw-bubble.cw-liquid-glass {
+  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-sent,
+.cw-liquid-glass .cw-bubble-sent,
+.cw-bubble-sent.cw-liquid-glass {
+  background-image: ${bubbles.liquidGlass.sent.overlayBrush}, ${bubbles.liquidGlass.sent.gradient} !important;
+  background-color: rgba(160, 24, 48, 0.75) !important;
+  border: ${bubbles.liquidGlass.sent.border} !important;
+  box-shadow: ${bubbles.liquidGlass.sent.boxShadow} !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-sent::before,
+.cw-liquid-glass .cw-bubble-sent::before,
+.cw-bubble-sent.cw-liquid-glass::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.85) 50%, transparent 100%) !important;
+  height: 1.5px !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-received,
+.cw-liquid-glass .cw-bubble-received,
+.cw-bubble-received.cw-liquid-glass {
+  background-image: ${bubbles.liquidGlass.received.overlayBrush}, ${bubbles.liquidGlass.received.gradient} !important;
+  background-color: rgba(18, 19, 28, 0.70) !important;
+  border: ${bubbles.liquidGlass.received.border} !important;
+  box-shadow: ${bubbles.liquidGlass.received.boxShadow} !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-received::before,
+.cw-liquid-glass .cw-bubble-received::before,
+.cw-bubble-received.cw-liquid-glass::before {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.65) 50%, transparent 100%) !important;
+  height: 1.5px !important;
+}
+
+[data-liquid-glass="true"] .cw-bubble-ai,
+.cw-liquid-glass .cw-bubble-ai,
+.cw-bubble-ai.cw-liquid-glass {
+  background-image: linear-gradient(180deg, rgba(129, 140, 248, 0.25) 0%, transparent 60%), ${bubbles.liquidGlass.beetaAi.gradient} !important;
+  border: ${bubbles.liquidGlass.beetaAi.border} !important;
+  box-shadow: ${bubbles.liquidGlass.beetaAi.boxShadow} !important;
+}
+
+[data-liquid-glass="true"] .cw-call-log-bubble,
+.cw-liquid-glass .cw-call-log-bubble {
+  background-color: rgba(18, 19, 28, 0.65) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.50), 0 6px 20px rgba(0, 0, 0, 0.40) !important;
+  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
 }
 
 /* Reactions Bar & Reaction Pills */

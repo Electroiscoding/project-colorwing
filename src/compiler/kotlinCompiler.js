@@ -733,6 +733,7 @@ fun ColorwingChatBubble(
     text: String,
     isMine: Boolean,
     timestamp: String? = null,
+    isLiquidGlass: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     val shape = if (isMine) ColorwingTokens.BubbleShapeSent else ColorwingTokens.BubbleShapeReceived
@@ -740,6 +741,8 @@ fun ColorwingChatBubble(
     val alignment = if (isMine) Alignment.CenterEnd else Alignment.CenterStart
     val textColor = if (isMine) Color.White else ColorwingTokens.TextPrimary
     val edgeColor = Color(0xFFE65100) // APK Warm Amber static line
+    val liquidBorderBrush = if (isLiquidGlass) rememberLiquidGlassBorder() else null
+    val liquidOverlayBrush = if (isLiquidGlass) rememberLiquidGlassOverlayBrush() else null
 
     Box(
         modifier = modifier.fillMaxWidth(),
@@ -751,7 +754,12 @@ fun ColorwingChatBubble(
                 .clip(shape)
                 .background(brush, shape)
                 .then(
-                    if (!isMine) Modifier.border(1.dp, ColorwingTokens.BorderDefault, shape)
+                    if (isLiquidGlass && liquidOverlayBrush != null) Modifier.background(liquidOverlayBrush, shape)
+                    else Modifier
+                )
+                .then(
+                    if (isLiquidGlass && liquidBorderBrush != null) Modifier.border(1.5.dp, liquidBorderBrush, shape)
+                    else if (!isMine) Modifier.border(1.dp, ColorwingTokens.BorderDefault, shape)
                     else Modifier
                 )
                 .drawWithCache {
@@ -759,16 +767,16 @@ fun ColorwingChatBubble(
                         drawContent()
                         // 1. Top Specular Highlight Line
                         drawLine(
-                            color = Color.White.copy(alpha = if (isMine) 0.15f else 0.10f),
+                            color = Color.White.copy(alpha = if (isLiquidGlass) 0.75f else if (isMine) 0.15f else 0.10f),
                             start = androidx.compose.ui.geometry.Offset(0f, 0f),
                             end = androidx.compose.ui.geometry.Offset(size.width, 0f),
-                            strokeWidth = 2f
+                            strokeWidth = if (isLiquidGlass) 3f else 2f
                         )
                         // 2. Aurora Amber Edge Line (APK signature)
                         if (isMine) {
                             val edgeX = size.width - 2f
                             drawLine(
-                                color = edgeColor.copy(alpha = 0.85f),
+                                color = edgeColor.copy(alpha = if (isLiquidGlass) 0.95f else 0.85f),
                                 start = androidx.compose.ui.geometry.Offset(edgeX, 10f),
                                 end = androidx.compose.ui.geometry.Offset(edgeX, size.height - 10f),
                                 strokeWidth = 3f,

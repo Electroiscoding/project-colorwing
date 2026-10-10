@@ -54,6 +54,31 @@ export const bubbles = {
     border: '1px solid rgba(99, 102, 241, 0.30)',
     color: '#FFFFFF',
     badgeColor: '#818CF8'
+  },
+
+  liquidGlass: {
+    backdropFilter: 'blur(16px) saturate(180%) contrast(105%)',
+    sent: {
+      gradient: 'linear-gradient(135deg, rgba(200, 33, 40, 0.82) 0%, rgba(160, 24, 48, 0.74) 35%, rgba(109, 22, 74, 0.68) 70%, rgba(80, 31, 80, 0.75) 100%)',
+      overlayBrush: 'linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.15) 100%)',
+      border: '1.5px solid rgba(255, 255, 255, 0.25)',
+      boxShadow: 'inset 0 1.5px 0 0 rgba(255, 255, 255, 0.75), inset 0 -1.5px 0 0 rgba(255, 255, 255, 0.35), inset -3px 0 0 0 #E65100, 0 8px 32px rgba(0, 0, 0, 0.55)',
+      topHighlight: 'rgba(255, 255, 255, 0.85)',
+      edgeGlowAmber: '#E65100'
+    },
+    received: {
+      gradient: 'linear-gradient(135deg, rgba(15, 19, 28, 0.78) 0%, rgba(24, 29, 40, 0.68) 40%, rgba(29, 29, 44, 0.72) 80%, rgba(15, 19, 28, 0.78) 100%)',
+      overlayBrush: 'linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 25%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.15) 100%)',
+      border: '1.5px solid rgba(255, 255, 255, 0.22)',
+      boxShadow: 'inset 0 1.5px 0 0 rgba(255, 255, 255, 0.60), inset 0 -1.5px 0 0 rgba(255, 255, 255, 0.25), 0 8px 32px rgba(0, 0, 0, 0.50)',
+      topHighlight: 'rgba(255, 255, 255, 0.65)'
+    },
+    beetaAi: {
+      gradient: 'linear-gradient(135deg, rgba(26, 26, 46, 0.80) 0%, rgba(22, 33, 62, 0.75) 100%)',
+      border: '1.5px solid rgba(129, 140, 248, 0.45)',
+      boxShadow: 'inset 0 1.5px 0 0 rgba(255, 255, 255, 0.75), inset 0 -1.5px 0 0 rgba(129, 140, 248, 0.35), 0 8px 32px rgba(99, 102, 241, 0.30)',
+      topHighlight: 'rgba(255, 255, 255, 0.75)'
+    }
   }
 };
 
