@@ -1,7 +1,7 @@
 # 🪽 ColorWing
 
 > **Centralized Cross-Platform Design & Styling Token Architecture for Web & Android**  
-> *Production-Grade. Single Source of Truth. Sub-Millisecond Realtime Sync. Big-Tech Grade.*
+> *Production-Grade. Single Source of Truth. Sub-Millisecond Realtime Sync. Zero-Bloat.*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Web%20%7C%20Android%20Compose%20%7C%20Tailwind%20%7C%20Flutter-black.svg)](#)
@@ -12,7 +12,7 @@
 
 ## 📑 Table of Contents
 
-1. [The Big-Tech Architecture](#-the-big-tech-architecture)
+1. [Core Architecture & Philosophy](#-core-architecture--philosophy)
 2. [The 5 Core Rules (How NOT to Mess Up)](#-the-5-core-rules-how-not-to-mess-up)
 3. [Web Developers Guide (Vanilla HTML, Vite, Next.js, SPAs)](#-web-developers-guide)
 4. [Tailwind CSS Developers Guide](#-tailwind-css-developers-guide)
@@ -24,9 +24,9 @@
 
 ---
 
-## ⚡ The Big-Tech Architecture
+## ⚡ Core Architecture & Philosophy
 
-Big tech engineering teams (Google, Meta, Twitter/X, Apple, Uber) never hard-code hex colors, CSS snippets, or bubble shapes inside individual feature repositories. Doing so causes design drift, broken styling twins, and endless maintenance overhead.
+High-scale distributed applications should never hard-code hex colors, CSS snippets, or bubble shapes inside individual feature repositories. Doing so causes design drift, broken styling twins, and endless maintenance overhead.
 
 **ColorWing** is the **centralized single source of truth**. You define your tokens and UI rules once in ColorWing, and it compiles in **< 6ms** into:
 - **Web**: Standard CSS Variables (`:root`) + Modular Utility Classes (`colorwing.css` & `colorwing.min.css`)
