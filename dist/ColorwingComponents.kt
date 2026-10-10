@@ -11,7 +11,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 
 /**
  * Centralized Chat Top Bar Component
@@ -33,7 +33,7 @@ fun ColorwingChatTopBar(
     statusText: String,
     isOnline: Boolean,
     showCallButton: Boolean = true, // APK rule: true on APK, false on Web
-    onBackClick: () -> Unit,
+    onBackClick: () -> Unit = {},
     onCallClick: () -> Unit = {},
     onMoreClick: () -> Unit = {},
     modifier: Modifier = Modifier
@@ -97,7 +97,7 @@ fun ColorwingChatTopBar(
 @Composable
 fun ColorwingPostBox(
     placeholder: String = "What's happening?",
-    onPostClick: () -> Unit,
+    onPostClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -185,7 +185,7 @@ fun ColorwingReactionPill(
     emoji: String,
     count: Int,
     isSelected: Boolean = false,
-    onClick: () -> Unit,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -253,5 +253,27 @@ fun ColorwingAvatar(
                     .border(2.dp, Color.Black, CircleShape)
             )
         }
+    }
+}
+
+// --- Android Studio Previews ---
+@Preview(showBackground = true, backgroundColor = 0xFF000000)
+@Composable
+fun ColorwingChatTopBarPreview() {
+    ColorwingTheme {
+        ColorwingChatTopBar(
+            title = "Sarah Connor",
+            statusText = "Online",
+            isOnline = true,
+            showCallButton = true
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF000000)
+@Composable
+fun ColorwingPostBoxPreview() {
+    ColorwingTheme {
+        ColorwingPostBox(placeholder = "What's happening?")
     }
 }

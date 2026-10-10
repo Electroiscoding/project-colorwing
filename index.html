@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-time-vibe="morning" data-liquid-glass="false">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ColorWing • Centralized Design System</title>
+  
+  <!-- Direct CDN Link from the GitHub Repository -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.min.css">
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+      background-color: var(--cw-bg);
+      color: var(--cw-text-primary);
+      margin: 0;
+      padding: 32px 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .main-wrap {
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .hero-banner {
+      background: var(--cw-surface);
+      border: 1px solid var(--cw-border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .code-pill {
+      font-family: monospace;
+      font-size: 13px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: var(--cw-text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-wrap">
+    
+    <div class="hero-banner cw-glass-panel">
+      <div>
+        <h1 style="margin:0; font-size:28px; font-weight:800;">🪽 ColorWing</h1>
+        <p style="margin:6px 0 0; color:var(--cw-text-secondary); font-size:14px;">
+          Centralized Cross-Platform Design Tokens for Web & Android
+        </p>
+      </div>
+
+      <div class="btn-group">
+        <a class="cw-btn cw-btn-tertiary" href="https://github.com/Electroiscoding/project-colorwing" target="_blank">
+          GitHub Repository
+        </a>
+        <button class="cw-btn cw-btn-secondary" onclick="toggleLiquid()">
+          Toggle Liquid Glass
+        </button>
+      </div>
+    </div>
+
+    <!-- 1-Liner CDN Import Box -->
+    <div style="background:var(--cw-surface-card); border:1px solid var(--cw-border); border-radius:16px; padding:20px; margin-bottom:24px;">
+      <h3 style="margin-top:0; font-size:15px; color:var(--cw-tertiary);">Direct CDN Import (Zero Install)</h3>
+      <p style="font-size:13px; color:var(--cw-text-secondary); margin:4px 0 12px;">
+        Include this directly in any HTML file to use ColorWing styles immediately:
+      </p>
+      <div style="background:#08080C; padding:12px 16px; border-radius:10px; border:1px solid var(--cw-border); font-family:monospace; font-size:12.5px; overflow-x:auto;">
+        &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.min.css"&gt;
+      </div>
+    </div>
+
+    <!-- Live Component Showcase -->
+    <div style="background:var(--cw-surface); border:1px solid var(--cw-border); border-radius:20px; overflow:hidden;">
+      
+      <!-- Chat Header -->
+      <div class="cw-chat-header">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="cw-avatar cw-avatar-md">
+            NW
+            <div class="cw-avatar-status"></div>
+          </div>
+          <div>
+            <div style="font-weight:700;">NeTuArk Core</div>
+            <div style="font-size:12px; color:var(--cw-success);">Online</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="cw-call-btn">📞</button>
+          <button style="background:transparent; border:none; color:#fff; cursor:pointer;">⋮</button>
+        </div>
+      </div>
+
+      <!-- Bubbles -->
+      <div style="padding:20px; background:#000000; display:flex; flex-direction:column; gap:12px;">
+        <div class="cw-bubble-group" style="align-self:flex-start;">
+          <div class="cw-bubble cw-bubble-received">
+            Live imported from the exact GitHub repository link!
+          </div>
+        </div>
+
+        <div class="cw-bubble-group" style="align-self:flex-end;">
+          <div class="cw-bubble cw-bubble-sent">
+            Sub-millisecond synchronization, primary black, secondary white, tertiary red.
+          </div>
+        </div>
+      </div>
+
+      <!-- Sequential Feed Box -->
+      <div class="cw-post-box" style="margin:16px;">
+        <input class="cw-post-input" placeholder="Type a message or post...">
+        <button class="cw-post-plus-btn">+</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    let isGlass = false;
+    function toggleLiquid() {
+      isGlass = !isGlass;
+      document.documentElement.setAttribute('data-liquid-glass', isGlass ? 'true' : 'false');
+    }
+  </script>
+</body>
+</html>
