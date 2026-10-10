@@ -152,6 +152,11 @@ assert.ok(ktComponents.includes('fun ColorwingAvatar'), 'Kotlin Avatar must be d
 assert.ok(ktComponents.includes('fun ColorwingCallLogBubble'), 'Kotlin CallLogBubble must be defined');
 assert.ok(ktComponents.includes('fun ColorwingGlassSurface'), 'Kotlin GlassSurface must be defined');
 assert.ok(ktComponents.includes('fun ColorwingGlassBottomBar'), 'Kotlin GlassBottomBar must be defined');
+assert.ok(ktComponents.includes('fun ColorwingPostCard'), 'Kotlin ColorwingPostCard must be defined');
+assert.ok(ktComponents.includes('data class ColorwingQuotedPostData'), 'Kotlin ColorwingQuotedPostData must be defined');
+assert.ok(css.includes('.cw-post-card'), 'CSS must include .cw-post-card');
+assert.ok(css.includes('.cw-post-actions'), 'CSS must include .cw-post-actions');
+assert.ok(css.includes('.cw-post-avatar'), 'CSS must include .cw-post-avatar');
 
 // 8. Verify Swift File Output
 console.log('  Testing Swift iOS compilation output...');
