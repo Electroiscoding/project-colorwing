@@ -52,10 +52,18 @@ const result = buildAll({ verbose: false });
 console.log(`    Compiled in ${result.durationMs}ms (Benchmark target: <10ms)`);
 assert.ok(parseFloat(result.durationMs) < 50, 'Build must be instantaneous under 50ms');
 
-// 5. Verify Generated Artifacts Exist (All 12 targets)
+// 5. Verify Generated Artifacts Exist (Master + Modular Sub-Bundles)
 const expectedFiles = [
   'colorwing.css',
   'colorwing.min.css',
+  'colors.css',
+  'colors.min.css',
+  'bubbles.css',
+  'bubbles.min.css',
+  'feed.css',
+  'feed.min.css',
+  'glass.css',
+  'glass.min.css',
   'colorwing.js',
   'colorwing.d.ts',
   'tokens.json',
@@ -92,6 +100,16 @@ assert.ok(css.includes('.cw-reply-quote'), 'CSS must include .cw-reply-quote');
 assert.ok(css.includes('.cw-voice-player'), 'CSS must include .cw-voice-player');
 assert.ok(css.includes('.cw-bottom-sheet'), 'CSS must include .cw-bottom-sheet');
 assert.ok(css.includes('.cw-badge-admin'), 'CSS must include .cw-badge-admin');
+
+// Modular CSS checks
+const colorsCss = fs.readFileSync(path.join(DIST_DIR, 'colors.css'), 'utf-8');
+assert.ok(colorsCss.includes('--cw-primary: #000000;'), 'colors.css must contain primary');
+const bubblesCss = fs.readFileSync(path.join(DIST_DIR, 'bubbles.css'), 'utf-8');
+assert.ok(bubblesCss.includes('.cw-bubble-sent'), 'bubbles.css must contain bubble sent');
+const feedCss = fs.readFileSync(path.join(DIST_DIR, 'feed.css'), 'utf-8');
+assert.ok(feedCss.includes('.cw-post-plus-btn'), 'feed.css must contain post plus button');
+const glassCss = fs.readFileSync(path.join(DIST_DIR, 'glass.css'), 'utf-8');
+assert.ok(glassCss.includes('.cw-glass-panel'), 'glass.css must contain glass panel');
 
 // 7. Verify Kotlin File Output
 console.log('  Testing Kotlin Compose compilation output...');

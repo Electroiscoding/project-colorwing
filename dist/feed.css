@@ -1,0 +1,61 @@
+/* ColorWing Feed UI */
+.cw-feed-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: var(--cw-bg);
+  min-height: 100vh;
+  border-left: 1px solid var(--cw-border);
+  border-right: 1px solid var(--cw-border);
+  box-sizing: border-box;
+}
+@media (max-width: 640px) {
+  .cw-feed-container { border-left: none; border-right: none; }
+}
+.cw-post-box {
+  background: var(--cw-surface-card);
+  border: 1px solid var(--cw-border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+}
+.cw-post-input {
+  flex: 1;
+  background: var(--cw-input-bg);
+  border: 1px solid var(--cw-input-border);
+  border-radius: 9999px;
+  padding: 10px 16px;
+  color: var(--cw-text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.cw-post-input:focus { border-color: var(--cw-tertiary); }
+.cw-post-plus-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--cw-tertiary);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.15s ease;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(217, 4, 41, 0.35);
+}
+.cw-post-plus-btn:hover { background: var(--cw-tertiary-hover); transform: scale(1.05); }
+.cw-post-plus-btn:active { transform: scale(0.95); }
+.cw-feed-item {
+  border-bottom: 1px solid var(--cw-border);
+  padding: 16px;
+  transition: background-color 0.15s ease;
+  background: transparent;
+}
+.cw-feed-item:hover { background-color: rgba(255, 255, 255, 0.02); }

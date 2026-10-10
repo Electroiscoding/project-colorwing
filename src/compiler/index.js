@@ -7,7 +7,13 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import tokens from '../tokens/index.js';
-import { compileCss } from './cssCompiler.js';
+import {
+  compileCss,
+  compileColorsCss,
+  compileBubblesCss,
+  compileFeedCss,
+  compileGlassCss
+} from './cssCompiler.js';
 import {
   compileKotlinTokens,
   compileKotlinTheme,
@@ -33,11 +39,21 @@ export function buildAll(options = {}) {
     fs.mkdirSync(DIST_DIR, { recursive: true });
   }
 
-  // 1. Compile CSS
+  // 1. Compile CSS (Master + Modular Sub-Bundles)
   const rawCss = compileCss({ minify: false });
   const minCss = compileCss({ minify: true });
   fs.writeFileSync(path.join(DIST_DIR, 'colorwing.css'), rawCss, 'utf-8');
   fs.writeFileSync(path.join(DIST_DIR, 'colorwing.min.css'), minCss, 'utf-8');
+
+  // Modular CSS Sub-Bundles
+  fs.writeFileSync(path.join(DIST_DIR, 'colors.css'), compileColorsCss({ minify: false }), 'utf-8');
+  fs.writeFileSync(path.join(DIST_DIR, 'colors.min.css'), compileColorsCss({ minify: true }), 'utf-8');
+  fs.writeFileSync(path.join(DIST_DIR, 'bubbles.css'), compileBubblesCss({ minify: false }), 'utf-8');
+  fs.writeFileSync(path.join(DIST_DIR, 'bubbles.min.css'), compileBubblesCss({ minify: true }), 'utf-8');
+  fs.writeFileSync(path.join(DIST_DIR, 'feed.css'), compileFeedCss({ minify: false }), 'utf-8');
+  fs.writeFileSync(path.join(DIST_DIR, 'feed.min.css'), compileFeedCss({ minify: true }), 'utf-8');
+  fs.writeFileSync(path.join(DIST_DIR, 'glass.css'), compileGlassCss({ minify: false }), 'utf-8');
+  fs.writeFileSync(path.join(DIST_DIR, 'glass.min.css'), compileGlassCss({ minify: true }), 'utf-8');
 
   // 2. Compile Kotlin Jetpack Compose Artifacts
   const ktTokens = compileKotlinTokens();
@@ -130,7 +146,7 @@ export default tokens;
   const durationMs = (performance.now() - startTime).toFixed(2);
   if (verbose) {
     console.log(`[ColorWing] Build complete in ${durationMs}ms`);
-    console.log(`  -> dist/colorwing.css & min.css`);
+    console.log(`  -> dist/colorwing.css & min.css (plus colors, bubbles, feed, glass sub-bundles)`);
     console.log(`  -> dist/ColorwingTokens.kt & Theme.kt & Components.kt (Android)`);
     console.log(`  -> dist/ColorwingTokens.swift (iOS SwiftUI)`);
     console.log(`  -> dist/ColorwingTokens.dart (Flutter)`);
@@ -140,7 +156,7 @@ export default tokens;
     console.log(`  -> dist/colorwing.js & .d.ts`);
   }
 
-  return { durationMs, filesGenerated: 12 };
+  return { durationMs, filesGenerated: 20 };
 }
 
 export default { buildAll };

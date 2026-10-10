@@ -72,10 +72,20 @@ Developers can import ColorWing directly from the exact repository link (`github
 Drop this directly into your HTML `<head>`:
 
 ```html
-<!-- Production Minified CSS directly from GitHub -->
+<!-- Master CSS Bundle (Full Design System: Colors, Bubbles, Feed, Glass, Ambient) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.min.css">
 
-<!-- Or JavaScript ESM Runtime directly from GitHub -->
+<!-- Or Lightweight Modular Sub-Bundles (Import only what you need): -->
+<!-- A. Colors & CSS Variables only (< 1KB) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colors.min.css">
+<!-- B. Chat Bubbles styling only -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/bubbles.min.css">
+<!-- C. Feed & Post Box UI only -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/feed.min.css">
+<!-- D. Glassmorphism & Liquid Glass only -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/glass.min.css">
+
+<!-- JavaScript ESM Runtime directly from GitHub -->
 <script type="module" src="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.js"></script>
 ```
 
@@ -105,7 +115,15 @@ In your `package.json`:
 Then simply import in JavaScript / TypeScript:
 ```javascript
 import { tokens } from '@netuark/colorwing';
+
+// Master CSS Bundle (All tokens, components, utility classes)
 import '@netuark/colorwing/css';
+
+// Or import lightweight modular sub-bundles:
+import '@netuark/colorwing/colors';   // Just CSS variables & color helpers
+import '@netuark/colorwing/bubbles';  // Just chat bubble styling & gradients
+import '@netuark/colorwing/feed';     // Just feed containers & post box
+import '@netuark/colorwing/glass';    // Just glass surfaces & liquid glass
 ```
 
 ---

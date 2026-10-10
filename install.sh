@@ -21,8 +21,15 @@ if [ "$PLATFORM" = "web" ]; then
   curl -fsSL "${REPO_RAW}/dist/colorwing.min.css" -o "${DEST}/colorwing.min.css"
   echo "Downloading colorwing.js -> ${DEST}/colorwing.js..."
   curl -fsSL "${REPO_RAW}/dist/colorwing.js" -o "${DEST}/colorwing.js"
-  echo "✓ Web tokens imported successfully to ${DEST}!"
-  echo "Add to your HTML: <link rel=\"stylesheet\" href=\"${DEST}/colorwing.min.css\">"
+  echo "Downloading modular sub-bundles (colors, bubbles, feed, glass)..."
+  curl -fsSL "${REPO_RAW}/dist/colors.min.css" -o "${DEST}/colors.min.css"
+  curl -fsSL "${REPO_RAW}/dist/bubbles.min.css" -o "${DEST}/bubbles.min.css"
+  curl -fsSL "${REPO_RAW}/dist/feed.min.css" -o "${DEST}/feed.min.css"
+  curl -fsSL "${REPO_RAW}/dist/glass.min.css" -o "${DEST}/glass.min.css"
+  echo "✓ Web tokens and modular sub-bundles imported successfully to ${DEST}!"
+  echo "Master Bundle:   <link rel=\"stylesheet\" href=\"${DEST}/colorwing.min.css\">"
+  echo "Colors Only:     <link rel=\"stylesheet\" href=\"${DEST}/colors.min.css\">"
+  echo "Bubbles Only:    <link rel=\"stylesheet\" href=\"${DEST}/bubbles.min.css\">"
 
 elif [ "$PLATFORM" = "android" ]; then
   DEST="${DEST_DIR:-./app/src/main/kotlin/com/netuark/colorwing}"
