@@ -48,9 +48,7 @@
 
 [data-liquid-glass="true"] body,
 body.cw-liquid-glass {
-  background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.12), transparent 45%),
-              radial-gradient(circle at 100% 50%, rgba(217, 4, 41, 0.08), transparent 40%),
-              #030712 !important;
+  background: #000000 !important;
 }
 
 [data-liquid-glass="true"] .cw-glass-panel::before,
