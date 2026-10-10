@@ -14,13 +14,14 @@
 
 1. [Core Architecture & Philosophy](#-core-architecture--philosophy)
 2. [The 5 Core Rules (How NOT to Mess Up)](#-the-5-core-rules-how-not-to-mess-up)
-3. [Web Developers Guide (Vanilla HTML, Vite, Next.js, SPAs)](#-web-developers-guide)
-4. [Tailwind CSS Developers Guide](#-tailwind-css-developers-guide)
-5. [Android Compose Developers Guide (Kotlin / APK)](#-android-compose-developers-guide)
-6. [Flutter & React Native Guides](#-flutter--react-native-guides)
-7. [The Millisecond Live-Sync Workflow](#-the-millisecond-live-sync-workflow)
-8. [Common Developer Pitfalls & Quick Fixes](#-common-developer-pitfalls--quick-fixes)
-9. [CLI Command Reference](#-cli-command-reference)
+3. [Direct Import From Exact GitHub Repository Link](#-direct-import-from-exact-github-repository-link)
+4. [Web Developers Guide (Vanilla HTML, Vite, Next.js, SPAs)](#-web-developers-guide)
+5. [Tailwind CSS Developers Guide](#-tailwind-css-developers-guide)
+6. [Android Compose Developers Guide (Kotlin / APK)](#-android-compose-developers-guide)
+7. [Flutter & React Native Guides](#-flutter--react-native-guides)
+8. [The Millisecond Live-Sync Workflow](#-the-millisecond-live-sync-workflow)
+9. [Common Developer Pitfalls & Quick Fixes](#-common-developer-pitfalls--quick-fixes)
+10. [CLI Command Reference](#-cli-command-reference)
 
 ---
 
@@ -63,15 +64,85 @@ Before writing any UI code, memorize these 5 foundational rules from the **Merge
 
 ---
 
+## 🔗 Direct Import From Exact GitHub Repository Link
+
+Developers can import ColorWing directly from the exact repository link (`github.com/Electroiscoding/project-colorwing`) across Web, Android, and NPM with **zero local repository dependencies or third-party wrappers**:
+
+### 1. Web HTML (Direct CDN Link — Zero Install)
+Drop this directly into your HTML `<head>`:
+
+```html
+<!-- Production Minified CSS directly from GitHub -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.min.css">
+
+<!-- Or JavaScript ESM Runtime directly from GitHub -->
+<script type="module" src="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.js"></script>
+```
+
+Or inside any CSS file:
+```css
+@import url("https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.min.css");
+```
+
+---
+
+### 2. NPM / Node / React / Vite / Next.js (Direct GitHub Repo Dependency)
+Install directly from the GitHub repository URL:
+
+```bash
+npm install github:Electroiscoding/project-colorwing
+```
+
+In your `package.json`:
+```json
+{
+  "dependencies": {
+    "@netuark/colorwing": "github:Electroiscoding/project-colorwing"
+  }
+}
+```
+
+Then simply import in JavaScript / TypeScript:
+```javascript
+import { tokens } from '@netuark/colorwing';
+import '@netuark/colorwing/css';
+```
+
+---
+
+### 3. Android Studio (Direct 1-Liner Terminal Importer)
+From your Android project directory (`app/`), run:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/install.sh | bash -s android
+```
+
+This immediately pulls `ColorwingTokens.kt`, `ColorwingTheme.kt`, and `ColorwingComponents.kt` directly from `raw.githubusercontent.com/Electroiscoding/project-colorwing/master/dist/` into your Compose package!
+
+---
+
+### 4. Direct 1-Liner for Web / Flutter / iOS
+```bash
+# Web Assets:
+curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/install.sh | bash -s web
+
+# Flutter:
+curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/install.sh | bash -s flutter
+
+# iOS SwiftUI:
+curl -fsSL https://raw.githubusercontent.com/Electroiscoding/project-colorwing/master/install.sh | bash -s ios
+```
+
+---
+
 ## 🌐 Web Developers Guide
 
 ### Step 1: Import ColorWing CSS
 
-Add this single line inside your HTML `<head>` or main stylesheet:
+Add this single line inside your HTML `<head>`:
 
 ```html
-<!-- Production Minified CSS -->
-<link rel="stylesheet" href="path/to/project-colorwing/dist/colorwing.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Electroiscoding/project-colorwing@master/dist/colorwing.min.css">
 ```
 
 Or in a modern bundler (Vite, Webpack, Next.js):

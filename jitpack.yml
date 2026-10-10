@@ -1,0 +1,4 @@
+before_install:
+  - node bin/colorwing.js build
+install:
+  - echo "ColorWing Android tokens prepared"

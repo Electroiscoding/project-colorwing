@@ -52,17 +52,21 @@ const result = buildAll({ verbose: false });
 console.log(`    Compiled in ${result.durationMs}ms (Benchmark target: <10ms)`);
 assert.ok(parseFloat(result.durationMs) < 50, 'Build must be instantaneous under 50ms');
 
-// 5. Verify Generated Artifacts Exist
+// 5. Verify Generated Artifacts Exist (All 12 targets)
 const expectedFiles = [
   'colorwing.css',
   'colorwing.min.css',
   'colorwing.js',
   'colorwing.d.ts',
   'tokens.json',
+  'figma-tokens.json',
   'tailwind-preset.js',
   'ColorwingTokens.kt',
   'ColorwingTheme.kt',
-  'ColorwingComponents.kt'
+  'ColorwingComponents.kt',
+  'ColorwingTokens.swift',
+  'ColorwingTokens.dart',
+  'ColorwingNative.js'
 ];
 
 expectedFiles.forEach((file) => {
@@ -106,4 +110,21 @@ assert.ok(ktComponents.includes('fun ColorwingReplyQuote'), 'Kotlin ReplyQuote m
 assert.ok(ktComponents.includes('fun ColorwingReactionPill'), 'Kotlin ReactionPill must be defined');
 assert.ok(ktComponents.includes('fun ColorwingAvatar'), 'Kotlin Avatar must be defined');
 
-console.log('✅ ALL TESTS PASSED SUCCESSFULLY!');
+// 8. Verify Swift File Output
+console.log('  Testing Swift iOS compilation output...');
+const swiftTokens = fs.readFileSync(path.join(DIST_DIR, 'ColorwingTokens.swift'), 'utf-8');
+assert.ok(swiftTokens.includes('public static let primary'), 'Swift must include primary color');
+assert.ok(swiftTokens.includes('public static let tertiary'), 'Swift must include tertiary color');
+
+// 9. Verify Flutter File Output
+console.log('  Testing Flutter Dart compilation output...');
+const dartTokens = fs.readFileSync(path.join(DIST_DIR, 'ColorwingTokens.dart'), 'utf-8');
+assert.ok(dartTokens.includes('static const Color primary'), 'Dart must include primary color');
+assert.ok(dartTokens.includes('static const Color tertiary'), 'Dart must include tertiary color');
+
+// 10. Verify React Native File Output
+console.log('  Testing React Native compilation output...');
+const rnTokens = fs.readFileSync(path.join(DIST_DIR, 'ColorwingNative.js'), 'utf-8');
+assert.ok(rnTokens.includes("primary: '#000000'"), 'RN must include primary color');
+
+console.log('✅ ALL 10 TEST SUITES PASSED SUCCESSFULLY!');

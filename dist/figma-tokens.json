@@ -1,0 +1,54 @@
+{
+  "color": {
+    "primary": {
+      "value": "#000000",
+      "type": "color"
+    },
+    "secondary": {
+      "value": "#FFFFFF",
+      "type": "color"
+    },
+    "tertiary": {
+      "value": "#D90429",
+      "type": "color"
+    },
+    "tertiaryDark": {
+      "value": "#9B021D",
+      "type": "color"
+    },
+    "background": {
+      "value": "#000000",
+      "type": "color"
+    },
+    "surface": {
+      "value": "#12131C",
+      "type": "color"
+    },
+    "surfaceCard": {
+      "value": "#111111",
+      "type": "color"
+    },
+    "border": {
+      "value": "rgba(255, 255, 255, 0.08)",
+      "type": "color"
+    },
+    "accentCyan": {
+      "value": "#818CF8",
+      "type": "color"
+    },
+    "success": {
+      "value": "#22C55E",
+      "type": "color"
+    }
+  },
+  "borderRadius": {
+    "bubble": {
+      "value": "14px",
+      "type": "borderRadius"
+    },
+    "bubbleTail": {
+      "value": "4px",
+      "type": "borderRadius"
+    }
+  }
+}

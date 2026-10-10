@@ -1,6 +1,6 @@
 /**
  * ColorWing Centralized Design System: Master Compiler Pipeline
- * Orchestrates compilation to CSS, JS, Kotlin, Flutter, React Native, Tailwind, and JSON targets.
+ * Orchestrates compilation to CSS, JS, Kotlin, Swift, Flutter, React Native, Tailwind, Figma, and JSON targets.
  */
 
 import fs from 'fs';
@@ -13,10 +13,12 @@ import {
   compileKotlinTheme,
   compileKotlinComponents
 } from './kotlinCompiler.js';
+import { compileSwiftTokens } from './swiftCompiler.js';
 import { compileFlutterTokens } from './flutterCompiler.js';
 import { compileReactNativeTokens } from './reactNativeCompiler.js';
 import { compileTailwindPreset } from './tailwindCompiler.js';
 import { compileJsonTokens } from './jsonCompiler.js';
+import { compileFigmaTokens } from './figmaCompiler.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -45,23 +47,29 @@ export function buildAll(options = {}) {
   fs.writeFileSync(path.join(DIST_DIR, 'ColorwingTheme.kt'), ktTheme, 'utf-8');
   fs.writeFileSync(path.join(DIST_DIR, 'ColorwingComponents.kt'), ktComponents, 'utf-8');
 
-  // 3. Compile Flutter / Dart Tokens
+  // 3. Compile iOS SwiftUI Tokens
+  const swiftTokens = compileSwiftTokens();
+  fs.writeFileSync(path.join(DIST_DIR, 'ColorwingTokens.swift'), swiftTokens, 'utf-8');
+
+  // 4. Compile Flutter / Dart Tokens
   const flutterTokens = compileFlutterTokens();
   fs.writeFileSync(path.join(DIST_DIR, 'ColorwingTokens.dart'), flutterTokens, 'utf-8');
 
-  // 4. Compile React Native Tokens
+  // 5. Compile React Native Tokens
   const rnTokens = compileReactNativeTokens();
   fs.writeFileSync(path.join(DIST_DIR, 'ColorwingNative.js'), rnTokens, 'utf-8');
 
-  // 5. Compile Tailwind Preset
+  // 6. Compile Tailwind Preset
   const tailwindPreset = compileTailwindPreset();
   fs.writeFileSync(path.join(DIST_DIR, 'tailwind-preset.js'), tailwindPreset, 'utf-8');
 
-  // 6. Compile JSON Tokens
+  // 7. Compile JSON & Figma Tokens
   const jsonTokens = compileJsonTokens();
+  const figmaTokens = compileFigmaTokens();
   fs.writeFileSync(path.join(DIST_DIR, 'tokens.json'), jsonTokens, 'utf-8');
+  fs.writeFileSync(path.join(DIST_DIR, 'figma-tokens.json'), figmaTokens, 'utf-8');
 
-  // 7. Generate JavaScript & TypeScript Distribution Files
+  // 8. Generate JavaScript & TypeScript Distribution Files
   const esmJs = `/**
  * ColorWing Design System (ESM Bundle)
  */
@@ -123,15 +131,16 @@ export default tokens;
   if (verbose) {
     console.log(`[ColorWing] Build complete in ${durationMs}ms`);
     console.log(`  -> dist/colorwing.css & min.css`);
-    console.log(`  -> dist/ColorwingTokens.kt & Theme.kt & Components.kt`);
+    console.log(`  -> dist/ColorwingTokens.kt & Theme.kt & Components.kt (Android)`);
+    console.log(`  -> dist/ColorwingTokens.swift (iOS SwiftUI)`);
     console.log(`  -> dist/ColorwingTokens.dart (Flutter)`);
     console.log(`  -> dist/ColorwingNative.js (React Native)`);
     console.log(`  -> dist/tailwind-preset.js`);
-    console.log(`  -> dist/tokens.json`);
+    console.log(`  -> dist/tokens.json & figma-tokens.json`);
     console.log(`  -> dist/colorwing.js & .d.ts`);
   }
 
-  return { durationMs, filesGenerated: 10 };
+  return { durationMs, filesGenerated: 12 };
 }
 
 export default { buildAll };
