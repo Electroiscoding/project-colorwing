@@ -171,14 +171,20 @@ export function compileBubblesCss(options = {}) {
 /* --- Liquid Glass Bubbles (1:1 APK LiquidGlassEffect & SafeHaze) --- */
 [data-liquid-glass="true"] .cw-bubble,
 .cw-liquid-glass .cw-bubble,
-.cw-bubble.cw-liquid-glass {
+.cw-bubble.cw-liquid-glass,
+[data-liquid-glass="true"] .msg-bubble,
+.cw-liquid-glass .msg-bubble,
+.msg-bubble.cw-liquid-glass {
   backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
 }
 
 [data-liquid-glass="true"] .cw-bubble-sent,
 .cw-liquid-glass .cw-bubble-sent,
-.cw-bubble-sent.cw-liquid-glass {
+.cw-bubble-sent.cw-liquid-glass,
+[data-liquid-glass="true"] .sent,
+.cw-liquid-glass .sent,
+.sent.cw-liquid-glass {
   background-image: ${bubbles.liquidGlass.sent.overlayBrush}, ${bubbles.liquidGlass.sent.gradient} !important;
   background-color: rgba(160, 24, 48, 0.75) !important;
   border: ${bubbles.liquidGlass.sent.border} !important;
@@ -187,14 +193,25 @@ export function compileBubblesCss(options = {}) {
 
 [data-liquid-glass="true"] .cw-bubble-sent::before,
 .cw-liquid-glass .cw-bubble-sent::before,
-.cw-bubble-sent.cw-liquid-glass::before {
+.cw-bubble-sent.cw-liquid-glass::before,
+[data-liquid-glass="true"] .sent::before,
+.cw-liquid-glass .sent::before,
+.sent.cw-liquid-glass::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.85) 50%, transparent 100%) !important;
   height: 1.5px !important;
+  border-radius: 14px 14px 0 0;
+  pointer-events: none;
 }
 
 [data-liquid-glass="true"] .cw-bubble-received,
 .cw-liquid-glass .cw-bubble-received,
-.cw-bubble-received.cw-liquid-glass {
+.cw-bubble-received.cw-liquid-glass,
+[data-liquid-glass="true"] .received,
+.cw-liquid-glass .received,
+.received.cw-liquid-glass {
   background-image: ${bubbles.liquidGlass.received.overlayBrush}, ${bubbles.liquidGlass.received.gradient} !important;
   background-color: rgba(18, 19, 28, 0.70) !important;
   border: ${bubbles.liquidGlass.received.border} !important;
@@ -203,14 +220,25 @@ export function compileBubblesCss(options = {}) {
 
 [data-liquid-glass="true"] .cw-bubble-received::before,
 .cw-liquid-glass .cw-bubble-received::before,
-.cw-bubble-received.cw-liquid-glass::before {
+.cw-bubble-received.cw-liquid-glass::before,
+[data-liquid-glass="true"] .received::before,
+.cw-liquid-glass .received::before,
+.received.cw-liquid-glass::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.65) 50%, transparent 100%) !important;
   height: 1.5px !important;
+  border-radius: 14px 14px 0 0;
+  pointer-events: none;
 }
 
 [data-liquid-glass="true"] .cw-bubble-ai,
 .cw-liquid-glass .cw-bubble-ai,
-.cw-bubble-ai.cw-liquid-glass {
+.cw-bubble-ai.cw-liquid-glass,
+[data-liquid-glass="true"] .beeta-msg,
+.cw-liquid-glass .beeta-msg,
+.beeta-msg.cw-liquid-glass {
   background-image: linear-gradient(180deg, rgba(129, 140, 248, 0.25) 0%, transparent 60%), ${bubbles.liquidGlass.beetaAi.gradient} !important;
   border: ${bubbles.liquidGlass.beetaAi.border} !important;
   box-shadow: ${bubbles.liquidGlass.beetaAi.boxShadow} !important;
@@ -663,14 +691,83 @@ export function compileGlassCss(options = {}) {
 [data-liquid-glass="true"] .card-glass,
 .cw-liquid-glass .card-glass,
 .card-glass.cw-liquid-glass,
-[data-liquid-glass="true"] .cw-post-card.cw-glass-mode,
-.cw-liquid-glass .cw-post-card.cw-glass-mode {
+[data-liquid-glass="true"] .cw-post-card,
+.cw-liquid-glass .cw-post-card,
+[data-liquid-glass="true"] .post-card,
+.cw-liquid-glass .post-card,
+[data-liquid-glass="true"] .feed-card,
+.cw-liquid-glass .feed-card,
+[data-liquid-glass="true"] .cw-feed-item,
+.cw-liquid-glass .cw-feed-item,
+[data-liquid-glass="true"] .cw-post-box,
+.cw-liquid-glass .cw-post-box,
+[data-liquid-glass="true"] .cw-post-quoted-card,
+.cw-liquid-glass .cw-post-quoted-card {
   background-image: ${glass.liquid.overlayGradient} !important;
   background-color: var(--cw-glass-bg, ${glass.liquid.surface}) !important;
   border: ${glass.liquid.border} !important;
   box-shadow: ${glass.liquid.boxShadow} !important;
   backdrop-filter: ${glass.liquid.backdropFilter} !important;
   -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter} !important;
+}
+
+[data-liquid-glass="true"] header,
+.cw-liquid-glass header,
+[data-liquid-glass="true"] .cw-chat-header,
+.cw-liquid-glass .cw-chat-header {
+  background-color: rgba(10, 10, 14, 0.72) !important;
+  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.12), 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-liquid-glass="true"] #bottom-nav-bar,
+.cw-liquid-glass #bottom-nav-bar,
+[data-liquid-glass="true"] nav.fixed,
+.cw-liquid-glass nav.fixed {
+  background-color: rgba(10, 10, 14, 0.75) !important;
+  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.20) !important;
+  box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.35), 0 -8px 32px rgba(0, 0, 0, 0.7) !important;
+}
+
+[data-liquid-glass="true"] .cw-chat-input-bar,
+.cw-liquid-glass .cw-chat-input-bar,
+[data-liquid-glass="true"] #chat-input-bar,
+.cw-liquid-glass #chat-input-bar,
+[data-liquid-glass="true"] .chat-messages-container .bg-\\[\\#141416\\],
+.cw-liquid-glass .chat-messages-container .bg-\\[\\#141416\\] {
+  background-color: rgba(20, 20, 26, 0.70) !important;
+  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.50), 0 8px 32px rgba(0, 0, 0, 0.50) !important;
+}
+
+[data-liquid-glass="true"] .cw-bottom-sheet,
+.cw-liquid-glass .cw-bottom-sheet,
+[data-liquid-glass="true"] #sticker-bottom-sheet,
+.cw-liquid-glass #sticker-bottom-sheet,
+[data-liquid-glass="true"] #pack-selector-sheet,
+.cw-liquid-glass #pack-selector-sheet,
+[data-liquid-glass="true"] #se-picker-sheet,
+.cw-liquid-glass #se-picker-sheet {
+  background-color: rgba(18, 19, 28, 0.85) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.60), 0 -8px 36px rgba(0, 0, 0, 0.70) !important;
+  backdrop-filter: blur(24px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) contrast(105%) !important;
+}
+
+[data-liquid-glass="true"] #desktop-left-nav,
+.cw-liquid-glass #desktop-left-nav,
+[data-liquid-glass="true"] #desktop-news-sidebar,
+.cw-liquid-glass #desktop-news-sidebar {
+  background-color: rgba(12, 13, 18, 0.60) !important;
+  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
 }
 
 [data-liquid-glass="true"] body,
@@ -718,14 +815,20 @@ body.cw-liquid-glass {
 /* Liquid Glass Message Bubbles (1:1 APK LiquidGlassEffect & SafeHaze) */
 [data-liquid-glass="true"] .cw-bubble,
 .cw-liquid-glass .cw-bubble,
-.cw-bubble.cw-liquid-glass {
+.cw-bubble.cw-liquid-glass,
+[data-liquid-glass="true"] .msg-bubble,
+.cw-liquid-glass .msg-bubble,
+.msg-bubble.cw-liquid-glass {
   backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
 }
 
 [data-liquid-glass="true"] .cw-bubble-sent,
 .cw-liquid-glass .cw-bubble-sent,
-.cw-bubble-sent.cw-liquid-glass {
+.cw-bubble-sent.cw-liquid-glass,
+[data-liquid-glass="true"] .sent,
+.cw-liquid-glass .sent,
+.sent.cw-liquid-glass {
   background-image: ${bubbles.liquidGlass.sent.overlayBrush}, ${bubbles.liquidGlass.sent.gradient} !important;
   background-color: rgba(160, 24, 48, 0.75) !important;
   border: ${bubbles.liquidGlass.sent.border} !important;
@@ -734,14 +837,25 @@ body.cw-liquid-glass {
 
 [data-liquid-glass="true"] .cw-bubble-sent::before,
 .cw-liquid-glass .cw-bubble-sent::before,
-.cw-bubble-sent.cw-liquid-glass::before {
+.cw-bubble-sent.cw-liquid-glass::before,
+[data-liquid-glass="true"] .sent::before,
+.cw-liquid-glass .sent::before,
+.sent.cw-liquid-glass::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.85) 50%, transparent 100%) !important;
   height: 1.5px !important;
+  border-radius: 14px 14px 0 0;
+  pointer-events: none;
 }
 
 [data-liquid-glass="true"] .cw-bubble-received,
 .cw-liquid-glass .cw-bubble-received,
-.cw-bubble-received.cw-liquid-glass {
+.cw-bubble-received.cw-liquid-glass,
+[data-liquid-glass="true"] .received,
+.cw-liquid-glass .received,
+.received.cw-liquid-glass {
   background-image: ${bubbles.liquidGlass.received.overlayBrush}, ${bubbles.liquidGlass.received.gradient} !important;
   background-color: rgba(18, 19, 28, 0.70) !important;
   border: ${bubbles.liquidGlass.received.border} !important;
@@ -750,14 +864,25 @@ body.cw-liquid-glass {
 
 [data-liquid-glass="true"] .cw-bubble-received::before,
 .cw-liquid-glass .cw-bubble-received::before,
-.cw-bubble-received.cw-liquid-glass::before {
+.cw-bubble-received.cw-liquid-glass::before,
+[data-liquid-glass="true"] .received::before,
+.cw-liquid-glass .received::before,
+.received.cw-liquid-glass::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.65) 50%, transparent 100%) !important;
   height: 1.5px !important;
+  border-radius: 14px 14px 0 0;
+  pointer-events: none;
 }
 
 [data-liquid-glass="true"] .cw-bubble-ai,
 .cw-liquid-glass .cw-bubble-ai,
-.cw-bubble-ai.cw-liquid-glass {
+.cw-bubble-ai.cw-liquid-glass,
+[data-liquid-glass="true"] .beeta-msg,
+.cw-liquid-glass .beeta-msg,
+.beeta-msg.cw-liquid-glass {
   background-image: linear-gradient(180deg, rgba(129, 140, 248, 0.25) 0%, transparent 60%), ${bubbles.liquidGlass.beetaAi.gradient} !important;
   border: ${bubbles.liquidGlass.beetaAi.border} !important;
   box-shadow: ${bubbles.liquidGlass.beetaAi.boxShadow} !important;
@@ -904,14 +1029,83 @@ export function compileCss(options = {}) {
 [data-liquid-glass="true"] .card-glass,
 .cw-liquid-glass .card-glass,
 .card-glass.cw-liquid-glass,
-[data-liquid-glass="true"] .cw-post-card.cw-glass-mode,
-.cw-liquid-glass .cw-post-card.cw-glass-mode {
+[data-liquid-glass="true"] .cw-post-card,
+.cw-liquid-glass .cw-post-card,
+[data-liquid-glass="true"] .post-card,
+.cw-liquid-glass .post-card,
+[data-liquid-glass="true"] .feed-card,
+.cw-liquid-glass .feed-card,
+[data-liquid-glass="true"] .cw-feed-item,
+.cw-liquid-glass .cw-feed-item,
+[data-liquid-glass="true"] .cw-post-box,
+.cw-liquid-glass .cw-post-box,
+[data-liquid-glass="true"] .cw-post-quoted-card,
+.cw-liquid-glass .cw-post-quoted-card {
   background-image: ${glass.liquid.overlayGradient} !important;
   background-color: var(--cw-glass-bg, ${glass.liquid.surface}) !important;
   border: ${glass.liquid.border} !important;
   box-shadow: ${glass.liquid.boxShadow} !important;
   backdrop-filter: ${glass.liquid.backdropFilter} !important;
   -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter} !important;
+}
+
+[data-liquid-glass="true"] header,
+.cw-liquid-glass header,
+[data-liquid-glass="true"] .cw-chat-header,
+.cw-liquid-glass .cw-chat-header {
+  background-color: rgba(10, 10, 14, 0.72) !important;
+  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.12), 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-liquid-glass="true"] #bottom-nav-bar,
+.cw-liquid-glass #bottom-nav-bar,
+[data-liquid-glass="true"] nav.fixed,
+.cw-liquid-glass nav.fixed {
+  background-color: rgba(10, 10, 14, 0.75) !important;
+  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.20) !important;
+  box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.35), 0 -8px 32px rgba(0, 0, 0, 0.7) !important;
+}
+
+[data-liquid-glass="true"] .cw-chat-input-bar,
+.cw-liquid-glass .cw-chat-input-bar,
+[data-liquid-glass="true"] #chat-input-bar,
+.cw-liquid-glass #chat-input-bar,
+[data-liquid-glass="true"] .chat-messages-container .bg-\\[\\#141416\\],
+.cw-liquid-glass .chat-messages-container .bg-\\[\\#141416\\] {
+  background-color: rgba(20, 20, 26, 0.70) !important;
+  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.50), 0 8px 32px rgba(0, 0, 0, 0.50) !important;
+}
+
+[data-liquid-glass="true"] .cw-bottom-sheet,
+.cw-liquid-glass .cw-bottom-sheet,
+[data-liquid-glass="true"] #sticker-bottom-sheet,
+.cw-liquid-glass #sticker-bottom-sheet,
+[data-liquid-glass="true"] #pack-selector-sheet,
+.cw-liquid-glass #pack-selector-sheet,
+[data-liquid-glass="true"] #se-picker-sheet,
+.cw-liquid-glass #se-picker-sheet {
+  background-color: rgba(18, 19, 28, 0.85) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.60), 0 -8px 36px rgba(0, 0, 0, 0.70) !important;
+  backdrop-filter: blur(24px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) contrast(105%) !important;
+}
+
+[data-liquid-glass="true"] #desktop-left-nav,
+.cw-liquid-glass #desktop-left-nav,
+[data-liquid-glass="true"] #desktop-news-sidebar,
+.cw-liquid-glass #desktop-news-sidebar {
+  background-color: rgba(12, 13, 18, 0.60) !important;
+  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
 }
 
 [data-liquid-glass="true"] body,
@@ -1134,14 +1328,20 @@ body.cw-liquid-glass {
 /* --- Liquid Glass Bubbles (1:1 APK LiquidGlassEffect & SafeHaze) --- */
 [data-liquid-glass="true"] .cw-bubble,
 .cw-liquid-glass .cw-bubble,
-.cw-bubble.cw-liquid-glass {
+.cw-bubble.cw-liquid-glass,
+[data-liquid-glass="true"] .msg-bubble,
+.cw-liquid-glass .msg-bubble,
+.msg-bubble.cw-liquid-glass {
   backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
 }
 
 [data-liquid-glass="true"] .cw-bubble-sent,
 .cw-liquid-glass .cw-bubble-sent,
-.cw-bubble-sent.cw-liquid-glass {
+.cw-bubble-sent.cw-liquid-glass,
+[data-liquid-glass="true"] .sent,
+.cw-liquid-glass .sent,
+.sent.cw-liquid-glass {
   background-image: ${bubbles.liquidGlass.sent.overlayBrush}, ${bubbles.liquidGlass.sent.gradient} !important;
   background-color: rgba(160, 24, 48, 0.75) !important;
   border: ${bubbles.liquidGlass.sent.border} !important;
@@ -1150,14 +1350,25 @@ body.cw-liquid-glass {
 
 [data-liquid-glass="true"] .cw-bubble-sent::before,
 .cw-liquid-glass .cw-bubble-sent::before,
-.cw-bubble-sent.cw-liquid-glass::before {
+.cw-bubble-sent.cw-liquid-glass::before,
+[data-liquid-glass="true"] .sent::before,
+.cw-liquid-glass .sent::before,
+.sent.cw-liquid-glass::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.85) 50%, transparent 100%) !important;
   height: 1.5px !important;
+  border-radius: 14px 14px 0 0;
+  pointer-events: none;
 }
 
 [data-liquid-glass="true"] .cw-bubble-received,
 .cw-liquid-glass .cw-bubble-received,
-.cw-bubble-received.cw-liquid-glass {
+.cw-bubble-received.cw-liquid-glass,
+[data-liquid-glass="true"] .received,
+.cw-liquid-glass .received,
+.received.cw-liquid-glass {
   background-image: ${bubbles.liquidGlass.received.overlayBrush}, ${bubbles.liquidGlass.received.gradient} !important;
   background-color: rgba(18, 19, 28, 0.70) !important;
   border: ${bubbles.liquidGlass.received.border} !important;
@@ -1166,14 +1377,25 @@ body.cw-liquid-glass {
 
 [data-liquid-glass="true"] .cw-bubble-received::before,
 .cw-liquid-glass .cw-bubble-received::before,
-.cw-bubble-received.cw-liquid-glass::before {
+.cw-bubble-received.cw-liquid-glass::before,
+[data-liquid-glass="true"] .received::before,
+.cw-liquid-glass .received::before,
+.received.cw-liquid-glass::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.65) 50%, transparent 100%) !important;
   height: 1.5px !important;
+  border-radius: 14px 14px 0 0;
+  pointer-events: none;
 }
 
 [data-liquid-glass="true"] .cw-bubble-ai,
 .cw-liquid-glass .cw-bubble-ai,
-.cw-bubble-ai.cw-liquid-glass {
+.cw-bubble-ai.cw-liquid-glass,
+[data-liquid-glass="true"] .beeta-msg,
+.cw-liquid-glass .beeta-msg,
+.beeta-msg.cw-liquid-glass {
   background-image: linear-gradient(180deg, rgba(129, 140, 248, 0.25) 0%, transparent 60%), ${bubbles.liquidGlass.beetaAi.gradient} !important;
   border: ${bubbles.liquidGlass.beetaAi.border} !important;
   box-shadow: ${bubbles.liquidGlass.beetaAi.boxShadow} !important;
