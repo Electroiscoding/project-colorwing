@@ -44,22 +44,26 @@ fun ColorwingSampleScreen() {
                 onPostClick = { /* Create post */ }
             )
 
-            // Sequential Feed Flow items
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+            // Chat Bubble Demo using ColorwingChatBubble
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
                 item {
-                    // Chat Bubble Demo using Colorwing Bubble Brush
-                    val bubbleBrush = rememberColorwingBubbleBrush(isMine = true)
-                    Box(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .background(bubbleBrush, ColorwingTokens.BubbleShapeSent)
-                            .padding(horizontal = 14.dp, vertical = 8.dp)
-                    ) {
-                        androidx.compose.material3.Text(
-                            text = "ColorWing powers Android & Web seamlessly!",
-                            color = ColorwingTokens.TextPrimary
-                        )
-                    }
+                    ColorwingChatBubble(
+                        text = "Received message with slate surface & subtle border.",
+                        isMine = false,
+                        timestamp = "8:30 PM"
+                    )
+                }
+                item {
+                    ColorwingChatBubble(
+                        text = "ColorWing powers Android Compose & Web seamlessly with crimson gradient!",
+                        isMine = true,
+                        timestamp = "8:31 PM"
+                    )
                 }
             }
         }

@@ -256,6 +256,57 @@ fun ColorwingAvatar(
     }
 }
 
+/**
+ * Centralized Chat Bubble Composable
+ * Adheres to APK Shape (14dp with 4dp tail) & Gradient Brushes
+ */
+@Composable
+fun ColorwingChatBubble(
+    text: String,
+    isMine: Boolean,
+    timestamp: String? = null,
+    modifier: Modifier = Modifier
+) {
+    val shape = if (isMine) ColorwingTokens.BubbleShapeSent else ColorwingTokens.BubbleShapeReceived
+    val brush = rememberColorwingBubbleBrush(isMine = isMine)
+    val alignment = if (isMine) Alignment.CenterEnd else Alignment.CenterStart
+    val textColor = if (isMine) Color.White else ColorwingTokens.TextPrimary
+
+    Box(
+        modifier = modifier.fillMaxWidth(),
+        contentAlignment = alignment
+    ) {
+        Column(
+            modifier = Modifier
+                .widthIn(min = 60.dp, max = 280.dp)
+                .clip(shape)
+                .background(brush, shape)
+                .then(
+                    if (!isMine) Modifier.border(1.dp, ColorwingTokens.BorderDefault, shape)
+                    else Modifier
+                )
+                .padding(horizontal = 14.dp, vertical = 8.dp)
+        ) {
+            Text(
+                text = text,
+                color = textColor,
+                fontSize = 14.5.sp,
+                lineHeight = 20.sp
+            )
+
+            if (timestamp != null) {
+                Spacer(modifier = Modifier.height(2.dp))
+                Text(
+                    text = timestamp,
+                    color = ColorwingTokens.TextMuted,
+                    fontSize = 10.sp,
+                    modifier = Modifier.align(Alignment.End)
+                )
+            }
+        }
+    }
+}
+
 // --- Android Studio Previews ---
 @Preview(showBackground = true, backgroundColor = 0xFF000000)
 @Composable
@@ -275,5 +326,33 @@ fun ColorwingChatTopBarPreview() {
 fun ColorwingPostBoxPreview() {
     ColorwingTheme {
         ColorwingPostBox(placeholder = "What's happening?")
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF000000)
+@Composable
+fun ColorwingChatBubbleSentPreview() {
+    ColorwingTheme {
+        Box(modifier = Modifier.padding(16.dp)) {
+            ColorwingChatBubble(
+                text = "Sent bubble with crimson gradient brush!",
+                isMine = true,
+                timestamp = "8:30 PM"
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF000000)
+@Composable
+fun ColorwingChatBubbleReceivedPreview() {
+    ColorwingTheme {
+        Box(modifier = Modifier.padding(16.dp)) {
+            ColorwingChatBubble(
+                text = "Received bubble with slate surface & subtle border.",
+                isMine = false,
+                timestamp = "8:31 PM"
+            )
+        }
     }
 }

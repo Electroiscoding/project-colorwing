@@ -131,6 +131,7 @@ assert.ok(ktTheme.includes('rememberColorwingAmbientColor'), 'Kotlin ambient col
 
 const ktComponents = fs.readFileSync(path.join(DIST_DIR, 'ColorwingComponents.kt'), 'utf-8');
 assert.ok(ktComponents.includes('fun ColorwingChatTopBar'), 'Kotlin ChatTopBar must be defined');
+assert.ok(ktComponents.includes('fun ColorwingChatBubble'), 'Kotlin ChatBubble must be defined');
 assert.ok(ktComponents.includes('fun ColorwingReplyQuote'), 'Kotlin ReplyQuote must be defined');
 assert.ok(ktComponents.includes('fun ColorwingReactionPill'), 'Kotlin ReactionPill must be defined');
 assert.ok(ktComponents.includes('fun ColorwingAvatar'), 'Kotlin Avatar must be defined');
