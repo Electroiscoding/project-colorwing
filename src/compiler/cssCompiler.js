@@ -281,6 +281,192 @@ export function compileCss(options = {}) {
   margin-right: auto;
 }
 
+/* Reactions Bar & Reaction Pills */
+.cw-reactions-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px;
+  background: ${components.reactions.barBg};
+  border: ${components.reactions.barBorder};
+  border-radius: ${components.reactions.borderRadius};
+  box-shadow: ${components.reactions.barShadow};
+  backdrop-filter: ${components.reactions.barBackdropFilter};
+  -webkit-backdrop-filter: ${components.reactions.barBackdropFilter};
+}
+
+.cw-reaction-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
+  background: ${components.reactions.pillBg};
+  border: ${components.reactions.pillBorder};
+  color: var(--cw-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.cw-reaction-pill:hover {
+  background: ${components.reactions.pillHoverBg};
+  color: #ffffff;
+}
+.cw-reaction-pill.active {
+  background: ${components.reactions.activePillBg};
+  border-color: ${components.reactions.activePillBorder};
+  color: #ffffff;
+}
+
+/* Reply Quote Box */
+.cw-reply-quote {
+  border-left: ${components.replyQuote.borderLeft};
+  background: ${components.replyQuote.bg};
+  border-radius: ${components.replyQuote.borderRadius};
+  padding: ${components.replyQuote.padding};
+  margin-bottom: 6px;
+  font-size: ${components.replyQuote.fontSize};
+  box-sizing: border-box;
+}
+.cw-reply-quote-title {
+  color: ${components.replyQuote.titleColor};
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.cw-reply-quote-text {
+  color: ${components.replyQuote.textColor};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Voice Message Player */
+.cw-voice-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: ${components.voicePlayer.bg};
+  border: ${components.voicePlayer.border};
+  border-radius: ${components.voicePlayer.borderRadius};
+  padding: 8px 14px;
+  box-sizing: border-box;
+}
+.cw-voice-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: ${components.voicePlayer.playButtonBg};
+  color: ${components.voicePlayer.playButtonColor};
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+.cw-voice-btn:hover {
+  transform: scale(1.06);
+}
+.cw-voice-waveform {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 24px;
+}
+.cw-voice-bar {
+  width: 3px;
+  border-radius: 9999px;
+  background: ${components.voicePlayer.waveformInactive};
+  transition: height 0.1s ease, background-color 0.15s ease;
+}
+.cw-voice-bar.active {
+  background: ${components.voicePlayer.waveformActive};
+}
+
+/* Pinned Message Banner */
+.cw-pinned-banner {
+  background: ${components.pinnedBanner.bg};
+  border-bottom: ${components.pinnedBanner.borderBottom};
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+/* Bottom Sheet / Action Drawer */
+.cw-bottom-sheet {
+  background: ${components.bottomSheet.bg};
+  border-top: ${components.bottomSheet.borderTop};
+  border-top-left-radius: ${components.bottomSheet.borderRadius};
+  border-top-right-radius: ${components.bottomSheet.borderRadius};
+  padding: 16px 20px 24px;
+  box-sizing: border-box;
+}
+.cw-bottom-sheet-handle {
+  width: ${components.bottomSheet.handleWidth};
+  height: ${components.bottomSheet.handleHeight};
+  background: ${components.bottomSheet.handleBg};
+  border-radius: 9999px;
+  margin: 0 auto 14px;
+}
+
+/* Avatars & Online Indicators */
+.cw-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: ${components.avatar.defaultBg};
+  color: ${components.avatar.color};
+  font-weight: 700;
+  flex-shrink: 0;
+  overflow: visible;
+}
+.cw-avatar-sm { width: 32px; height: 32px; font-size: 13px; }
+.cw-avatar-md { width: 40px; height: 40px; font-size: 15px; }
+.cw-avatar-lg { width: 56px; height: 56px; font-size: 20px; }
+.cw-avatar-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: ${components.avatar.statusOnline};
+  border: 2px solid #000000;
+}
+
+/* Badges */
+.cw-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.cw-badge-admin {
+  color: ${components.badges.admin.color};
+  background: ${components.badges.admin.bg};
+  border: ${components.badges.admin.border};
+}
+.cw-badge-ai {
+  color: ${components.badges.ai.color};
+  background: ${components.badges.ai.bg};
+  border: ${components.badges.ai.border};
+}
+.cw-badge-verified {
+  color: ${components.badges.verified.color};
+  background: ${components.badges.verified.bg};
+  border: ${components.badges.verified.border};
+}
+
 /* Feed UI: Static Black + Post Box + Plus Sign + Sequential Flow */
 .cw-feed-container {
   width: 100%;
@@ -415,6 +601,41 @@ export function compileCss(options = {}) {
 .cw-btn-ghost:hover {
   background: rgba(255, 255, 255, 0.06);
   color: #ffffff;
+}
+
+/* Tabs & Navigation */
+.cw-tab-bar {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--cw-border);
+  background: var(--cw-bg);
+}
+.cw-tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 12px 16px;
+  color: var(--cw-text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s ease;
+}
+.cw-tab-item:hover {
+  color: var(--cw-text-primary);
+}
+.cw-tab-item.active {
+  color: var(--cw-text-primary);
+}
+.cw-tab-item.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: var(--cw-tertiary);
+  border-radius: 9999px;
 }
 
 /* Scrollbars */

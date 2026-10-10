@@ -6,7 +6,14 @@
  * - Feed (Static pitch-black + sequential flow + post box + plus sign)
  * - Profile (Minimalist static web layout)
  * - Sequential Web Flow (skip heavy cards to eliminate fatigue)
- * - Buttons, Inputs, Avatars
+ * - Reactions Bar & Emoji Pills
+ * - Reply Quote Preview
+ * - Voice Message Audio Player
+ * - Pinned Message Banner
+ * - Bottom Sheet / Action Drawer
+ * - Avatars & Status Rings
+ * - Badges & Tags
+ * - Buttons & Inputs
  */
 
 export const components = {
@@ -62,6 +69,100 @@ export const components = {
     statValueColor: '#FFFFFF',
     tabActiveBorder: '#D90429',
     tabInactiveColor: 'rgba(255, 255, 255, 0.50)'
+  },
+
+  // --- Reactions Floating Bar & Pills ---
+  reactions: {
+    barBg: 'rgba(24, 24, 27, 0.94)',
+    barBorder: '1px solid rgba(255, 255, 255, 0.14)',
+    barBackdropFilter: 'blur(14px)',
+    barShadow: '0 4px 18px -2px rgba(0, 0, 0, 0.45)',
+    borderRadius: '9999px',
+    pillBg: 'rgba(255, 255, 255, 0.08)',
+    pillBorder: '1px solid rgba(255, 255, 255, 0.12)',
+    pillHoverBg: 'rgba(255, 255, 255, 0.16)',
+    activePillBorder: '#D90429',
+    activePillBg: 'rgba(217, 4, 41, 0.18)'
+  },
+
+  // --- Reply Quote Preview Box ---
+  replyQuote: {
+    borderLeft: '3px solid #D90429',
+    bg: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: '6px',
+    padding: '6px 10px',
+    titleColor: '#D90429',
+    textColor: 'rgba(255, 255, 255, 0.70)',
+    fontSize: '12px'
+  },
+
+  // --- Voice Message Player ---
+  voicePlayer: {
+    bg: 'rgba(255, 255, 255, 0.05)',
+    border: '1px solid rgba(255, 255, 255, 0.08)',
+    borderRadius: '16px',
+    playButtonBg: '#D90429',
+    playButtonColor: '#FFFFFF',
+    waveformInactive: 'rgba(255, 255, 255, 0.25)',
+    waveformActive: '#D90429',
+    durationColor: 'rgba(255, 255, 255, 0.60)'
+  },
+
+  // --- Pinned Message Header Banner ---
+  pinnedBanner: {
+    bg: 'rgba(18, 19, 28, 0.96)',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+    pinIconColor: '#D90429',
+    titleColor: '#FFFFFF',
+    subtitleColor: 'rgba(255, 255, 255, 0.50)'
+  },
+
+  // --- Bottom Sheet / Action Drawer ---
+  bottomSheet: {
+    bg: '#111111',
+    borderTop: '1px solid rgba(255, 255, 255, 0.10)',
+    borderRadius: '24px',
+    handleBg: 'rgba(255, 255, 255, 0.20)',
+    handleWidth: '36px',
+    handleHeight: '4px',
+    titleColor: '#FFFFFF',
+    subtitleColor: 'rgba(255, 255, 255, 0.50)'
+  },
+
+  // --- Avatars & Online Status Indicator ---
+  avatar: {
+    sizes: {
+      xs: '24px',
+      sm: '32px',
+      md: '40px',
+      lg: '56px',
+      xl: '80px'
+    },
+    defaultBg: '#1F2430',
+    color: '#FFFFFF',
+    statusOnline: '#22C55E',
+    statusOffline: 'rgba(255, 255, 255, 0.35)',
+    statusRingColor: '#000000',
+    statusRingWidth: '2px'
+  },
+
+  // --- Badges & Verification Tags ---
+  badges: {
+    admin: {
+      color: '#D90429',
+      bg: 'rgba(217, 4, 41, 0.12)',
+      border: '1px solid rgba(217, 4, 41, 0.30)'
+    },
+    ai: {
+      color: '#818CF8',
+      bg: 'rgba(129, 140, 248, 0.12)',
+      border: '1px solid rgba(129, 140, 248, 0.30)'
+    },
+    verified: {
+      color: '#38BDF8',
+      bg: 'rgba(56, 189, 248, 0.12)',
+      border: '1px solid rgba(56, 189, 248, 0.30)'
+    }
   },
 
   // --- Interactive Buttons ---

@@ -83,6 +83,11 @@ assert.ok(css.includes('.cw-bubble-received'), 'CSS must include .cw-bubble-rece
 assert.ok(css.includes('.cw-feed-item'), 'CSS must include .cw-feed-item');
 assert.ok(css.includes('.cw-call-btn'), 'CSS must include .cw-call-btn');
 assert.ok(css.includes('[data-platform="apk"]'), 'CSS must include APK platform selector');
+assert.ok(css.includes('.cw-reactions-row'), 'CSS must include .cw-reactions-row');
+assert.ok(css.includes('.cw-reply-quote'), 'CSS must include .cw-reply-quote');
+assert.ok(css.includes('.cw-voice-player'), 'CSS must include .cw-voice-player');
+assert.ok(css.includes('.cw-bottom-sheet'), 'CSS must include .cw-bottom-sheet');
+assert.ok(css.includes('.cw-badge-admin'), 'CSS must include .cw-badge-admin');
 
 // 7. Verify Kotlin File Output
 console.log('  Testing Kotlin Compose compilation output...');
@@ -94,5 +99,11 @@ assert.ok(ktTokens.includes('val Tertiary = Color(0xFFD90429)'), 'Kotlin must in
 const ktTheme = fs.readFileSync(path.join(DIST_DIR, 'ColorwingTheme.kt'), 'utf-8');
 assert.ok(ktTheme.includes('fun ColorwingTheme'), 'Kotlin theme composable must be defined');
 assert.ok(ktTheme.includes('rememberColorwingAmbientColor'), 'Kotlin ambient color helper must be defined');
+
+const ktComponents = fs.readFileSync(path.join(DIST_DIR, 'ColorwingComponents.kt'), 'utf-8');
+assert.ok(ktComponents.includes('fun ColorwingChatTopBar'), 'Kotlin ChatTopBar must be defined');
+assert.ok(ktComponents.includes('fun ColorwingReplyQuote'), 'Kotlin ReplyQuote must be defined');
+assert.ok(ktComponents.includes('fun ColorwingReactionPill'), 'Kotlin ReactionPill must be defined');
+assert.ok(ktComponents.includes('fun ColorwingAvatar'), 'Kotlin Avatar must be defined');
 
 console.log('✅ ALL TESTS PASSED SUCCESSFULLY!');
