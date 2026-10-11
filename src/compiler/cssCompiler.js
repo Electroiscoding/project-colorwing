@@ -175,8 +175,7 @@ export function compileBubblesCss(options = {}) {
 [data-liquid-glass="true"] .msg-bubble,
 .cw-liquid-glass .msg-bubble,
 .msg-bubble.cw-liquid-glass {
-  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  contain: content;
 }
 
 [data-liquid-glass="true"] .cw-bubble-sent,
@@ -246,11 +245,9 @@ export function compileBubblesCss(options = {}) {
 
 [data-liquid-glass="true"] .cw-call-log-bubble,
 .cw-liquid-glass .cw-call-log-bubble {
-  background-color: rgba(18, 19, 28, 0.65) !important;
+  background-color: rgba(18, 19, 28, 0.85) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.50), 0 6px 20px rgba(0, 0, 0, 0.40) !important;
-  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
 }
 `;
   return options.minify ? minifyCss(raw) : raw;
@@ -679,18 +676,26 @@ export function compileGlassCss(options = {}) {
   --cw-glass-bg: ${glass.liquid.surface} !important;
   --cw-glass-border: ${glass.liquid.border} !important;
   --cw-glass-shadow: ${glass.liquid.boxShadow} !important;
-  --cw-glass-filter: ${glass.liquid.backdropFilter} !important;
-  backdrop-filter: ${glass.liquid.backdropFilter} !important;
-  -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter} !important;
+  --cw-glass-filter: none;
 }
 
-/* Full Liquid Glass Surface Styling matching APK SafeHaze + LiquidGlassEffect */
+/* Standalone / Dialog Card Glass (Hardware-isolated) */
 [data-liquid-glass="true"] .cw-glass-panel,
 .cw-liquid-glass .cw-glass-panel,
 .cw-glass-panel.cw-liquid-glass,
 [data-liquid-glass="true"] .card-glass,
 .cw-liquid-glass .card-glass,
-.card-glass.cw-liquid-glass,
+.card-glass.cw-liquid-glass {
+  background-image: ${glass.liquid.overlayGradient} !important;
+  background-color: var(--cw-glass-bg, ${glass.liquid.surface}) !important;
+  border: ${glass.liquid.border} !important;
+  box-shadow: ${glass.liquid.boxShadow} !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  contain: paint;
+}
+
+/* Feed Cards & Content (Hardware-isolated specular glass with zero blur overhead) */
 [data-liquid-glass="true"] .cw-post-card,
 .cw-liquid-glass .cw-post-card,
 [data-liquid-glass="true"] .post-card,
@@ -707,30 +712,36 @@ export function compileGlassCss(options = {}) {
   background-color: var(--cw-glass-bg, ${glass.liquid.surface}) !important;
   border: ${glass.liquid.border} !important;
   box-shadow: ${glass.liquid.boxShadow} !important;
-  backdrop-filter: ${glass.liquid.backdropFilter} !important;
-  -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter} !important;
+  contain: content;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 180px;
 }
 
+/* Hardware-Accelerated Floating Bars */
 [data-liquid-glass="true"] header,
 .cw-liquid-glass header,
 [data-liquid-glass="true"] .cw-chat-header,
 .cw-liquid-glass .cw-chat-header {
-  background-color: rgba(10, 10, 14, 0.72) !important;
-  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  background-color: rgba(10, 10, 14, 0.78) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
   border-bottom: 1.5px solid rgba(255, 255, 255, 0.18) !important;
   box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.12), 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 [data-liquid-glass="true"] #bottom-nav-bar,
 .cw-liquid-glass #bottom-nav-bar,
 [data-liquid-glass="true"] nav.fixed,
 .cw-liquid-glass nav.fixed {
-  background-color: rgba(10, 10, 14, 0.75) !important;
-  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  background-color: rgba(10, 10, 14, 0.82) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.20) !important;
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.35), 0 -8px 32px rgba(0, 0, 0, 0.7) !important;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 [data-liquid-glass="true"] .cw-chat-input-bar,
@@ -739,11 +750,10 @@ export function compileGlassCss(options = {}) {
 .cw-liquid-glass #chat-input-bar,
 [data-liquid-glass="true"] .chat-messages-container .bg-\\[\\#141416\\],
 .cw-liquid-glass .chat-messages-container .bg-\\[\\#141416\\] {
-  background-color: rgba(20, 20, 26, 0.70) !important;
-  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  background-color: rgba(20, 20, 26, 0.85) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.50), 0 8px 32px rgba(0, 0, 0, 0.50) !important;
+  transform: translateZ(0);
 }
 
 [data-liquid-glass="true"] .cw-bottom-sheet,
@@ -754,20 +764,18 @@ export function compileGlassCss(options = {}) {
 .cw-liquid-glass #pack-selector-sheet,
 [data-liquid-glass="true"] #se-picker-sheet,
 .cw-liquid-glass #se-picker-sheet {
-  background-color: rgba(18, 19, 28, 0.85) !important;
+  background-color: rgba(18, 19, 28, 0.94) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.25) !important;
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.60), 0 -8px 36px rgba(0, 0, 0, 0.70) !important;
-  backdrop-filter: blur(24px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(180%) contrast(105%) !important;
+  transform: translateZ(0);
 }
 
 [data-liquid-glass="true"] #desktop-left-nav,
 .cw-liquid-glass #desktop-left-nav,
 [data-liquid-glass="true"] #desktop-news-sidebar,
 .cw-liquid-glass #desktop-news-sidebar {
-  background-color: rgba(12, 13, 18, 0.60) !important;
-  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  background-color: rgba(12, 13, 18, 0.85) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 [data-liquid-glass="true"] body,
@@ -797,8 +805,6 @@ body.cw-liquid-glass {
   background-color: ${glass.liquid.surface};
   border: ${glass.liquid.border};
   box-shadow: ${glass.liquid.boxShadow};
-  backdrop-filter: ${glass.liquid.backdropFilter};
-  -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter};
   border-radius: 20px;
   position: relative;
   overflow: hidden;
@@ -812,15 +818,14 @@ body.cw-liquid-glass {
   pointer-events: none;
 }
 
-/* Liquid Glass Message Bubbles (1:1 APK LiquidGlassEffect & SafeHaze) */
+/* Liquid Glass Message Bubbles (100% Specular Refraction - Zero GPU Blur Thrash) */
 [data-liquid-glass="true"] .cw-bubble,
 .cw-liquid-glass .cw-bubble,
 .cw-bubble.cw-liquid-glass,
 [data-liquid-glass="true"] .msg-bubble,
 .cw-liquid-glass .msg-bubble,
 .msg-bubble.cw-liquid-glass {
-  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  contain: content;
 }
 
 [data-liquid-glass="true"] .cw-bubble-sent,
@@ -890,11 +895,9 @@ body.cw-liquid-glass {
 
 [data-liquid-glass="true"] .cw-call-log-bubble,
 .cw-liquid-glass .cw-call-log-bubble {
-  background-color: rgba(18, 19, 28, 0.65) !important;
+  background-color: rgba(18, 19, 28, 0.85) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.50), 0 6px 20px rgba(0, 0, 0, 0.40) !important;
-  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
 }
 `;
   return options.minify ? minifyCss(raw) : raw;
@@ -1017,18 +1020,26 @@ export function compileCss(options = {}) {
   --cw-glass-bg: ${glass.liquid.surface} !important;
   --cw-glass-border: ${glass.liquid.border} !important;
   --cw-glass-shadow: ${glass.liquid.boxShadow} !important;
-  --cw-glass-filter: ${glass.liquid.backdropFilter} !important;
-  backdrop-filter: ${glass.liquid.backdropFilter} !important;
-  -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter} !important;
+  --cw-glass-filter: none;
 }
 
-/* Full Liquid Glass Surface Styling matching APK SafeHaze + LiquidGlassEffect */
+/* Standalone / Dialog Card Glass (Hardware-isolated) */
 [data-liquid-glass="true"] .cw-glass-panel,
 .cw-liquid-glass .cw-glass-panel,
 .cw-glass-panel.cw-liquid-glass,
 [data-liquid-glass="true"] .card-glass,
 .cw-liquid-glass .card-glass,
-.card-glass.cw-liquid-glass,
+.card-glass.cw-liquid-glass {
+  background-image: ${glass.liquid.overlayGradient} !important;
+  background-color: var(--cw-glass-bg, ${glass.liquid.surface}) !important;
+  border: ${glass.liquid.border} !important;
+  box-shadow: ${glass.liquid.boxShadow} !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  contain: paint;
+}
+
+/* Feed Cards & Content (Hardware-isolated specular glass with zero blur overhead) */
 [data-liquid-glass="true"] .cw-post-card,
 .cw-liquid-glass .cw-post-card,
 [data-liquid-glass="true"] .post-card,
@@ -1045,30 +1056,36 @@ export function compileCss(options = {}) {
   background-color: var(--cw-glass-bg, ${glass.liquid.surface}) !important;
   border: ${glass.liquid.border} !important;
   box-shadow: ${glass.liquid.boxShadow} !important;
-  backdrop-filter: ${glass.liquid.backdropFilter} !important;
-  -webkit-backdrop-filter: ${glass.liquid.webkitBackdropFilter} !important;
+  contain: content;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 180px;
 }
 
+/* Hardware-Accelerated Floating Bars */
 [data-liquid-glass="true"] header,
 .cw-liquid-glass header,
 [data-liquid-glass="true"] .cw-chat-header,
 .cw-liquid-glass .cw-chat-header {
-  background-color: rgba(10, 10, 14, 0.72) !important;
-  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  background-color: rgba(10, 10, 14, 0.78) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
   border-bottom: 1.5px solid rgba(255, 255, 255, 0.18) !important;
   box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.12), 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 [data-liquid-glass="true"] #bottom-nav-bar,
 .cw-liquid-glass #bottom-nav-bar,
 [data-liquid-glass="true"] nav.fixed,
 .cw-liquid-glass nav.fixed {
-  background-color: rgba(10, 10, 14, 0.75) !important;
-  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  background-color: rgba(10, 10, 14, 0.82) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.20) !important;
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.35), 0 -8px 32px rgba(0, 0, 0, 0.7) !important;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 [data-liquid-glass="true"] .cw-chat-input-bar,
@@ -1077,11 +1094,10 @@ export function compileCss(options = {}) {
 .cw-liquid-glass #chat-input-bar,
 [data-liquid-glass="true"] .chat-messages-container .bg-\\[\\#141416\\],
 .cw-liquid-glass .chat-messages-container .bg-\\[\\#141416\\] {
-  background-color: rgba(20, 20, 26, 0.70) !important;
-  backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) contrast(105%) !important;
+  background-color: rgba(20, 20, 26, 0.85) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.50), 0 8px 32px rgba(0, 0, 0, 0.50) !important;
+  transform: translateZ(0);
 }
 
 [data-liquid-glass="true"] .cw-bottom-sheet,
@@ -1092,20 +1108,18 @@ export function compileCss(options = {}) {
 .cw-liquid-glass #pack-selector-sheet,
 [data-liquid-glass="true"] #se-picker-sheet,
 .cw-liquid-glass #se-picker-sheet {
-  background-color: rgba(18, 19, 28, 0.85) !important;
+  background-color: rgba(18, 19, 28, 0.94) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.25) !important;
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.60), 0 -8px 36px rgba(0, 0, 0, 0.70) !important;
-  backdrop-filter: blur(24px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(180%) contrast(105%) !important;
+  transform: translateZ(0);
 }
 
 [data-liquid-glass="true"] #desktop-left-nav,
 .cw-liquid-glass #desktop-left-nav,
 [data-liquid-glass="true"] #desktop-news-sidebar,
 .cw-liquid-glass #desktop-news-sidebar {
-  background-color: rgba(12, 13, 18, 0.60) !important;
-  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  background-color: rgba(12, 13, 18, 0.85) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 [data-liquid-glass="true"] body,
@@ -1332,8 +1346,7 @@ body.cw-liquid-glass {
 [data-liquid-glass="true"] .msg-bubble,
 .cw-liquid-glass .msg-bubble,
 .msg-bubble.cw-liquid-glass {
-  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
+  contain: content;
 }
 
 [data-liquid-glass="true"] .cw-bubble-sent,
@@ -1403,11 +1416,9 @@ body.cw-liquid-glass {
 
 [data-liquid-glass="true"] .cw-call-log-bubble,
 .cw-liquid-glass .cw-call-log-bubble {
-  background-color: rgba(18, 19, 28, 0.65) !important;
+  background-color: rgba(18, 19, 28, 0.85) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.50), 0 6px 20px rgba(0, 0, 0, 0.40) !important;
-  backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(105%) !important;
 }
 
 /* Reactions Bar & Reaction Pills */
