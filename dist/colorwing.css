@@ -517,12 +517,10 @@ body.cw-liquid-glass {
   align-items: center;
   gap: 4px;
   padding: 3px 6px;
-  background: rgba(24, 24, 27, 0.94);
+  background: rgba(24, 24, 27, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 9999px;
   box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 }
 
 .cw-reaction-pill {

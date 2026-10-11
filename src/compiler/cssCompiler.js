@@ -1423,8 +1423,6 @@ body.cw-liquid-glass {
   border: ${components.reactions.barBorder};
   border-radius: ${components.reactions.borderRadius};
   box-shadow: ${components.reactions.barShadow};
-  backdrop-filter: ${components.reactions.barBackdropFilter};
-  -webkit-backdrop-filter: ${components.reactions.barBackdropFilter};
 }
 
 .cw-reaction-pill {

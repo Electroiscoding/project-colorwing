@@ -211,9 +211,9 @@ export const components = {
 
   // --- Reactions Floating Bar & Pills ---
   reactions: {
-    barBg: 'rgba(24, 24, 27, 0.94)',
+    barBg: 'rgba(24, 24, 27, 0.96)',
     barBorder: '1px solid rgba(255, 255, 255, 0.14)',
-    barBackdropFilter: 'blur(14px)',
+    barBackdropFilter: 'none',
     barShadow: '0 4px 18px -2px rgba(0, 0, 0, 0.45)',
     borderRadius: '9999px',
     pillBg: 'rgba(255, 255, 255, 0.08)',
