@@ -38,9 +38,14 @@
   background-color: var(--cw-glass-bg, rgba(18, 19, 28, 0.60)) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.75), inset 0 -1.5px 0 0 rgba(255, 255, 255, 0.35), 0 8px 36px rgba(0, 0, 0, 0.65) !important;
+  contain: content;
+}
+
+[data-liquid-glass="true"] .cw-modal-glass,
+.cw-liquid-glass .cw-modal-glass,
+.cw-modal-glass.cw-liquid-glass {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  contain: paint;
 }
 
 /* Feed Cards & Content (Hardware-isolated specular glass with zero blur overhead) */
@@ -70,26 +75,20 @@
 .cw-liquid-glass header,
 [data-liquid-glass="true"] .cw-chat-header,
 .cw-liquid-glass .cw-chat-header {
-  background-color: rgba(10, 10, 14, 0.78) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background-color: rgba(10, 10, 14, 0.94) !important;
   border-bottom: 1.5px solid rgba(255, 255, 255, 0.18) !important;
   box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.12), 0 8px 30px rgba(0, 0, 0, 0.6) !important;
   transform: translateZ(0);
-  will-change: transform;
 }
 
 [data-liquid-glass="true"] #bottom-nav-bar,
 .cw-liquid-glass #bottom-nav-bar,
 [data-liquid-glass="true"] nav.fixed,
 .cw-liquid-glass nav.fixed {
-  background-color: rgba(10, 10, 14, 0.82) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background-color: rgba(10, 10, 14, 0.94) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.20) !important;
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.35), 0 -8px 32px rgba(0, 0, 0, 0.7) !important;
   transform: translateZ(0);
-  will-change: transform;
 }
 
 [data-liquid-glass="true"] .cw-chat-input-bar,

@@ -452,9 +452,7 @@ export function compileFeedCss(options = {}) {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: rgba(0, 0, 0, 0.70);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.85);
   color: #ffffff;
   font-size: 10px;
   font-weight: 700;
@@ -463,7 +461,7 @@ export function compileFeedCss(options = {}) {
   display: flex;
   align-items: center;
   gap: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   pointer-events: none;
   z-index: 20;
 }
@@ -474,9 +472,7 @@ export function compileFeedCss(options = {}) {
   position: absolute;
   bottom: 12px;
   left: 12px;
-  background: rgba(0, 0, 0, 0.70);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.85);
   color: #ffffff;
   width: 36px;
   height: 36px;
@@ -484,21 +480,19 @@ export function compileFeedCss(options = {}) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
   z-index: 20;
   transition: background 0.15s ease;
 }
 .cw-post-video-play-ctrl:hover {
-  background: rgba(0, 0, 0, 0.90);
+  background: rgba(0, 0, 0, 0.95);
 }
 .cw-post-video-mute-ctrl {
   position: absolute;
   bottom: 12px;
   right: 12px;
-  background: rgba(0, 0, 0, 0.70);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.85);
   color: #ffffff;
   width: 36px;
   height: 36px;
@@ -506,13 +500,13 @@ export function compileFeedCss(options = {}) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
   z-index: 20;
   transition: background 0.15s ease;
 }
 .cw-post-video-mute-ctrl:hover {
-  background: rgba(0, 0, 0, 0.90);
+  background: rgba(0, 0, 0, 0.95);
 }
 .cw-post-video-overlay {
   position: absolute;
@@ -690,9 +684,14 @@ export function compileGlassCss(options = {}) {
   background-color: var(--cw-glass-bg, ${glass.liquid.surface}) !important;
   border: ${glass.liquid.border} !important;
   box-shadow: ${glass.liquid.boxShadow} !important;
+  contain: content;
+}
+
+[data-liquid-glass="true"] .cw-modal-glass,
+.cw-liquid-glass .cw-modal-glass,
+.cw-modal-glass.cw-liquid-glass {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  contain: paint;
 }
 
 /* Feed Cards & Content (Hardware-isolated specular glass with zero blur overhead) */
@@ -722,26 +721,20 @@ export function compileGlassCss(options = {}) {
 .cw-liquid-glass header,
 [data-liquid-glass="true"] .cw-chat-header,
 .cw-liquid-glass .cw-chat-header {
-  background-color: rgba(10, 10, 14, 0.78) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background-color: rgba(10, 10, 14, 0.94) !important;
   border-bottom: 1.5px solid rgba(255, 255, 255, 0.18) !important;
   box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.12), 0 8px 30px rgba(0, 0, 0, 0.6) !important;
   transform: translateZ(0);
-  will-change: transform;
 }
 
 [data-liquid-glass="true"] #bottom-nav-bar,
 .cw-liquid-glass #bottom-nav-bar,
 [data-liquid-glass="true"] nav.fixed,
 .cw-liquid-glass nav.fixed {
-  background-color: rgba(10, 10, 14, 0.82) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background-color: rgba(10, 10, 14, 0.94) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.20) !important;
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.35), 0 -8px 32px rgba(0, 0, 0, 0.7) !important;
   transform: translateZ(0);
-  will-change: transform;
 }
 
 [data-liquid-glass="true"] .cw-chat-input-bar,
@@ -1034,9 +1027,14 @@ export function compileCss(options = {}) {
   background-color: var(--cw-glass-bg, ${glass.liquid.surface}) !important;
   border: ${glass.liquid.border} !important;
   box-shadow: ${glass.liquid.boxShadow} !important;
+  contain: content;
+}
+
+[data-liquid-glass="true"] .cw-modal-glass,
+.cw-liquid-glass .cw-modal-glass,
+.cw-modal-glass.cw-liquid-glass {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  contain: paint;
 }
 
 /* Feed Cards & Content (Hardware-isolated specular glass with zero blur overhead) */
@@ -1066,26 +1064,20 @@ export function compileCss(options = {}) {
 .cw-liquid-glass header,
 [data-liquid-glass="true"] .cw-chat-header,
 .cw-liquid-glass .cw-chat-header {
-  background-color: rgba(10, 10, 14, 0.78) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background-color: rgba(10, 10, 14, 0.94) !important;
   border-bottom: 1.5px solid rgba(255, 255, 255, 0.18) !important;
   box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.12), 0 8px 30px rgba(0, 0, 0, 0.6) !important;
   transform: translateZ(0);
-  will-change: transform;
 }
 
 [data-liquid-glass="true"] #bottom-nav-bar,
 .cw-liquid-glass #bottom-nav-bar,
 [data-liquid-glass="true"] nav.fixed,
 .cw-liquid-glass nav.fixed {
-  background-color: rgba(10, 10, 14, 0.82) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background-color: rgba(10, 10, 14, 0.94) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.20) !important;
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.35), 0 -8px 32px rgba(0, 0, 0, 0.7) !important;
   transform: translateZ(0);
-  will-change: transform;
 }
 
 [data-liquid-glass="true"] .cw-chat-input-bar,
@@ -1826,9 +1818,7 @@ body.cw-liquid-glass {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: rgba(0, 0, 0, 0.70);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.85);
   color: #ffffff;
   font-size: 10px;
   font-weight: 700;
@@ -1837,7 +1827,7 @@ body.cw-liquid-glass {
   display: flex;
   align-items: center;
   gap: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   pointer-events: none;
   z-index: 20;
 }
@@ -1848,9 +1838,7 @@ body.cw-liquid-glass {
   position: absolute;
   bottom: 12px;
   left: 12px;
-  background: rgba(0, 0, 0, 0.70);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.85);
   color: #ffffff;
   width: 36px;
   height: 36px;
@@ -1858,21 +1846,19 @@ body.cw-liquid-glass {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
   z-index: 20;
   transition: background 0.15s ease;
 }
 .cw-post-video-play-ctrl:hover {
-  background: rgba(0, 0, 0, 0.90);
+  background: rgba(0, 0, 0, 0.95);
 }
 .cw-post-video-mute-ctrl {
   position: absolute;
   bottom: 12px;
   right: 12px;
-  background: rgba(0, 0, 0, 0.70);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.85);
   color: #ffffff;
   width: 36px;
   height: 36px;
@@ -1880,13 +1866,13 @@ body.cw-liquid-glass {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
   z-index: 20;
   transition: background 0.15s ease;
 }
 .cw-post-video-mute-ctrl:hover {
-  background: rgba(0, 0, 0, 0.90);
+  background: rgba(0, 0, 0, 0.95);
 }
 .cw-post-video-overlay {
   position: absolute;
